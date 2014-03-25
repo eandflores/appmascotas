@@ -1,0 +1,17 @@
+<Alloy>
+	<Window class="container">
+		<View id="wrapper">
+			
+		</View>
+		<View id="marcas">
+			
+		</View>
+		<View id="main">
+				<ImageView id="imagenIndex"></ImageView>
+		</View>
+		<View id="footer">
+			<Button id="login">INICIAR SESIÓN</Button>
+			<Button id="registro">REGISTRARSE</Button>
+		</View>
+	</Window>
+</Alloy>
