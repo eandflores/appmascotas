@@ -1,0 +1,62 @@
+".container": {
+	backgroundColor:"white",
+	layout:"vertical"
+},
+"#wrapper": {
+	backgroundColor:"#cc5122",
+	width: "100%",
+	height: "9%",
+	top: "3.5%"
+},
+"#marcas": {
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"9.5%"
+},
+"#main":{
+	width:"100%",
+	height:"50%"
+},
+"#imagenIndex":{
+	width:"100%",
+	height:"100%",
+	image:"/img/fondoRegistro.jpg"
+},
+"#inputs":{
+	width:"100%",
+	height:"15.5%",
+	layout:"vertical",
+	backgroundColor:"#f5f5f5"
+},
+"#inputNombre":{
+	width:"100%",
+	height:"33.4%",
+	backgroundColor:"#f5f5f5"
+},
+"#inputCorreo":{
+	width:"100%",
+	height:"33.3%",
+	backgroundColor:"#f5f5f5"
+},
+"#inputContraseña":{
+	width:"100%",
+	height:"33.3%",
+	backgroundColor:"#f5f5f5"
+},
+"#margen":{
+	height:"5.1%",
+	width:"100%",
+	backgroundColor:"white"
+}
+"#footer":{
+	layout:"horizontal",
+	width:"100%",
+	height:"7.4%"
+},
+"#registro":{
+	backgroundColor:"#cc5122",
+	color:"white",
+	width:"100%",
+	height:"100%"
+}
+

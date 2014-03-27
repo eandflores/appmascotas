@@ -10,8 +10,8 @@
 				<ImageView id="imagenIndex"></ImageView>
 		</View>
 		<View id="footer">
-			<Button id="login">INICIAR SESIÓN</Button>
-			<Button id="registro">REGISTRARSE</Button>
+			<Button id="login" onClick="login" >INICIAR SESIÓN</Button>
+			<Button id="registro" onClick="registro" layout="registro" >REGISTRARSE</Button>
 		</View>
 	</Window>
 </Alloy>

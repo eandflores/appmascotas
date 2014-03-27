@@ -1,4 +1,9 @@
 function Controller() {
+    function login() {}
+    function registro() {
+        var vista = Alloy.createController("registro").getView();
+        vista.open();
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -6,6 +11,7 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
+    var __defers = {};
     $.__views.index = Ti.UI.createWindow({
         backgroundColor: "white",
         layout: "vertical",
@@ -56,18 +62,23 @@ function Controller() {
         id: "login"
     });
     $.__views.footer.add($.__views.login);
+    login ? $.__views.login.addEventListener("click", login) : __defers["$.__views.login!click!login"] = true;
     $.__views.registro = Ti.UI.createButton({
         backgroundColor: "#5b7256",
         color: "white",
         width: "50%",
         height: "100%",
         title: "REGISTRARSE",
-        id: "registro"
+        id: "registro",
+        layout: "registro"
     });
     $.__views.footer.add($.__views.registro);
+    registro ? $.__views.registro.addEventListener("click", registro) : __defers["$.__views.registro!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
     $.index.open();
+    __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);
+    __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);
 }
 
