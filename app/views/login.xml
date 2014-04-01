@@ -11,13 +11,14 @@
 				<ImageView id="imagenIndex"></ImageView>
 		</View>
 		<View id="inputs">
-				<TextField id="inputNombre" hintText="NOMBRE"></TextField>
 				<TextField id="inputCorreo" hintText="CORREO"></TextField>
-				<TextField id="inputContraseña" hintText="CONTRASEÑA"></TextField>
+				<TextField id="inputClave" hintText="CLAVE"></TextField>
 		</View>
-		<View id="margenB"></View>
+		<View id="layout">
+			<Label id="recuperarContraseña" onClick="recuperarContraseña">¿HAS OLVIDADO TU CONTRASEÑA?</Label>
+		</View>
 		<View id="footer">
-			<Button id="registro">REGISTRARSE</Button>
+			<Button id="registro" onClick="registro">INICIAR SESIÓN</Button>
 		</View>
 	</Window>
 </Alloy>

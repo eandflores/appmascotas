@@ -1,0 +1,57 @@
+<Alloy>
+	<Window class="container">
+		<View id="wrapper">
+			
+		</View>
+		<View id="marcas">
+			
+		</View>
+		<ScrollView id="mainScroll">
+			<View class="main">
+				<ImageView class="productoImg" backgroundImage="/img/Perro1.jpg"></ImageView>
+				<View class="labelGroup">
+					<Label class="productoNombre">EUKANUBA 1</Label>
+					<Label class="productoDescripcion">Alimentos para adultos</Label>
+					<Label class="productoPrecio">$1500</Label>
+				</View>
+				<ImageView class="flecha" backgroundImage="/img/Flecha.jpg"></ImageView>
+			</View>
+			<View class="main">
+				<ImageView class="productoImg" backgroundImage="/img/Gato1.jpg"></ImageView>
+				<View class="labelGroup">
+					<Label class="productoNombre">EUKANUBA 2</Label>
+					<Label class="productoDescripcion">Alimentos para cachorros</Label>
+					<Label class="productoPrecio">$2500</Label>
+				</View>
+				<ImageView class="flecha" backgroundImage="/img/Flecha.jpg"></ImageView>
+			</View>
+			<View class="main">
+				<ImageView class="productoImg" backgroundImage="/img/Perro1.jpg"></ImageView>
+				<View class="labelGroup">
+					<Label class="productoNombre">EUKANUBA 3</Label>
+					<Label class="productoDescripcion">Alimentos para adultos</Label>
+					<Label class="productoPrecio">$1500</Label>
+				</View>
+				<ImageView class="flecha" backgroundImage="/img/Flecha.jpg"></ImageView>
+			</View>
+			<View class="main">
+				<ImageView class="productoImg" backgroundImage="/img/Gato1.jpg"></ImageView>
+				<View class="labelGroup">
+					<Label class="productoNombre">EUKANUBA 4</Label>
+					<Label class="productoDescripcion">Alimentos para cachorros</Label>
+					<Label class="productoPrecio">$2500</Label>
+				</View>
+				<ImageView class="flecha" backgroundImage="/img/Flecha.jpg"></ImageView>
+			</View>
+			<View class="main">
+				<ImageView class="productoImg" backgroundImage="/img/Perro1.jpg"></ImageView>
+				<View class="labelGroup">
+					<Label class="productoNombre">EUKANUBA 5</Label>
+					<Label class="productoDescripcion">Alimentos para adultos</Label>
+					<Label class="productoPrecio">$1500</Label>
+				</View>
+				<ImageView class="flecha" backgroundImage="/img/Flecha.jpg"></ImageView>
+			</View>
+		</ScrollView>
+	</Window>
+</Alloy>

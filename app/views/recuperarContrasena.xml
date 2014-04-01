@@ -1,5 +1,6 @@
 <Alloy>
 	<Window class="container">
+		<View id="margenA"></View>
 		<View id="wrapper">
 			
 		</View>
@@ -9,9 +10,12 @@
 		<View id="main">
 				<ImageView id="imagenIndex"></ImageView>
 		</View>
+		<View id="inputs">
+				<TextField id="inputCorreo" hintText="CORREO"></TextField>
+		</View>
+		<View id="margenB"></View>
 		<View id="footer">
-			<Button id="login" onClick="login" >INICIAR SESIÓN</Button>
-			<Button id="registro" onClick="registro">REGISTRARSE</Button>
+			<Button id="registro">RECUPERAR CONTRASEÑA</Button>
 		</View>
 	</Window>
 </Alloy>

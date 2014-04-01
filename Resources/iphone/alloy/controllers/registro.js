@@ -15,11 +15,17 @@ function Controller() {
         id: "registro"
     });
     $.__views.registro && $.addTopLevelView($.__views.registro);
+    $.__views.margenA = Ti.UI.createView({
+        height: "3.5%",
+        width: "100%",
+        backgroundColor: "white",
+        id: "margenA"
+    });
+    $.__views.registro.add($.__views.margenA);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
         height: "9%",
-        top: "3.5%",
         id: "wrapper"
     });
     $.__views.registro.add($.__views.wrapper);
@@ -54,8 +60,8 @@ function Controller() {
     $.__views.inputNombre = Ti.UI.createTextField({
         width: "100%",
         height: "33.4%",
-        borderWidth: "0.2px",
-        borderColor: "gray",
+        backgroundColor: "#f5f5f5",
+        color: "#585858",
         id: "inputNombre",
         hintText: "NOMBRE"
     });
@@ -63,8 +69,8 @@ function Controller() {
     $.__views.inputCorreo = Ti.UI.createTextField({
         width: "100%",
         height: "33.3%",
-        borderWidth: "0.2px",
-        borderColor: "gray",
+        backgroundColor: "#f5f5f5",
+        color: "#585858",
         id: "inputCorreo",
         hintText: "CORREO"
     });
@@ -72,19 +78,19 @@ function Controller() {
     $.__views.inputContraseña = Ti.UI.createTextField({
         width: "100%",
         height: "33.3%",
-        borderWidth: "0.2px",
-        borderColor: "gray",
+        backgroundColor: "#f5f5f5",
+        color: "#585858",
         id: "inputContraseña",
         hintText: "CONTRASEÑA"
     });
     $.__views.inputs.add($.__views.inputContraseña);
-    $.__views.margen = Ti.UI.createView({
+    $.__views.margenB = Ti.UI.createView({
         height: "5.1%",
         width: "100%",
         backgroundColor: "white",
-        id: "margen"
+        id: "margenB"
     });
-    $.__views.registro.add($.__views.margen);
+    $.__views.registro.add($.__views.margenB);
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",

@@ -1,5 +1,8 @@
 function Controller() {
-    function login() {}
+    function login() {
+        var vista = Alloy.createController("login").getView();
+        vista.open();
+    }
     function registro() {
         var vista = Alloy.createController("registro").getView();
         vista.open();
@@ -69,8 +72,7 @@ function Controller() {
         width: "50%",
         height: "100%",
         title: "REGISTRARSE",
-        id: "registro",
-        layout: "registro"
+        id: "registro"
     });
     $.__views.footer.add($.__views.registro);
     registro ? $.__views.registro.addEventListener("click", registro) : __defers["$.__views.registro!click!registro"] = true;

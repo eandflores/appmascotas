@@ -1,6 +1,8 @@
 
 function login(){
-	//$.registro.open();
+	
+	var vista = Alloy.createController('login').getView();
+	vista.open();
 }
 
 function registro(){

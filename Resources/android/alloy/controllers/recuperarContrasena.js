@@ -1,47 +1,44 @@
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    this.__controllerPath = "registro";
+    this.__controllerPath = "recuperarContrasena";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
     arguments[0] ? arguments[0]["$model"] : null;
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.registro = Ti.UI.createWindow({
-        backgroundColor: "#cc5122",
+    $.__views.recuperarContrasena = Ti.UI.createWindow({
+        backgroundColor: "white",
         layout: "vertical",
-        color: "white",
-        width: "100%",
-        height: "100%",
-        id: "registro"
+        id: "recuperarContrasena"
     });
-    $.__views.registro && $.addTopLevelView($.__views.registro);
+    $.__views.recuperarContrasena && $.addTopLevelView($.__views.recuperarContrasena);
     $.__views.margenA = Ti.UI.createView({
         height: "3.5%",
         width: "100%",
         backgroundColor: "white",
         id: "margenA"
     });
-    $.__views.registro.add($.__views.margenA);
+    $.__views.recuperarContrasena.add($.__views.margenA);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
         height: "9%",
         id: "wrapper"
     });
-    $.__views.registro.add($.__views.wrapper);
+    $.__views.recuperarContrasena.add($.__views.wrapper);
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
         height: "9.5%",
         id: "marcas"
     });
-    $.__views.registro.add($.__views.marcas);
+    $.__views.recuperarContrasena.add($.__views.marcas);
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "50%",
         id: "main"
     });
-    $.__views.registro.add($.__views.main);
+    $.__views.recuperarContrasena.add($.__views.main);
     $.__views.imagenIndex = Ti.UI.createImageView({
         width: "100%",
         height: "100%",
@@ -51,59 +48,41 @@ function Controller() {
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "15.5%",
+        height: "5.5%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
     });
-    $.__views.registro.add($.__views.inputs);
-    $.__views.inputNombre = Ti.UI.createTextField({
-        width: "100%",
-        height: "33.4%",
-        backgroundColor: "#f5f5f5",
-        color: "#585858",
-        id: "inputNombre",
-        hintText: "NOMBRE"
-    });
-    $.__views.inputs.add($.__views.inputNombre);
+    $.__views.recuperarContrasena.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
         width: "100%",
-        height: "33.3%",
+        height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
         hintText: "CORREO"
     });
     $.__views.inputs.add($.__views.inputCorreo);
-    $.__views.inputContraseña = Ti.UI.createTextField({
-        width: "100%",
-        height: "33.3%",
-        backgroundColor: "#f5f5f5",
-        color: "#585858",
-        id: "inputContraseña",
-        hintText: "CONTRASEÑA"
-    });
-    $.__views.inputs.add($.__views.inputContraseña);
     $.__views.margenB = Ti.UI.createView({
-        height: "5.1%",
+        height: "15.8%",
         width: "100%",
         backgroundColor: "white",
         id: "margenB"
     });
-    $.__views.registro.add($.__views.margenB);
+    $.__views.recuperarContrasena.add($.__views.margenB);
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
         height: "7.4%",
         id: "footer"
     });
-    $.__views.registro.add($.__views.footer);
+    $.__views.recuperarContrasena.add($.__views.footer);
     $.__views.registro = Ti.UI.createButton({
         backgroundColor: "#cc5122",
         color: "white",
         width: "100%",
         height: "100%",
-        title: "REGISTRARSE",
+        title: "RECUPERAR CONTRASEÑA",
         id: "registro"
     });
     $.__views.footer.add($.__views.registro);
