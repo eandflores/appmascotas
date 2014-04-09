@@ -5,7 +5,8 @@ function Controller() {
     }
     function registro() {
         var vista = Alloy.createController("productos", {
-            opcion: 1
+            categoria: "TODAS",
+            marca: "TODAS"
         }).getView();
         vista.open();
     }

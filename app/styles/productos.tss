@@ -12,12 +12,28 @@
 "#marcas": {
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
-	height:"9.5%"
+	height:"9.5%",
+	layout:"horizontal"
+},
+".flecha": {
+	width:"14%",
+	height:"80%"
+},
+"#marcasScroll": {
+	width: "72%",
+	contentWidth: Ti.UI.SIZE,
+	scrollType: 'horizontal',
+	layout: 'horizontal',
+	height:"85%",
+	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
+	showHorizontalScrollIndicator:"true",
 },
 "#mainScroll":{
 	width:"100%",
-	height:"auto",
+	height:"78%",
+	contentHeight: Ti.UI.SIZE,
 	layout:'vertical',
+	scrollType: 'vertical',
 	showVerticalScrollIndicator:"true",
 },
 "#perrogato":{
@@ -45,4 +61,5 @@
 	height:"100%",
 	backgroundImage:"/img/lupa.jpg"
 }
+
 

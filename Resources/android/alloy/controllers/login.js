@@ -4,7 +4,10 @@ function Controller() {
         vista.open();
     }
     function registro() {
-        var vista = Alloy.createController("productos").getView();
+        var vista = Alloy.createController("productos", {
+            categoria: "TODAS",
+            marca: "TODAS"
+        }).getView();
         vista.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));

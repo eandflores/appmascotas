@@ -5,8 +5,6 @@ function recuperarContraseña(){
 }
 function registro(){
 	
-	var opcion = 1;
-	
-	var vista = Alloy.createController('productos',{opcion: 1}).getView();
+	var vista = Alloy.createController('productos',{categoria: 'TODAS', marca: 'TODAS'}).getView();
 	vista.open();
 }
