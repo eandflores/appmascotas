@@ -19,6 +19,7 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.login = Ti.UI.createWindow({
+        navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         id: "login"
@@ -67,7 +68,8 @@ function Controller() {
     });
     $.__views.login.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
@@ -76,12 +78,14 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputClave = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputClave",
-        hintText: "CLAVE"
+        hintText: "CLAVE",
+        passwordMask: "true"
     });
     $.__views.inputs.add($.__views.inputClave);
     $.__views.layout = Ti.UI.createView({

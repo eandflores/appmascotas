@@ -1,3 +1,6 @@
+"Window" : {
+	navBarHidden: "true"
+},
 ".container": {
 	backgroundColor:"white",
 	layout:"vertical"

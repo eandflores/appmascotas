@@ -1,3 +1,6 @@
+"Window" : {
+	navBarHidden: "true"
+},
 ".container": {
 	backgroundColor:"white",
 	layout:"vertical"
@@ -33,13 +36,15 @@
 	backgroundColor:"#f5f5f5"
 },
 "#inputCorreo":{
-	width:"100%",
+	left:"10%",
+	width:"90%",
 	height:"50%",
 	backgroundColor:"#f5f5f5",
 	color:"#585858"
 },
 "#inputClave":{
-	width:"100%",
+	left:"10%",
+	width:"90%",
 	height:"50%",
 	backgroundColor:"#f5f5f5",
 	color:"#585858"

@@ -7,6 +7,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.registro = Ti.UI.createWindow({
+        navBarHidden: "true",
         backgroundColor: "#cc5122",
         layout: "vertical",
         color: "white",
@@ -58,7 +59,8 @@ function Controller() {
     });
     $.__views.registro.add($.__views.inputs);
     $.__views.inputNombre = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "33.4%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
@@ -67,7 +69,8 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputNombre);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
@@ -76,7 +79,8 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputContraseña = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",

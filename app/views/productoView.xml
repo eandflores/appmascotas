@@ -1,0 +1,20 @@
+<Alloy>
+	<Window class="container">
+		<View id="wrapper">
+			<ImageView id="menuImg"></ImageView>
+			<ImageView id="perrogato" onClick="productosPerroGato"></ImageView>
+			<ImageView id="perro" onClick="productosPerro"></ImageView>
+			<ImageView id="gato" onClick="productosGato"></ImageView>
+			<ImageView id="lupaImg"></ImageView>
+		</View>
+		<View id="marcas">
+			<ImageView class="flecha" backgroundImage="/img/FlechaIzq.jpg"></ImageView>
+			<ScrollView id="marcasScroll"></ScrollView>
+			<ImageView class="flecha" backgroundImage="/img/FlechaDer.jpg"></ImageView>
+		</View>
+		<View id="Main"></View>
+		<View id="footer">
+			<Button id="carro">AGREGAR AL CARRO</Button>
+		</View>
+	</Window>
+</Alloy>

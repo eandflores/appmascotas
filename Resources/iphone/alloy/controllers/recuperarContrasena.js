@@ -7,6 +7,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.recuperarContrasena = Ti.UI.createWindow({
+        navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         id: "recuperarContrasena"
@@ -55,7 +56,8 @@ function Controller() {
     });
     $.__views.recuperarContrasena.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        width: "100%",
+        left: "10%",
+        width: "90%",
         height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",

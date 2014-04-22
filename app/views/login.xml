@@ -12,7 +12,7 @@
 		</View>
 		<View id="inputs">
 				<TextField id="inputCorreo" hintText="CORREO"></TextField>
-				<TextField id="inputClave" hintText="CLAVE"></TextField>
+				<TextField id="inputClave" hintText="CLAVE" passwordMask="true"></TextField>
 		</View>
 		<View id="layout">
 			<Label id="recuperarContraseña" onClick="recuperarContraseña">¿HAS OLVIDADO TU CONTRASEÑA?</Label>

@@ -1,4 +1,3 @@
-
 function login(){
 	
 	var vista = Alloy.createController('login').getView();
