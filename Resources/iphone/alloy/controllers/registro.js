@@ -10,30 +10,30 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "#cc5122",
         layout: "vertical",
+        bottom: "0%",
+        height: "100%",
         color: "white",
         width: "100%",
-        height: "100%",
         id: "registro"
     });
     $.__views.registro && $.addTopLevelView($.__views.registro);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
-        height: "9%",
-        top: "3.5%",
+        height: "9.6%",
         id: "wrapper"
     });
     $.__views.registro.add($.__views.wrapper);
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
-        height: "9.5%",
+        height: "10%",
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
     $.__views.main = Ti.UI.createView({
         width: "100%",
-        height: "50%",
+        height: "49.2%",
         id: "main"
     });
     $.__views.registro.add($.__views.main);
@@ -46,7 +46,7 @@ function Controller() {
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "15.5%",
+        height: "18%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
@@ -83,7 +83,7 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputContraseña);
     $.__views.margenB = Ti.UI.createView({
-        height: "5.1%",
+        height: "5.2%",
         width: "100%",
         backgroundColor: "white",
         id: "margenB"
@@ -92,7 +92,7 @@ function Controller() {
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
-        height: "7.4%",
+        height: "7.6%",
         id: "footer"
     });
     $.__views.registro.add($.__views.footer);

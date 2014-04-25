@@ -1,9 +1,6 @@
 <Alloy>
 	<Window class="container">
-		<!--<View id="margenA"></View>-->
-		<View id="wrapper">
-			
-		</View>
+		<View id="wrapper"></View>
 		<View id="marcas">
 			
 		</View>

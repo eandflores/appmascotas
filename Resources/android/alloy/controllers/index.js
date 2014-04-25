@@ -16,8 +16,8 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.index = Ti.UI.createWindow({
-        navBarHidden: "true",
         exitOnClose: true,
+        navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         id: "index"
@@ -26,20 +26,20 @@ function Controller() {
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
-        height: "9%",
+        height: "9.6%",
         id: "wrapper"
     });
     $.__views.index.add($.__views.wrapper);
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
-        height: "9.5%",
+        height: "10%",
         id: "marcas"
     });
     $.__views.index.add($.__views.marcas);
     $.__views.main = Ti.UI.createView({
         width: "100%",
-        height: "70.6%",
+        height: "72.8%",
         id: "main"
     });
     $.__views.index.add($.__views.main);
@@ -53,7 +53,7 @@ function Controller() {
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
-        height: "7.4%",
+        height: "7.6%",
         id: "footer"
     });
     $.__views.index.add($.__views.footer);

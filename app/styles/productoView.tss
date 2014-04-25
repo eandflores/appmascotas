@@ -8,14 +8,13 @@
 "#wrapper": {
 	backgroundColor:"#cc5122",
 	width: "100%",
-	height: "9%",
-	/*top: "3.5%",*/
+	height: "9.5%",
 	layout: "horizontal"
 },
 "#marcas": {
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
-	height:"9.5%",
+	height:"10%",
 	layout:"horizontal"
 },
 ".flecha": {
@@ -58,13 +57,13 @@
 }
 "#Main":{
 	width:"100%",
-	height:"70.6%",
+	height:"72.8%",
 	layout:'vertical'
 },
 "#footer":{
 	layout:"horizontal",
 	width:"100%",
-	height:"7.4%"
+	height:"7.6%"
 },
 "#carro":{
 	backgroundColor:"#cc5122",

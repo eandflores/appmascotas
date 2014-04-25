@@ -28,20 +28,20 @@ function Controller() {
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
-        height: "9%",
+        height: "9.6%",
         id: "wrapper"
     });
     $.__views.login.add($.__views.wrapper);
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
-        height: "9.5%",
+        height: "10%",
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
     $.__views.main = Ti.UI.createView({
         width: "100%",
-        height: "50%",
+        height: "52.2%",
         id: "main"
     });
     $.__views.login.add($.__views.main);
@@ -54,7 +54,7 @@ function Controller() {
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "12.2%",
+        height: "12.6%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
@@ -82,7 +82,7 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputClave);
     $.__views.layout = Ti.UI.createView({
-        height: "10.4%",
+        height: "8%",
         width: "100%",
         backgroundColor: "white",
         id: "layout"
@@ -102,7 +102,7 @@ function Controller() {
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
-        height: "7.4%",
+        height: "7.6%",
         id: "footer"
     });
     $.__views.login.add($.__views.footer);

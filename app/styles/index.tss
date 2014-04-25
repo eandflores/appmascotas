@@ -1,6 +1,6 @@
 "Window" : {
-	navBarHidden: "true",
-	exitOnClose: true
+	exitOnClose: true,
+	navBarHidden: "true"
 },
 ".container": {
 	backgroundColor:"white",
@@ -9,18 +9,17 @@
 "#wrapper": {
 	backgroundColor:"#cc5122",
 	width: "100%",
-	height: "9%",
-	/*top: "3.5%"*/
+	height: "9.6%",
 },
 
 "#marcas": {
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
-	height:"9.5%"
+	height:"10%"
 },
 "#main":{
 	width:"100%",
-	height:"70.6%"
+	height:"72.8%"
 },
 "#imagenIndex":{
 	width:"100%",
@@ -30,7 +29,7 @@
 "#footer":{
 	layout:"horizontal",
 	width:"100%",
-	height:"7.4%"
+	height:"7.6%"
 }
 "#login":{
 	backgroundColor:"#cc5122",

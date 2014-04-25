@@ -39,15 +39,16 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        bottom: "0%",
+        height: "96.5%",
         id: "productoView"
     });
     $.__views.productoView && $.addTopLevelView($.__views.productoView);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
-        height: "9%",
+        height: "9.5%",
         layout: "horizontal",
-        top: "3.5%",
         id: "wrapper"
     });
     $.__views.productoView.add($.__views.wrapper);
@@ -92,7 +93,7 @@ function Controller() {
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
-        height: "9.5%",
+        height: "10%",
         layout: "horizontal",
         id: "marcas"
     });
@@ -124,7 +125,7 @@ function Controller() {
     $.__views.marcas.add($.__views.__alloyId1);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
-        height: "70.6%",
+        height: "72.8%",
         layout: "vertical",
         id: "Main"
     });
@@ -132,7 +133,7 @@ function Controller() {
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
-        height: "7.4%",
+        height: "7.6%",
         id: "footer"
     });
     $.__views.productoView.add($.__views.footer);
@@ -261,12 +262,6 @@ function Controller() {
         peso: 1,
         precio: 1e3
     });
-    productosPrecio.push({
-        id: 7,
-        producto_id: 1,
-        peso: 4,
-        precio: 3500
-    });
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
@@ -375,17 +370,20 @@ function Controller() {
         editable: false
     });
     Peso.addEventListener("click", function() {
+        var winModalPeso;
+        var viewModalPeso;
         var winModalPeso = Ti.UI.createWindow({
             backgroundColor: "#000",
             width: "100%",
-            height: "100%",
+            top: "3.5%",
+            height: "96.5%",
             opacity: .4
         });
         var viewModalPeso = Ti.UI.createView({
             width: "100%",
-            height: "18.2%",
+            height: "18.7%",
             layout: "vertical",
-            top: "35.5%"
+            top: "36%"
         });
         var FlechaArrPeso = Ti.UI.createImageView({
             width: "9.4%",
@@ -459,17 +457,20 @@ function Controller() {
         editable: false
     });
     Cantidad.addEventListener("click", function() {
+        var winModalCantidad;
+        var viewModalCantidad;
         var winModalCantidad = Ti.UI.createWindow({
             backgroundColor: "#000",
             width: "100%",
-            height: "100%",
+            top: "3.5%",
+            height: "96.5%",
             opacity: .4
         });
         var viewModalCantidad = Ti.UI.createView({
             width: "100%",
-            height: "18.2%",
+            height: "18.7%",
             layout: "vertical",
-            top: "44.5%"
+            top: "45%"
         });
         var FlechaArrCantidad = Ti.UI.createImageView({
             width: "9.4%",

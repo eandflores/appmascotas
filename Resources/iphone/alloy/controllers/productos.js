@@ -146,15 +146,16 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        bottom: "0%",
+        height: "96.5%",
         id: "productos"
     });
     $.__views.productos && $.addTopLevelView($.__views.productos);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
-        height: "9%",
+        height: "9.5%",
         layout: "horizontal",
-        top: "3.5%",
         id: "wrapper"
     });
     $.__views.productos.add($.__views.wrapper);
@@ -199,7 +200,7 @@ function Controller() {
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
-        height: "9.5%",
+        height: "10%",
         layout: "horizontal",
         id: "marcas"
     });
@@ -231,7 +232,7 @@ function Controller() {
     $.__views.marcas.add($.__views.__alloyId3);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
-        height: "78%",
+        height: "80.5%",
         contentHeight: Ti.UI.SIZE,
         layout: "vertical",
         scrollType: "vertical",

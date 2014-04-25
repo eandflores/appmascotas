@@ -131,12 +131,12 @@ productosPrecio.push({
 	'peso' : 1,
 	'precio': 1000
 });
-productosPrecio.push({
+/*productosPrecio.push({
 	'id' : 7,
 	'producto_id' : 1,
 	'peso' : 4,
 	'precio': 3500
-});
+});*/
 
 var marcasScroll = $.marcasScroll;
 
@@ -277,19 +277,38 @@ var InputPeso = Ti.UI.createTextField({
 
 Peso.addEventListener("click",function(){
 	
-	var winModalPeso = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.40,
-    });
- 	
- 	var viewModalPeso = Ti.UI.createView({
-		width:"100%",
-		height:"18.2%",
-		layout:"vertical",
-		top:"35.5%"
-	});
+	if(Titanium.Platform.name == "iPhone OS"){
+		var winModalPeso = Ti.UI.createWindow({
+	        backgroundColor : '#000',
+	        width:'100%',
+	        top: "3.5%",
+	        height:'96.5%',
+	        opacity:0.40
+	        
+	    });
+	    
+	    var viewModalPeso = Ti.UI.createView({
+			width:"100%",
+			height:"18.7%",
+			layout:"vertical",
+			top:"36%"
+		});
+	}
+	else{
+		var winModalPeso = Ti.UI.createWindow({
+	        backgroundColor : '#000',
+	        width:'100%',
+	        height:'100%',
+	        opacity:0.40
+	    });
+	    
+	    var viewModalPeso = Ti.UI.createView({
+			width:"100%",
+			height:"18.7%",
+			layout:"vertical",
+			top:"33.5%"
+		});
+	}
 	
  	var FlechaArrPeso = Ti.UI.createImageView({
 		width:"9.4%",
@@ -375,19 +394,37 @@ var InputCantidad = Ti.UI.createTextField({
 
 Cantidad.addEventListener("click",function(){
 	
-	var winModalCantidad = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.40,
-    });
- 	
- 	var viewModalCantidad = Ti.UI.createView({
-		width:"100%",
-		height:"18.2%",
-		layout:"vertical",
-		top:"44.5%"
-	});
+	if(Titanium.Platform.name == "iPhone OS"){
+		var winModalCantidad = Ti.UI.createWindow({
+	        backgroundColor : '#000',
+	        width:'100%',
+	        top: "3.5%",
+	        height:'96.5%',
+	        opacity:0.40
+	    });
+	    
+	    var viewModalCantidad = Ti.UI.createView({
+			width:"100%",
+			height:"18.7%",
+			layout:"vertical",
+			top:"45%"
+		});
+	}
+	else{
+		var winModalCantidad = Ti.UI.createWindow({
+	        backgroundColor : '#000',
+	        width:'100%',
+	        height:'100%',
+	        opacity:0.40
+	    });
+	    
+	    var viewModalCantidad = Ti.UI.createView({
+			width:"100%",
+			height:"18.7%",
+			layout:"vertical",
+			top:"43%"
+		});
+	}
 	
  	var FlechaArrCantidad = Ti.UI.createImageView({
 		width:"9.4%",

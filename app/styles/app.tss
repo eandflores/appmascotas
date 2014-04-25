@@ -1,5 +1,6 @@
-"#wrapper[platform=ios]": {
-	top: "3.5%"
+".container[platform=ios]": {
+	bottom: "0%",
+	height: "96.5%"
 },
 "TextField": {
 	height: Ti.UI.SIZE
