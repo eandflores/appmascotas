@@ -24,12 +24,12 @@ function Controller() {
         "TODAS" == categoria ? $.perrogato.backgroundImage = "/img/perrogato2.jpg" : "PERRO" == categoria ? $.perro.backgroundImage = "/img/perro2.jpg" : "GATO" == categoria && ($.gato.backgroundImage = "/img/gato2.jpg");
         var mainScroll = $.mainScroll;
         mainScroll.removeAllChildren();
-        for (var i = 0; productos.length > i; i++) {
+        for (var i = 0; productos.length > i; i++) for (var j = 0; productosPrecio.length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
                 height: "232px",
-                id: productos[i]["id"]
+                id: productosPrecio[j]["id"]
             });
             var Margen = Ti.UI.createView({
                 width: "100%",
@@ -80,7 +80,7 @@ function Controller() {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["precio"]
+                text: productosPrecio[j]["precio"]
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
@@ -96,7 +96,7 @@ function Controller() {
             Main.addEventListener("click", function() {
                 productosView(this["id"]);
             });
-            if ("TODAS" == categoria && "TODAS" == marca) {
+            if (productos[i]["id"] == productosPrecio[j]["producto_id"]) if ("TODAS" == categoria && "TODAS" == marca) {
                 mainScroll.add(Main);
                 mainScroll.add(Margen);
             } else if ("TODAS" == categoria && "TODAS" != marca) {
@@ -276,7 +276,6 @@ function Controller() {
         id: 1,
         nombre: "DOGUITOS 1",
         descripcion: "Alimento para adultos",
-        precio: 1500,
         categoria: categorias[1],
         marca: marcas[0]["id"],
         imagen: "/img/Perro1.jpg"
@@ -285,7 +284,6 @@ function Controller() {
         id: 2,
         nombre: "GATIS 1",
         descripcion: "Alimento para adultos",
-        precio: 1500,
         categoria: categorias[2],
         marca: marcas[2]["id"],
         imagen: "/img/Gato1.jpg"
@@ -294,7 +292,6 @@ function Controller() {
         id: 3,
         nombre: "EUKANUBA 1",
         descripcion: "Alimento para cachorros",
-        precio: 2500,
         categoria: categorias[1],
         marca: marcas[3]["id"],
         imagen: "/img/Perro1.jpg"
@@ -303,7 +300,6 @@ function Controller() {
         id: 4,
         nombre: "GATIS 2",
         descripcion: "Alimento para cachorros",
-        precio: 2500,
         categoria: categorias[2],
         marca: marcas[2]["id"],
         imagen: "/img/Gato1.jpg"
@@ -312,10 +308,52 @@ function Controller() {
         id: 5,
         nombre: "DOGUITOS 2",
         descripcion: "Alimento para adultos",
-        precio: 1e3,
         categoria: categorias[1],
         marca: marcas[0]["id"],
         imagen: "/img/Perro1.jpg"
+    });
+    var productosPrecio = new Array();
+    productosPrecio.push({
+        id: 1,
+        producto_id: 1,
+        peso: 2,
+        precio: 1500
+    });
+    productosPrecio.push({
+        id: 2,
+        producto_id: 1,
+        peso: 6,
+        precio: 5e3
+    });
+    productosPrecio.push({
+        id: 3,
+        producto_id: 2,
+        peso: 1,
+        precio: 1500
+    });
+    productosPrecio.push({
+        id: 4,
+        producto_id: 3,
+        peso: 1,
+        precio: 2500
+    });
+    productosPrecio.push({
+        id: 5,
+        producto_id: 4,
+        peso: 1,
+        precio: 1500
+    });
+    productosPrecio.push({
+        id: 6,
+        producto_id: 5,
+        peso: 1,
+        precio: 1e3
+    });
+    productosPrecio.push({
+        id: 7,
+        producto_id: 1,
+        peso: 4,
+        precio: 3500
     });
     Ti.App.categoria_actual = args["categoria"];
     Ti.App.marca_actual = args["marca"];
