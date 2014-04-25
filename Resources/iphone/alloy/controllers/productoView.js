@@ -46,8 +46,8 @@ function Controller() {
         backgroundColor: "#cc5122",
         width: "100%",
         height: "9%",
-        top: "3.5%",
         layout: "horizontal",
+        top: "3.5%",
         id: "wrapper"
     });
     $.__views.productoView.add($.__views.wrapper);

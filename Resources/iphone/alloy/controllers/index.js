@@ -17,6 +17,7 @@ function Controller() {
     var __defers = {};
     $.__views.index = Ti.UI.createWindow({
         navBarHidden: "true",
+        exitOnClose: true,
         backgroundColor: "white",
         layout: "vertical",
         id: "index"

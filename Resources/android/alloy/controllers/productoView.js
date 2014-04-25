@@ -46,7 +46,6 @@ function Controller() {
         backgroundColor: "#cc5122",
         width: "100%",
         height: "9%",
-        top: "3.5%",
         layout: "horizontal",
         id: "wrapper"
     });
@@ -364,8 +363,7 @@ function Controller() {
             var viewModalPeso = Ti.UI.createView({
                 width: "100%",
                 height: "18.2%",
-                layout: "vertical",
-                top: "35.5%"
+                layout: "vertical"
             });
             var FlechaArrPeso = Ti.UI.createImageView({
                 width: "9.4%",
@@ -429,7 +427,8 @@ function Controller() {
                 backgroundColor: "#000",
                 width: "100%",
                 height: "100%",
-                opacity: .4
+                opacity: .4,
+                navBarHidden: true
             });
             var viewModalCantidad = Ti.UI.createView({
                 width: "100%",

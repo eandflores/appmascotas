@@ -258,9 +258,10 @@ for(var i = 0; i < productos.length; i++){
 		 	var viewModalPeso = Ti.UI.createView({
 				width:"100%",
 				height:"18.2%",
-				layout:"vertical",
-				top:"35.5%"
+				layout:"vertical"
 			});
+			if(Ti.Platform.name != "android")
+				viewModalPeso.top = "35.5%";
 			
 		 	var FlechaArrPeso = Ti.UI.createImageView({
 				width:"9.4%",
@@ -339,6 +340,7 @@ for(var i = 0; i < productos.length; i++){
 		        width:'100%',
 		        height:'100%',
 		        opacity:0.40,
+		        navBarHidden: true
 		    });
 		 	
 		 	var viewModalCantidad = Ti.UI.createView({
