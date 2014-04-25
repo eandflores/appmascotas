@@ -260,6 +260,12 @@ function Controller() {
         peso: 1,
         precio: 1e3
     });
+    productosPrecio.push({
+        id: 7,
+        producto_id: 1,
+        peso: 4,
+        precio: 3500
+    });
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
@@ -278,17 +284,13 @@ function Controller() {
     var indice;
     var productoPrecio;
     var productosPrecioProducto = new Array();
-    for (var i = 0; productosPrecio.length > i; i++) if (productosPrecio[i]["id"] == args["producto"]) {
-        productoPrecio = productosPrecio[i];
-        indice = i;
-    }
+    for (var i = 0; productosPrecio.length > i; i++) productosPrecio[i]["id"] == args["producto"] && (productoPrecio = productosPrecio[i]);
     for (var i = 0; productos.length > i; i++) productos[i]["id"] == productoPrecio["producto_id"] && (producto = productos[i]);
-    var cont = 0;
-    for (var i = 0; productosPrecio.length > i; i++) if (producto["id"] == productosPrecio[i]["producto_id"]) {
-        productosPrecioProducto.push(productosPrecio[i]);
-        Titanium.API.info(productosPrecio[i]);
-        cont += 1;
-    }
+    for (var i = 0; productosPrecio.length > i; i++) producto["id"] == productosPrecio[i]["producto_id"] && productosPrecioProducto.push(productosPrecio[i]);
+    productosPrecioProducto = productosPrecioProducto.sort(function(a, b) {
+        return a["peso"] - b["peso"];
+    });
+    for (var i = 0; productosPrecioProducto.length > i; i++) productosPrecioProducto[i]["id"] == args["producto"] && (indice = i);
     var Producto = Ti.UI.createView({
         width: "100%",
         layout: "horizontal",
@@ -388,16 +390,6 @@ function Controller() {
             left: "71.6%",
             backgroundImage: "/img/FlechaArr.png"
         });
-        FlechaArrPeso.addEventListener("click", function() {
-            Titanium.API.info(indice);
-            Titanium.API.info(productosPrecio);
-            if (productosPrecioProducto.length - 1 > indice) {
-                indice += 1;
-                productoPrecio = productosPrecioProducto[indice];
-                InputPeso.value = productoPrecio["peso"];
-                LabelPrecio.setText(productoPrecio["precio"]);
-            }
-        });
         var ModalPeso = Ti.UI.createView({
             backgroundColor: "white",
             width: "100%",
@@ -413,9 +405,15 @@ function Controller() {
             left: "71.6%",
             backgroundImage: "/img/FlechaAba.png"
         });
+        FlechaArrPeso.addEventListener("click", function() {
+            if (productosPrecioProducto.length - 1 > indice) {
+                indice += 1;
+                productoPrecio = productosPrecioProducto[indice];
+                InputPeso.value = productoPrecio["peso"];
+                LabelPrecio.setText(productoPrecio["precio"]);
+            }
+        });
         FlechaAbaPeso.addEventListener("click", function() {
-            Titanium.API.info(indice);
-            Titanium.API.info(productoPrecio);
             if (indice > 0) {
                 indice -= 1;
                 productoPrecio = productosPrecioProducto[indice];

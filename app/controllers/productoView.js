@@ -167,7 +167,6 @@ var productosPrecioProducto = new Array;
 for(var i = 0; i < productosPrecio.length; i++){
 	if(productosPrecio[i]['id'] == args["producto"]){
 		productoPrecio = productosPrecio[i];
-		indice = i;
 	}
 }
 
@@ -177,14 +176,21 @@ for(var i = 0; i < productos.length; i++){
 	}
 }	
 
-var cont = 0;
 for(var i = 0; i < productosPrecio.length; i++){
 	if(producto['id'] == productosPrecio[i]['producto_id']){
 		productosPrecioProducto.push(productosPrecio[i]);
-		Titanium.API.info(productosPrecio[i]);
-		cont = cont + 1;
 	}
 }		
+	
+productosPrecioProducto = productosPrecioProducto.sort(function(a,b){ 
+	return a['peso'] - b['peso'];
+});
+
+for(var i = 0; i < productosPrecioProducto.length; i++){
+	if(productosPrecioProducto[i]['id'] == args["producto"]){
+		indice = i;
+	}
+}
 
 var Producto = Ti.UI.createView({
 	width:"100%",
@@ -317,17 +323,6 @@ Peso.addEventListener("click",function(){
 		backgroundImage:"/img/FlechaArr.png"
 	});
 	
-	FlechaArrPeso.addEventListener("click",function(){
-		Titanium.API.info(indice);
-		Titanium.API.info(productosPrecio);
-		if(indice < (productosPrecioProducto.length - 1)){
-			indice = indice + 1;
-			productoPrecio = productosPrecioProducto[indice];
-			InputPeso.value = productoPrecio['peso'];
-			LabelPrecio.setText(productoPrecio['precio']);
-		}
-	});
-	
     var ModalPeso= Ti.UI.createView({
         backgroundColor:"white",
         width : '100%',
@@ -346,9 +341,16 @@ Peso.addEventListener("click",function(){
 		backgroundImage:"/img/FlechaAba.png"
 	});
 	
+	FlechaArrPeso.addEventListener("click",function(){
+		if(indice < (productosPrecioProducto.length - 1)){
+			indice = indice + 1;
+			productoPrecio = productosPrecioProducto[indice];
+			InputPeso.value = productoPrecio['peso'];
+			LabelPrecio.setText(productoPrecio['precio']);
+		}
+	});
+	
 	FlechaAbaPeso.addEventListener("click",function(){
-		Titanium.API.info(indice);
-		Titanium.API.info(productoPrecio);
 		if(indice > 0){
 			indice = indice - 1;
 			productoPrecio = productosPrecioProducto[indice];
