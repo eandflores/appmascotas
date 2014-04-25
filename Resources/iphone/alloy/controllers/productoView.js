@@ -262,6 +262,12 @@ function Controller() {
         peso: 1,
         precio: 1e3
     });
+    productosPrecio.push({
+        id: 7,
+        producto_id: 1,
+        peso: 4,
+        precio: 3500
+    });
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({

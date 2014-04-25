@@ -131,12 +131,12 @@ productosPrecio.push({
 	'peso' : 1,
 	'precio': 1000
 });
-/*productosPrecio.push({
+productosPrecio.push({
 	'id' : 7,
 	'producto_id' : 1,
 	'peso' : 4,
 	'precio': 3500
-});*/
+});
 
 var marcasScroll = $.marcasScroll;
 
