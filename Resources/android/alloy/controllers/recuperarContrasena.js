@@ -13,13 +13,6 @@ function Controller() {
         id: "recuperarContrasena"
     });
     $.__views.recuperarContrasena && $.addTopLevelView($.__views.recuperarContrasena);
-    $.__views.margenA = Ti.UI.createView({
-        height: "3.5%",
-        width: "100%",
-        backgroundColor: "white",
-        id: "margenA"
-    });
-    $.__views.recuperarContrasena.add($.__views.margenA);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
@@ -56,9 +49,9 @@ function Controller() {
     });
     $.__views.recuperarContrasena.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
+        height: "100%",
         left: "10%",
         width: "90%",
-        height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",

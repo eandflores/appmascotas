@@ -25,13 +25,6 @@ function Controller() {
         id: "login"
     });
     $.__views.login && $.addTopLevelView($.__views.login);
-    $.__views.margenA = Ti.UI.createView({
-        height: "3.5%",
-        width: "100%",
-        backgroundColor: "white",
-        id: "margenA"
-    });
-    $.__views.login.add($.__views.margenA);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
@@ -61,16 +54,16 @@ function Controller() {
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "10.2%",
+        height: "12.2%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
     });
     $.__views.login.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
+        height: "50%",
         left: "10%",
         width: "90%",
-        height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -78,9 +71,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputClave = Ti.UI.createTextField({
+        height: "50%",
         left: "10%",
         width: "90%",
-        height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputClave",

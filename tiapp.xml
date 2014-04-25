@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.mascotas</id>
-    <name>Mascotas</name>
+    <id>com.villagranquiroz.tiendapet</id>
+    <name>Tienda Pet</name>
     <version>1.0</version>
-    <publisher>edgardo</publisher>
-    <url>http://</url>
+    <publisher>Villagrán &amp; Quiroz Limitada</publisher>
+    <url>http://villagranquiroz.cl</url>
     <description>not specified</description>
-    <copyright>2014 by edgardo</copyright>
+    <copyright>2014 by VQ Ltda</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -36,27 +36,27 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-	    <manifest>
-	        <application>
-	            <activity
-	                android:configChanges="keyboardHidden|orientation"
-	                android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
-	            <activity
-	                android:configChanges="keyboardHidden|orientation"
-	                android:name="org.appcelerator.titanium.TiTranslucentActivity"
-	                android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
-	            <activity
-	                android:configChanges="keyboardHidden|orientation"
-	                android:name="org.appcelerator.titanium.TiModalActivity"
-	                android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
-	            <activity
-	                android:configChanges="keyboardHidden|orientation"
-	                android:name="ti.modules.titanium.ui.TiTabActivity" android:screenOrientation="portrait"/>
-	            <activity
-	                android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait"/>
-	        </application>
-	    </manifest>
-	</android>
+        <manifest>
+            <application>
+                <activity
+                    android:configChanges="keyboardHidden|orientation"
+                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation"
+                    android:name="org.appcelerator.titanium.TiTranslucentActivity"
+                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation"
+                    android:name="org.appcelerator.titanium.TiModalActivity"
+                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation"
+                    android:name="ti.modules.titanium.ui.TiTabActivity" android:screenOrientation="portrait"/>
+                <activity
+                    android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait"/>
+            </application>
+        </manifest>
+    </android>
     <mobileweb>
         <precache/>
         <splash>

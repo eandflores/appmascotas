@@ -16,13 +16,6 @@ function Controller() {
         id: "registro"
     });
     $.__views.registro && $.addTopLevelView($.__views.registro);
-    $.__views.margenA = Ti.UI.createView({
-        height: "3.5%",
-        width: "100%",
-        backgroundColor: "white",
-        id: "margenA"
-    });
-    $.__views.registro.add($.__views.margenA);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
@@ -52,16 +45,16 @@ function Controller() {
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "15.5%",
+        height: "17.5%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
     });
     $.__views.registro.add($.__views.inputs);
     $.__views.inputNombre = Ti.UI.createTextField({
+        height: "33.4%",
         left: "10%",
         width: "90%",
-        height: "33.4%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputNombre",
@@ -69,9 +62,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputNombre);
     $.__views.inputCorreo = Ti.UI.createTextField({
+        height: "33.3%",
         left: "10%",
         width: "90%",
-        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -79,9 +72,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputContraseña = Ti.UI.createTextField({
+        height: "33.3%",
         left: "10%",
         width: "90%",
-        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputContraseña",
