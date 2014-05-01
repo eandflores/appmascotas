@@ -3,153 +3,66 @@ var args = arguments[0] || {};
 var categorias = [];
 
 // Los productos deben estar encasillados entre una de estas 2 categorias
-categorias[1] = "PERRO";
-categorias[2] = "GATO";
+categorias[1] = "Perro";
+categorias[2] = "Gato";
 
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
 
-var marcas = new Array;
-
-marcas.push({
-	'id' : 1,
-	'nombre' : "DOGUTOS",
-	'imagen' : "/img/Doguitos.jpg",
-	'categoria' : "PERRO"
-});
-
-marcas.push({
-	'id' : 2,
-	'nombre' : "ROYAL KANIN",
-	'imagen' : "/img/RoyalKanin.jpg",
-	'categoria' : "PERRO"
-});
-
-marcas.push({
-	'id' : 3,
-	'nombre' : "GATIS",
-	'imagen' : "/img/Gati.jpg",
-	'categoria' : "GATO"
-});
-
-marcas.push({
-	'id' : 4,
-	'nombre' : "EUKANUBA",
-	'imagen' : "/img/Doguitos.jpg",
-	'categoria' : "PERRO"
-});
-
-var productos = new Array;
-
-productos.push({
-	"id" : 1,
-	'nombre' : "DOGUITOS 1",
-	'descripcion' : "Alimento para adultos",
-	'categoria' : categorias[1],
-	'marca' : marcas[0]['id'],
-	'imagen' : "/img/Perro1.jpg"
-});
-
-productos.push({
-	"id" : 2,
-	'nombre' : "GATIS 1",
-	'descripcion' : "Alimento para adultos",
-	'categoria' : categorias[2],
-	'marca' : marcas[2]['id'],
-	'imagen' : "/img/Gato1.jpg"
-});
-
-productos.push({
-	"id" : 3,
-	'nombre' : "EUKANUBA 1",
-	'descripcion' : "Alimento para cachorros",
-	'categoria' : categorias[1],
-	'marca' : marcas[3]['id'],
-	'imagen' : "/img/Perro1.jpg"
-});
-
-productos.push({
-	"id" : 4,
-	'nombre' : "GATIS 2",
-	'descripcion' : "Alimento para cachorros",
-	'categoria' : categorias[2],
-	'marca' : marcas[2]['id'],
-	'imagen' : "/img/Gato1.jpg"
-});
-
-productos.push({
-	"id" : 5,
-	'nombre' : "DOGUITOS 2",
-	'descripcion' : "Alimento para adultos",
-	'categoria' : categorias[1],
-	'marca' : marcas[0]['id'],
-	'imagen' : "/img/Perro1.jpg"
-});
-
-var productosPrecio = new Array;
-
-productosPrecio.push({
-	'id' : 1,
-	'producto_id' : 1,
-	'peso' : 2,
-	'precio': 1500
-});
-productosPrecio.push({
-	'id' : 2,
-	'producto_id' : 1,
-	'peso' : 6,
-	'precio': 5000
-});
-productosPrecio.push({
-	'id' : 3,
-	'producto_id' : 2,
-	'peso' : 1,
-	'precio': 1500
-});
-productosPrecio.push({
-	'id' : 4,
-	'producto_id' : 3,
-	'peso' : 1,
-	'precio': 2500
-});
-productosPrecio.push({
-	'id' : 5,
-	'producto_id' : 4,
-	'peso' : 1,
-	'precio': 1500
-});
-productosPrecio.push({
-	'id' : 6,
-	'producto_id' : 5,
-	'peso' : 1,
-	'precio': 1000
-});
-productosPrecio.push({
-	'id' : 7,
-	'producto_id' : 1,
-	'peso' : 4,
-	'precio': 3500
-});
-
 Ti.App.categoria_actual = args['categoria'];
 Ti.App.marca_actual = args['marca'];
-ordenarProductos(Ti.App.categoria_actual,Ti.App.marca_actual);
+carro = args['carro'];
+token = args['token'];
 
-function ordenarProductos(categoria,marca){
+var marc = [];
+var prod = [];
+
+xhrMarcas = Ti.Network.createHTTPClient({
+	onload: function(e){
+		var marcas = JSON.parse(this.responseText);
+		getProductos(marcas);
+	},
+	onerror: function(e){
+		alert("Error de conexión con el servidor.");
+	}
+});
+
+xhrMarcas.open('GET','http://tiendapet.cl/api/marcas');
+xhrMarcas.send();
+
+function getProductos(marcas){
+	xhrProductos = Ti.Network.createHTTPClient({
+		onload: function(e){
+			var productos = JSON.parse(this.responseText);
+			marc = marcas;
+			prod = productos;
+	
+			ordenarProductos(marc,prod,Ti.App.categoria_actual,Ti.App.marca_actual);
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+		}
+	});
+	
+	xhrProductos.open('GET','http://tiendapet.cl/api/productos');
+	xhrProductos.send();
+	
+}
+
+function ordenarProductos(marcas,productos,categoria,marca){
+		
+	marc = marcas;
+	prod = productos;
 	
 	Ti.App.categoria_actual = categoria;
 	Ti.App.marca_actual = marca;
-	
-	Titanium.API.info(Ti.App.categoria_actual); 
-	Titanium.API.info(Ti.App.marca_actual); 
-	
+
 	var marcasScroll = $.marcasScroll;
 	marcasScroll.removeAllChildren();
 
 	for(var i = 0; i < marcas.length; i++){
-		
 		var ImageViewMarca = Ti.UI.createImageView({
-			backgroundImage : marcas[i]['imagen'],
+			backgroundImage : marcas[i]['banner'],
 			width:"153.6px",
 			id: marcas[i]['id'],
 			height:"100%"
@@ -159,12 +72,15 @@ function ordenarProductos(categoria,marca){
 			productosMarca(this['id']);
 		});
 		
+		/*
 		if(Ti.App.categoria_actual == "TODAS"){
 			marcasScroll.add(ImageViewMarca);	
 		}
-		else if(Ti.App.categoria_actual == marcas[i]["categoria"]){
+		else if(Ti.App.categoria_actual == Ti.App.marcas[i]["categoria"]){
 			marcasScroll.add(ImageViewMarca);	
 		}
+		*/
+		marcasScroll.add(ImageViewMarca);
 	}
 	
 	$.perrogato.backgroundImage = "/img/perrogato.jpg";
@@ -174,82 +90,83 @@ function ordenarProductos(categoria,marca){
 	if(categoria == "TODAS"){
 		$.perrogato.backgroundImage = "/img/perrogato2.jpg";
 	}
-	else if(categoria == "PERRO"){
+	else if(categoria == "Perro"){
 		$.perro.backgroundImage = "/img/perro2.jpg";
 	}
-	else if(categoria == "GATO"){
+	else if(categoria == "Gato"){
 		$.gato.backgroundImage = "/img/gato2.jpg";
 	}
 	
 	var mainScroll = $.mainScroll;
 	mainScroll.removeAllChildren();
-
+	
 	for(var i = 0; i < productos.length; i++){
 		
-		for(var j = 0; j < productosPrecio.length; j++){
+		for(var j = 0; j < productos[i]['producto_precios'].length; j++){
 			
 			var Main = Ti.UI.createView({
 				width:"100%",
 				layout:'horizontal',
 				height:"232px",
-				id: productosPrecio[j]['id']
+				id: productos[i]['producto_precios'][j]['id']
 			});
 			
 			var Margen = Ti.UI.createView({
 				width:"100%",
-				height:"0.2%",
+				height:"2px",
 				backgroundColor:"#e8e8e8"
 			});
 			
 			var ImageViewProducto = Ti.UI.createImageView({
-				backgroundImage : productos[i]['imagen'],
+				backgroundImage : productos[i]['prod_pic'],
 				width:"25%",
 				height:"100%"
 			});
 			
 			var LabelGroup = Ti.UI.createView({
-				width:"67%",
+				width:"68%",
 				height:"100%",
-				layout:"vertical"
+				layout:"vertical",
+				top:"0%"
 			});
 			
 			var LabelNombre = Ti.UI.createLabel({
 				color:"#cc5122",
 				width:"100%",
-				height:"28.2%",
-				top:"0%",
-				left:"8.3%",
+				height:"20%",
+				top:"20%",
+				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
 				},
-				text : productos[i]['nombre']
+				text : productos[i]['brand']
 			});
 			
 			var LabelDescripcion = Ti.UI.createLabel({
 				color:"gray",
 				width:"100%",
-				height:"19.6%",
+				height:"20%",
 				top:"0%",
-				left:"8.3%",
+				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
 				},
-				text : productos[i]['descripcion']
+				text : productos[i]['prod_name']
 			});
 			
 			var LabelPrecio = Ti.UI.createLabel({
 				width:"100%",
-				height:"21.7%",
+				height:"20%",
 				color:"#5c5c5b",
 				top:"0%",
-				left:"8.3%",
+				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
 				},
-				text : productosPrecio[j]['precio']
+				text : "$"+productos[i]['producto_precios'][j]['sku_price']
 			});
 			
 			var ImageViewFlecha = Ti.UI.createImageView({
@@ -270,58 +187,61 @@ function ordenarProductos(categoria,marca){
 				productosView(this['id']);
 			});
 			
-			if(productos[i]["id"] == productosPrecio[j]["producto_id"]){
-				if((categoria == "TODAS") && (marca == "TODAS")){
+			
+			if((categoria == "TODAS") && (marca == "TODAS")){
+				mainScroll.add(Main);	
+				mainScroll.add(Margen);	
+			}
+			else if((categoria == "TODAS") && (marca != "TODAS")){
+				if(marca == productos[i]['marca_id']){	
+					mainScroll.add(Main);
+					mainScroll.add(Margen);	
+				}	
+			}
+			else if((categoria != "TODAS") && (marca == "TODAS")){
+				if(categoria == productos[i]['tipo']){
 					mainScroll.add(Main);	
 					mainScroll.add(Margen);	
 				}
-				else if((categoria == "TODAS") && (marca != "TODAS")){
-					if(marca == productos[i]['marca']){	
-						mainScroll.add(Main);
-						mainScroll.add(Margen);	
-					}	
-				}
-				else if((categoria != "TODAS") && (marca == "TODAS")){
-					if(categoria == productos[i]['categoria']){
-						mainScroll.add(Main);	
-						mainScroll.add(Margen);	
-					}
-				}
-				else if((categoria != "TODAS") && (marca != "TODAS")){
-					if((categoria == productos[i]['categoria']) && (marca == productos[i]['marca'])){
-						mainScroll.add(Main);	
-						mainScroll.add(Margen);	
-					}	
-				}
 			}
+			else if((categoria != "TODAS") && (marca != "TODAS")){
+				if((categoria == productos[i]['tipo']) && (marca == productos[i]['marca_id'])){
+					mainScroll.add(Main);	
+					mainScroll.add(Margen);	
+				}	
+			}
+			
 		}
 	}
 }
 
 function productosPerroGato(){
-	ordenarProductos(categorias[3],"TODAS");
+	ordenarProductos(marc,prod,categorias[3],"TODAS");
 }
 
 function productosPerro(){
-	ordenarProductos(categorias[1],"TODAS");
+	ordenarProductos(marc,prod,categorias[1],"TODAS");
 }
 
 function productosGato(){
-	ordenarProductos(categorias[2],"TODAS");
+	ordenarProductos(marc,prod,categorias[2],"TODAS");
 }
 
 function productosMarca(marca){
 	Titanium.API.info(Ti.App.marca_actual); 
 	if(marca == Ti.App.marca_actual){
-		ordenarProductos(Ti.App.categoria_actual,"TODAS");	
+		ordenarProductos(marc,prod,"TODAS","TODAS");	
 	}
 	else{
-		ordenarProductos(Ti.App.categoria_actual,marca);	
+		ordenarProductos(marc,prod,"TODAS",marca);	
 	}
 }
 
 function productosView(producto){
+	var mainScroll = $.mainScroll;
+	mainScroll.removeAllChildren();
 	
-	var vista = Alloy.createController('productoView',{producto: producto}).getView();
+	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marc,productos: prod,producto: producto}).getView();
+	Ti.API.info(token+" "+carro);
 	vista.open();
 }

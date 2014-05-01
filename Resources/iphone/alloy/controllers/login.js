@@ -4,11 +4,32 @@ function Controller() {
         vista.open();
     }
     function registro() {
-        var vista = Alloy.createController("productos", {
-            categoria: "TODAS",
-            marca: "TODAS"
-        }).getView();
-        vista.open();
+        var email = $.inputCorreo.value;
+        var password = $.inputClave.value;
+        xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                var response = JSON.parse(this.responseText);
+                var token = response["token"];
+                var vista = Alloy.createController("productos", {
+                    token: token,
+                    carro: [],
+                    categoria: "TODAS",
+                    marca: "TODAS"
+                }).getView();
+                vista.open();
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+        xhr.send({
+            email: email,
+            password: password
+        });
+    }
+    function atras() {
+        win.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "login";
@@ -38,9 +59,19 @@ function Controller() {
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
         height: "10%",
+        orientation: "horizontal",
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
+    $.__views.__alloyId0 = Ti.UI.createImageView({
+        width: "14%",
+        height: "80%",
+        left: "0%",
+        backgroundImage: "/img/FlechaIzq.jpg",
+        id: "__alloyId0"
+    });
+    $.__views.marcas.add($.__views.__alloyId0);
+    atras ? $.__views.__alloyId0.addEventListener("click", atras) : __defers["$.__views.__alloyId0!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "52.2%",
@@ -120,6 +151,10 @@ function Controller() {
     registro ? $.__views.registro.addEventListener("click", registro) : __defers["$.__views.registro!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var win = $.login;
+    $.inputCorreo.value = "prueba3";
+    $.inputClave.value = "123";
+    __defers["$.__views.__alloyId0!click!atras"] && $.__views.__alloyId0.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);

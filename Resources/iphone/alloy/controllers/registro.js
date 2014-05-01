@@ -1,4 +1,32 @@
 function Controller() {
+    function registro() {
+        var email = $.inputCorreo.value;
+        var password = $.inputContraseña.value;
+        xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                var response = JSON.parse(this.responseText);
+                var token = response["token"];
+                var vista = Alloy.createController("productos", {
+                    token: token,
+                    carro: [],
+                    categoria: "TODAS",
+                    marca: "TODAS"
+                }).getView();
+                vista.open();
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
+        xhr.send({
+            email: email,
+            password: password
+        });
+    }
+    function atras() {
+        win.close();
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "registro";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -6,14 +34,13 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
+    var __defers = {};
     $.__views.registro = Ti.UI.createWindow({
         navBarHidden: "true",
-        backgroundColor: "#cc5122",
+        backgroundColor: "white",
         layout: "vertical",
         bottom: "0%",
-        height: "100%",
-        color: "white",
-        width: "100%",
+        height: "96.5%",
         id: "registro"
     });
     $.__views.registro && $.addTopLevelView($.__views.registro);
@@ -28,9 +55,19 @@ function Controller() {
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
         height: "10%",
+        orientation: "horizontal",
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
+    $.__views.__alloyId5 = Ti.UI.createImageView({
+        width: "14%",
+        height: "80%",
+        left: "0%",
+        backgroundImage: "/img/FlechaIzq.jpg",
+        id: "__alloyId5"
+    });
+    $.__views.marcas.add($.__views.__alloyId5);
+    atras ? $.__views.__alloyId5.addEventListener("click", atras) : __defers["$.__views.__alloyId5!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "49.2%",
@@ -79,7 +116,8 @@ function Controller() {
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputContraseña",
-        hintText: "CONTRASEÑA"
+        hintText: "CONTRASEÑA",
+        passwordMask: "true"
     });
     $.__views.inputs.add($.__views.inputContraseña);
     $.__views.margenB = Ti.UI.createView({
@@ -96,17 +134,21 @@ function Controller() {
         id: "footer"
     });
     $.__views.registro.add($.__views.footer);
-    $.__views.registro = Ti.UI.createButton({
+    $.__views.registrarse = Ti.UI.createButton({
         backgroundColor: "#cc5122",
         color: "white",
         width: "100%",
         height: "100%",
         title: "REGISTRARSE",
-        id: "registro"
+        id: "registrarse"
     });
-    $.__views.footer.add($.__views.registro);
+    $.__views.footer.add($.__views.registrarse);
+    registro ? $.__views.registrarse.addEventListener("click", registro) : __defers["$.__views.registrarse!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var win = $.registro;
+    __defers["$.__views.__alloyId5!click!atras"] && $.__views.__alloyId5.addEventListener("click", atras);
+    __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);
 }
 

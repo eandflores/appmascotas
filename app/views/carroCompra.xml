@@ -8,13 +8,15 @@
 			<ImageView id="lupaImg"></ImageView>
 		</View>
 		<View id="marcas">
-			<ImageView class="flecha" backgroundImage="/img/FlechaIzq.jpg"></ImageView>
-			<ScrollView id="marcasScroll"></ScrollView>
-			<ImageView class="flecha" backgroundImage="/img/FlechaDer.jpg"></ImageView>
+			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="productosPerroGato"></ImageView>
+			<ImageView id="carro" backgroundImage="/img/carro.jpg"></ImageView>
 		</View>
-		<View id="Main"></View>
+		<ScrollView id="mainScroll"></ScrollView>
+		<View id="total" backgroundImage="/img/totalFondo.jpg">
+			<Label id="totalLabel"></Label>>
+		</View>
 		<View id="footer">
-			<Button id="carro" onClick="carroCompra">AGREGAR AL CARRO</Button>
+			<Button id="pedido">HACER PEDIDO</Button>
 		</View>
 	</Window>
 </Alloy>

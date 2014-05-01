@@ -2,7 +2,7 @@
 	<Window class="container">
 		<View id="wrapper"></View>
 		<View id="marcas">
-			
+			<ImageView class="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
 		</View>
 		<View id="main">
 				<ImageView id="imagenIndex"></ImageView>
@@ -10,11 +10,11 @@
 		<View id="inputs">
 				<TextField id="inputNombre" hintText="NOMBRE"></TextField>
 				<TextField id="inputCorreo" hintText="CORREO"></TextField>
-				<TextField id="inputContraseña" hintText="CONTRASEÑA"></TextField>
+				<TextField id="inputContraseña" hintText="CONTRASEÑA" passwordMask="true"></TextField>
 		</View>
 		<View id="margenB"></View>
 		<View id="footer">
-			<Button id="registro">REGISTRARSE</Button>
+			<Button id="registrarse" onClick="registro">REGISTRARSE</Button>
 		</View>
 	</Window>
 </Alloy>

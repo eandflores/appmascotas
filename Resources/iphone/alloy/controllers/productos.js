@@ -1,14 +1,29 @@
 function Controller() {
-    function ordenarProductos(categoria, marca) {
+    function getProductos(marcas) {
+        xhrProductos = Ti.Network.createHTTPClient({
+            onload: function() {
+                var productos = JSON.parse(this.responseText);
+                marc = marcas;
+                prod = productos;
+                ordenarProductos(marc, prod, Ti.App.categoria_actual, Ti.App.marca_actual);
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhrProductos.open("GET", "http://tiendapet.cl/api/productos");
+        xhrProductos.send();
+    }
+    function ordenarProductos(marcas, productos, categoria, marca) {
+        marc = marcas;
+        prod = productos;
         Ti.App.categoria_actual = categoria;
         Ti.App.marca_actual = marca;
-        Titanium.API.info(Ti.App.categoria_actual);
-        Titanium.API.info(Ti.App.marca_actual);
         var marcasScroll = $.marcasScroll;
         marcasScroll.removeAllChildren();
         for (var i = 0; marcas.length > i; i++) {
             var ImageViewMarca = Ti.UI.createImageView({
-                backgroundImage: marcas[i]["imagen"],
+                backgroundImage: marcas[i]["banner"],
                 width: "153.6px",
                 id: marcas[i]["id"],
                 height: "100%"
@@ -16,71 +31,72 @@ function Controller() {
             ImageViewMarca.addEventListener("click", function() {
                 productosMarca(this["id"]);
             });
-            "TODAS" == Ti.App.categoria_actual ? marcasScroll.add(ImageViewMarca) : Ti.App.categoria_actual == marcas[i]["categoria"] && marcasScroll.add(ImageViewMarca);
+            marcasScroll.add(ImageViewMarca);
         }
         $.perrogato.backgroundImage = "/img/perrogato.jpg";
         $.perro.backgroundImage = "/img/perro.jpg";
         $.gato.backgroundImage = "/img/gato.jpg";
-        "TODAS" == categoria ? $.perrogato.backgroundImage = "/img/perrogato2.jpg" : "PERRO" == categoria ? $.perro.backgroundImage = "/img/perro2.jpg" : "GATO" == categoria && ($.gato.backgroundImage = "/img/gato2.jpg");
+        "TODAS" == categoria ? $.perrogato.backgroundImage = "/img/perrogato2.jpg" : "Perro" == categoria ? $.perro.backgroundImage = "/img/perro2.jpg" : "Gato" == categoria && ($.gato.backgroundImage = "/img/gato2.jpg");
         var mainScroll = $.mainScroll;
         mainScroll.removeAllChildren();
-        for (var i = 0; productos.length > i; i++) for (var j = 0; productosPrecio.length > j; j++) {
+        for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
                 height: "232px",
-                id: productosPrecio[j]["id"]
+                id: productos[i]["producto_precios"][j]["id"]
             });
             var Margen = Ti.UI.createView({
                 width: "100%",
-                height: "0.2%",
+                height: "2px",
                 backgroundColor: "#e8e8e8"
             });
             var ImageViewProducto = Ti.UI.createImageView({
-                backgroundImage: productos[i]["imagen"],
+                backgroundImage: productos[i]["prod_pic"],
                 width: "25%",
                 height: "100%"
             });
             var LabelGroup = Ti.UI.createView({
-                width: "67%",
+                width: "68%",
                 height: "100%",
-                layout: "vertical"
+                layout: "vertical",
+                top: "0%"
             });
             var LabelNombre = Ti.UI.createLabel({
                 color: "#cc5122",
                 width: "100%",
-                height: "28.2%",
-                top: "0%",
-                left: "8.3%",
+                height: "20%",
+                top: "20%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["nombre"]
+                text: productos[i]["brand"]
             });
             var LabelDescripcion = Ti.UI.createLabel({
                 color: "gray",
                 width: "100%",
-                height: "19.6%",
+                height: "20%",
                 top: "0%",
-                left: "8.3%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["descripcion"]
+                text: productos[i]["prod_name"]
             });
             var LabelPrecio = Ti.UI.createLabel({
                 width: "100%",
-                height: "21.7%",
+                height: "20%",
                 color: "#5c5c5b",
                 top: "0%",
-                left: "8.3%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productosPrecio[j]["precio"]
+                text: "$" + productos[i]["producto_precios"][j]["sku_price"]
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
@@ -96,42 +112,49 @@ function Controller() {
             Main.addEventListener("click", function() {
                 productosView(this["id"]);
             });
-            if (productos[i]["id"] == productosPrecio[j]["producto_id"]) if ("TODAS" == categoria && "TODAS" == marca) {
+            if ("TODAS" == categoria && "TODAS" == marca) {
                 mainScroll.add(Main);
                 mainScroll.add(Margen);
             } else if ("TODAS" == categoria && "TODAS" != marca) {
-                if (marca == productos[i]["marca"]) {
+                if (marca == productos[i]["marca_id"]) {
                     mainScroll.add(Main);
                     mainScroll.add(Margen);
                 }
             } else if ("TODAS" != categoria && "TODAS" == marca) {
-                if (categoria == productos[i]["categoria"]) {
+                if (categoria == productos[i]["tipo"]) {
                     mainScroll.add(Main);
                     mainScroll.add(Margen);
                 }
-            } else if ("TODAS" != categoria && "TODAS" != marca && categoria == productos[i]["categoria"] && marca == productos[i]["marca"]) {
+            } else if ("TODAS" != categoria && "TODAS" != marca && categoria == productos[i]["tipo"] && marca == productos[i]["marca_id"]) {
                 mainScroll.add(Main);
                 mainScroll.add(Margen);
             }
         }
     }
     function productosPerroGato() {
-        ordenarProductos(categorias[3], "TODAS");
+        ordenarProductos(marc, prod, categorias[3], "TODAS");
     }
     function productosPerro() {
-        ordenarProductos(categorias[1], "TODAS");
+        ordenarProductos(marc, prod, categorias[1], "TODAS");
     }
     function productosGato() {
-        ordenarProductos(categorias[2], "TODAS");
+        ordenarProductos(marc, prod, categorias[2], "TODAS");
     }
     function productosMarca(marca) {
         Titanium.API.info(Ti.App.marca_actual);
-        marca == Ti.App.marca_actual ? ordenarProductos(Ti.App.categoria_actual, "TODAS") : ordenarProductos(Ti.App.categoria_actual, marca);
+        marca == Ti.App.marca_actual ? ordenarProductos(marc, prod, "TODAS", "TODAS") : ordenarProductos(marc, prod, "TODAS", marca);
     }
     function productosView(producto) {
+        var mainScroll = $.mainScroll;
+        mainScroll.removeAllChildren();
         var vista = Alloy.createController("productoView", {
+            token: token,
+            carro: carro,
+            marcas: marc,
+            productos: prod,
             producto: producto
         }).getView();
+        Ti.API.info(token + " " + carro);
         vista.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -205,13 +228,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productos.add($.__views.marcas);
-    $.__views.__alloyId2 = Ti.UI.createImageView({
+    $.__views.__alloyId3 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId2"
+        id: "__alloyId3"
     });
-    $.__views.marcas.add($.__views.__alloyId2);
+    $.__views.marcas.add($.__views.__alloyId3);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -223,13 +246,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId3 = Ti.UI.createImageView({
+    $.__views.__alloyId4 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId3"
+        id: "__alloyId4"
     });
-    $.__views.marcas.add($.__views.__alloyId3);
+    $.__views.marcas.add($.__views.__alloyId4);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "80.5%",
@@ -244,121 +267,26 @@ function Controller() {
     _.extend($, $.__views);
     var args = arguments[0] || {};
     var categorias = [];
-    categorias[1] = "PERRO";
-    categorias[2] = "GATO";
+    categorias[1] = "Perro";
+    categorias[2] = "Gato";
     categorias[3] = "TODAS";
-    var marcas = new Array();
-    marcas.push({
-        id: 1,
-        nombre: "DOGUTOS",
-        imagen: "/img/Doguitos.jpg",
-        categoria: "PERRO"
-    });
-    marcas.push({
-        id: 2,
-        nombre: "ROYAL KANIN",
-        imagen: "/img/RoyalKanin.jpg",
-        categoria: "PERRO"
-    });
-    marcas.push({
-        id: 3,
-        nombre: "GATIS",
-        imagen: "/img/Gati.jpg",
-        categoria: "GATO"
-    });
-    marcas.push({
-        id: 4,
-        nombre: "EUKANUBA",
-        imagen: "/img/Doguitos.jpg",
-        categoria: "PERRO"
-    });
-    var productos = new Array();
-    productos.push({
-        id: 1,
-        nombre: "DOGUITOS 1",
-        descripcion: "Alimento para adultos",
-        categoria: categorias[1],
-        marca: marcas[0]["id"],
-        imagen: "/img/Perro1.jpg"
-    });
-    productos.push({
-        id: 2,
-        nombre: "GATIS 1",
-        descripcion: "Alimento para adultos",
-        categoria: categorias[2],
-        marca: marcas[2]["id"],
-        imagen: "/img/Gato1.jpg"
-    });
-    productos.push({
-        id: 3,
-        nombre: "EUKANUBA 1",
-        descripcion: "Alimento para cachorros",
-        categoria: categorias[1],
-        marca: marcas[3]["id"],
-        imagen: "/img/Perro1.jpg"
-    });
-    productos.push({
-        id: 4,
-        nombre: "GATIS 2",
-        descripcion: "Alimento para cachorros",
-        categoria: categorias[2],
-        marca: marcas[2]["id"],
-        imagen: "/img/Gato1.jpg"
-    });
-    productos.push({
-        id: 5,
-        nombre: "DOGUITOS 2",
-        descripcion: "Alimento para adultos",
-        categoria: categorias[1],
-        marca: marcas[0]["id"],
-        imagen: "/img/Perro1.jpg"
-    });
-    var productosPrecio = new Array();
-    productosPrecio.push({
-        id: 1,
-        producto_id: 1,
-        peso: 2,
-        precio: 1500
-    });
-    productosPrecio.push({
-        id: 2,
-        producto_id: 1,
-        peso: 6,
-        precio: 5e3
-    });
-    productosPrecio.push({
-        id: 3,
-        producto_id: 2,
-        peso: 1,
-        precio: 1500
-    });
-    productosPrecio.push({
-        id: 4,
-        producto_id: 3,
-        peso: 1,
-        precio: 2500
-    });
-    productosPrecio.push({
-        id: 5,
-        producto_id: 4,
-        peso: 1,
-        precio: 1500
-    });
-    productosPrecio.push({
-        id: 6,
-        producto_id: 5,
-        peso: 1,
-        precio: 1e3
-    });
-    productosPrecio.push({
-        id: 7,
-        producto_id: 1,
-        peso: 4,
-        precio: 3500
-    });
     Ti.App.categoria_actual = args["categoria"];
     Ti.App.marca_actual = args["marca"];
-    ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual);
+    carro = args["carro"];
+    token = args["token"];
+    var marc = [];
+    var prod = [];
+    xhrMarcas = Ti.Network.createHTTPClient({
+        onload: function() {
+            var marcas = JSON.parse(this.responseText);
+            getProductos(marcas);
+        },
+        onerror: function() {
+            alert("Error de conexión con el servidor.");
+        }
+    });
+    xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+    xhrMarcas.send();
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

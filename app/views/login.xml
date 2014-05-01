@@ -1,7 +1,9 @@
 <Alloy>
 	<Window class="container">
 		<View id="wrapper"></View>
-		<View id="marcas"></View>
+		<View id="marcas">
+			<ImageView class="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
+		</View>
 		<View id="main">
 				<ImageView id="imagenIndex"></ImageView>
 		</View>

@@ -13,7 +13,13 @@
 "#marcas": {
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
-	height:"10%"
+	height:"10%",
+	orientation: "horizontal",
+},
+".flecha": {
+	width:"14%",
+	height:"80%",
+	left:"0%"
 },
 "#main":{
 	width:"100%",
@@ -62,7 +68,7 @@
 	width:"100%",
 	height:"7.6%"
 },
-"#registro":{
+"#registrarse":{
 	backgroundColor:"#cc5122",
 	color:"white",
 	width:"100%",
