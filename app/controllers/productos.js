@@ -214,7 +214,8 @@ function productosMarca(marca){
 
 function productosView(producto){
 	var mainScroll = $.mainScroll;
-	mainScroll.removeAllChildren();
+	//mainScroll.removeAllChildren();
+	mainScroll = null;
 	
 	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,producto: producto}).getView();
 	vista.open();

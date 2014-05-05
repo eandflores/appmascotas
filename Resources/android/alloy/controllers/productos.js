@@ -1,22 +1,5 @@
 function Controller() {
-    function getProductos(marcas) {
-        xhrProductos = Ti.Network.createHTTPClient({
-            onload: function() {
-                var productos = JSON.parse(this.responseText);
-                marc = marcas;
-                prod = productos;
-                ordenarProductos(marc, prod, Ti.App.categoria_actual, Ti.App.marca_actual);
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-            }
-        });
-        xhrProductos.open("GET", "http://tiendapet.cl/api/productos");
-        xhrProductos.send();
-    }
-    function ordenarProductos(marcas, productos, categoria, marca) {
-        marc = marcas;
-        prod = productos;
+    function ordenarProductos(categoria, marca) {
         Ti.App.categoria_actual = categoria;
         Ti.App.marca_actual = marca;
         var marcasScroll = $.marcasScroll;
@@ -57,16 +40,17 @@ function Controller() {
                 height: "100%"
             });
             var LabelGroup = Ti.UI.createView({
-                width: "67%",
+                width: "68%",
                 height: "100%",
-                layout: "vertical"
+                layout: "vertical",
+                top: "0%"
             });
             var LabelNombre = Ti.UI.createLabel({
                 color: "#cc5122",
                 width: "100%",
-                height: "28.2%",
-                top: "0%",
-                left: "8.3%",
+                height: "20%",
+                top: "20%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
@@ -76,9 +60,9 @@ function Controller() {
             var LabelDescripcion = Ti.UI.createLabel({
                 color: "gray",
                 width: "100%",
-                height: "19.6%",
+                height: "20%",
                 top: "0%",
-                left: "8.3%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
@@ -87,15 +71,15 @@ function Controller() {
             });
             var LabelPrecio = Ti.UI.createLabel({
                 width: "100%",
-                height: "21.7%",
+                height: "20%",
                 color: "#5c5c5b",
                 top: "0%",
-                left: "8.3%",
+                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: "$" + productos[i]["producto_precios"][j]["sku_price"]
+                text: productos[i]["producto_precios"][j]["sku_description"] + " x $" + productos[i]["producto_precios"][j]["sku_price"]
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
@@ -131,24 +115,31 @@ function Controller() {
         }
     }
     function productosPerroGato() {
-        ordenarProductos(marc, prod, categorias[3], "TODAS");
+        ordenarProductos(categorias[3], "TODAS");
     }
     function productosPerro() {
-        ordenarProductos(marc, prod, categorias[1], "TODAS");
+        ordenarProductos(categorias[1], "TODAS");
     }
     function productosGato() {
-        ordenarProductos(marc, prod, categorias[2], "TODAS");
+        ordenarProductos(categorias[2], "TODAS");
     }
     function productosMarca(marca) {
-        Titanium.API.info(Ti.App.marca_actual);
-        marca == Ti.App.marca_actual ? ordenarProductos(marc, prod, "TODAS", "TODAS") : ordenarProductos(marc, prod, "TODAS", marca);
+        marca == Ti.App.marca_actual ? ordenarProductos("TODAS", "TODAS") : ordenarProductos("TODAS", marca);
     }
     function productosView(producto) {
         var mainScroll = $.mainScroll;
-        mainScroll.removeAllChildren();
+        mainScroll = null;
         var vista = Alloy.createController("productoView", {
-            marcas: marc,
-            productos: prod,
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             producto: producto
         }).getView();
         vista.open();
@@ -222,13 +213,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productos.add($.__views.marcas);
-    $.__views.__alloyId2 = Ti.UI.createImageView({
+    $.__views.__alloyId9 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId2"
+        id: "__alloyId9"
     });
-    $.__views.marcas.add($.__views.__alloyId2);
+    $.__views.marcas.add($.__views.__alloyId9);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -240,13 +231,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId3 = Ti.UI.createImageView({
+    $.__views.__alloyId10 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId3"
+        id: "__alloyId10"
     });
-    $.__views.marcas.add($.__views.__alloyId3);
+    $.__views.marcas.add($.__views.__alloyId10);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "80.5%",
@@ -264,21 +255,19 @@ function Controller() {
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
+    token = args["token"];
+    carro = args["carro"];
+    marcas = args["marcas"];
+    productos = args["productos"];
+    medios = args["medios"];
+    direcciones = args["direcciones"];
+    medio = args["medio"];
+    direccion = args["direccion"];
+    correo = args["correo"];
+    telefono = args["telefono"];
     Ti.App.categoria_actual = args["categoria"];
     Ti.App.marca_actual = args["marca"];
-    var marc = [];
-    var prod = [];
-    xhrMarcas = Ti.Network.createHTTPClient({
-        onload: function() {
-            var marcas = JSON.parse(this.responseText);
-            getProductos(marcas);
-        },
-        onerror: function() {
-            alert("Error de conexión con el servidor.");
-        }
-    });
-    xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
-    xhrMarcas.send();
+    ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

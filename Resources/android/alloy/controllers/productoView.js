@@ -1,6 +1,16 @@
 function Controller() {
     function productosPerroGato() {
         var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS"
         }).getView();
@@ -8,6 +18,16 @@ function Controller() {
     }
     function productosPerro() {
         var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS"
         }).getView();
@@ -15,6 +35,16 @@ function Controller() {
     }
     function productosGato() {
         var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS"
         }).getView();
@@ -22,8 +52,37 @@ function Controller() {
     }
     function productosMarca(marca) {
         var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[3],
             marca: marca
+        }).getView();
+        vista.open();
+    }
+    function carroCompra() {
+        carro.push({
+            id: productoPrecio["id"],
+            qty: InputCantidad.value
+        });
+        var vista = Alloy.createController("carroCompra", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
         }).getView();
         vista.open();
     }
@@ -96,13 +155,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId0 = Ti.UI.createImageView({
+    $.__views.__alloyId7 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId0"
+        id: "__alloyId7"
     });
-    $.__views.marcas.add($.__views.__alloyId0);
+    $.__views.marcas.add($.__views.__alloyId7);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -114,13 +173,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId1 = Ti.UI.createImageView({
+    $.__views.__alloyId8 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId1"
+        id: "__alloyId8"
     });
-    $.__views.marcas.add($.__views.__alloyId1);
+    $.__views.marcas.add($.__views.__alloyId8);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",
@@ -144,16 +203,24 @@ function Controller() {
         id: "carro"
     });
     $.__views.footer.add($.__views.carro);
+    carroCompra ? $.__views.carro.addEventListener("click", carroCompra) : __defers["$.__views.carro!click!carroCompra"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    Titanium.API.info(args["producto"]);
     var categorias = [];
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
+    var carro = args["carro"];
+    var token = args["token"];
     var marcas = args["marcas"];
     var productos = args["productos"];
+    medios = args["medios"];
+    direcciones = args["direcciones"];
+    medio = args["medio"];
+    direccion = args["direccion"];
+    correo = args["correo"];
+    telefono = args["telefono"];
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
@@ -178,10 +245,6 @@ function Controller() {
     }
     productosPrecioProducto = producto["producto_precios"];
     for (var i = 0; productosPrecioProducto.length > i; i++) productosPrecioProducto[i]["id"] == args["producto"] && (indice = i);
-    Titanium.API.info(producto);
-    Titanium.API.info(productosPrecioProducto);
-    Titanium.API.info(productosPrecioProducto.length);
-    Titanium.API.info(indice);
     var Producto = Ti.UI.createView({
         width: "100%",
         layout: "horizontal",
@@ -195,14 +258,15 @@ function Controller() {
     var LabelGroup = Ti.UI.createView({
         width: "75%",
         height: "100%",
-        layout: "vertical"
+        layout: "vertical",
+        top: "0%"
     });
     var LabelNombre = Ti.UI.createLabel({
         color: "#cc5122",
         width: "100%",
-        height: "28.2%",
-        top: "0%",
-        left: "8.3%",
+        height: "20%",
+        top: "20%",
+        left: "8%",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
@@ -212,9 +276,9 @@ function Controller() {
     var LabelDescripcion = Ti.UI.createLabel({
         color: "gray",
         width: "100%",
-        height: "19.6%",
+        height: "20%",
         top: "0%",
-        left: "8.3%",
+        left: "8%",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
@@ -223,10 +287,10 @@ function Controller() {
     });
     var LabelPrecio = Ti.UI.createLabel({
         width: "100%",
-        height: "21.7%",
+        height: "20%",
         color: "#5c5c5b",
         top: "0%",
-        left: "8.3%",
+        left: "8%",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
@@ -445,6 +509,7 @@ function Controller() {
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
+    __defers["$.__views.carro!click!carroCompra"] && $.__views.carro.addEventListener("click", carroCompra);
     _.extend($, exports);
 }
 
