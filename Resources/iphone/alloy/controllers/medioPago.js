@@ -113,6 +113,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "medioPago"

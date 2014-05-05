@@ -3,7 +3,6 @@ function Controller() {
         Ti.App.categoria_actual = categoria;
         Ti.App.marca_actual = marca;
         var marcasScroll = $.marcasScroll;
-        marcasScroll.removeAllChildren();
         for (var i = 0; marcas.length > i; i++) {
             var ImageViewMarca = Ti.UI.createImageView({
                 backgroundImage: marcas[i]["banner"],
@@ -21,7 +20,6 @@ function Controller() {
         $.gato.backgroundImage = "/img/gato.jpg";
         "TODAS" == categoria ? $.perrogato.backgroundImage = "/img/perrogato2.jpg" : "Perro" == categoria ? $.perro.backgroundImage = "/img/perro2.jpg" : "Gato" == categoria && ($.gato.backgroundImage = "/img/gato2.jpg");
         var mainScroll = $.mainScroll;
-        mainScroll.removeAllChildren();
         for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
@@ -115,20 +113,95 @@ function Controller() {
         }
     }
     function productosPerroGato() {
-        ordenarProductos(categorias[3], "TODAS");
+        var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[3],
+            marca: "TODAS"
+        }).getView();
+        vista.open();
     }
     function productosPerro() {
-        ordenarProductos(categorias[1], "TODAS");
+        var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[1],
+            marca: "TODAS"
+        }).getView();
+        vista.open();
     }
     function productosGato() {
-        ordenarProductos(categorias[2], "TODAS");
+        var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[2],
+            marca: "TODAS"
+        }).getView();
+        vista.open();
     }
     function productosMarca(marca) {
-        marca == Ti.App.marca_actual ? ordenarProductos("TODAS", "TODAS") : ordenarProductos("TODAS", marca);
+        if (marca == Ti.App.marca_actual) {
+            var vista = Alloy.createController("productos", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                medio: medio,
+                direccion: direccion,
+                correo: correo,
+                telefono: telefono,
+                categoria: "TODAS",
+                marca: "TODAS"
+            }).getView();
+            vista.open();
+        } else {
+            var vista = Alloy.createController("productos", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                medio: medio,
+                direccion: direccion,
+                correo: correo,
+                telefono: telefono,
+                categoria: "TODAS",
+                marca: marca
+            }).getView();
+            vista.open();
+        }
     }
     function productosView(producto) {
         var mainScroll = $.mainScroll;
-        mainScroll.removeAllChildren();
+        marcasScroll = null;
+        mainScroll = null;
         var vista = Alloy.createController("productoView", {
             token: token,
             carro: carro,
@@ -156,6 +229,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "productos"
@@ -207,6 +281,7 @@ function Controller() {
         id: "lupaImg"
     });
     $.__views.wrapper.add($.__views.lupaImg);
+    buscarProducto ? $.__views.lupaImg.addEventListener("click", buscarProducto) : __defers["$.__views.lupaImg!click!buscarProducto"] = true;
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
@@ -215,13 +290,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productos.add($.__views.marcas);
-    $.__views.__alloyId9 = Ti.UI.createImageView({
+    $.__views.__alloyId27 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId9"
+        id: "__alloyId27"
     });
-    $.__views.marcas.add($.__views.__alloyId9);
+    $.__views.marcas.add($.__views.__alloyId27);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -233,13 +308,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId10 = Ti.UI.createImageView({
+    $.__views.__alloyId28 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId10"
+        id: "__alloyId28"
     });
-    $.__views.marcas.add($.__views.__alloyId10);
+    $.__views.marcas.add($.__views.__alloyId28);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "80.5%",
@@ -273,6 +348,7 @@ function Controller() {
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
+    __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     _.extend($, exports);
 }
 

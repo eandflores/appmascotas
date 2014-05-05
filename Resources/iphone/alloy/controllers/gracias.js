@@ -94,6 +94,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "gracias"
@@ -153,13 +154,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.gracias.add($.__views.marcas);
-    $.__views.__alloyId2 = Ti.UI.createImageView({
+    $.__views.__alloyId20 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId2"
+        id: "__alloyId20"
     });
-    $.__views.marcas.add($.__views.__alloyId2);
+    $.__views.marcas.add($.__views.__alloyId20);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -171,13 +172,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId3 = Ti.UI.createImageView({
+    $.__views.__alloyId21 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId3"
+        id: "__alloyId21"
     });
-    $.__views.marcas.add($.__views.__alloyId3);
+    $.__views.marcas.add($.__views.__alloyId21);
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "80.5%",
@@ -199,13 +200,13 @@ function Controller() {
         id: "labels"
     });
     $.__views.main.add($.__views.labels);
-    $.__views.__alloyId4 = Ti.UI.createImageView({
+    $.__views.__alloyId22 = Ti.UI.createImageView({
         height: "11.3%",
         width: "100%",
         backgroundImage: "/img/tituloGracias.jpg",
-        id: "__alloyId4"
+        id: "__alloyId22"
     });
-    $.__views.labels.add($.__views.__alloyId4);
+    $.__views.labels.add($.__views.__alloyId22);
     $.__views.gracias = Ti.UI.createLabel({
         left: "14%",
         height: "8%",
@@ -217,13 +218,13 @@ function Controller() {
         id: "gracias"
     });
     $.__views.labels.add($.__views.gracias);
-    $.__views.__alloyId5 = Ti.UI.createImageView({
+    $.__views.__alloyId23 = Ti.UI.createImageView({
         height: "11.3%",
         width: "100%",
         backgroundImage: "/img/tituloMedio.jpg",
-        id: "__alloyId5"
+        id: "__alloyId23"
     });
-    $.__views.labels.add($.__views.__alloyId5);
+    $.__views.labels.add($.__views.__alloyId23);
     $.__views.pago = Ti.UI.createLabel({
         left: "14%",
         height: "8%",

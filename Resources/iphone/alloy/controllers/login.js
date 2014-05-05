@@ -77,6 +77,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "login"
@@ -97,15 +98,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
-    $.__views.__alloyId6 = Ti.UI.createImageView({
+    $.__views.__alloyId24 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId6"
+        id: "__alloyId24"
     });
-    $.__views.marcas.add($.__views.__alloyId6);
-    atras ? $.__views.__alloyId6.addEventListener("click", atras) : __defers["$.__views.__alloyId6!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId24);
+    atras ? $.__views.__alloyId24.addEventListener("click", atras) : __defers["$.__views.__alloyId24!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "52.2%",
@@ -159,7 +160,10 @@ function Controller() {
         height: "100%",
         width: "100%",
         color: "#cc5122",
-        fontWeight: "bold",
+        font: {
+            fontWeight: "bold",
+            fontSize: "12sp"
+        },
         textAlign: "center",
         text: "¿HAS OLVIDADO TU CONTRASEÑA?",
         id: "recuperarContraseña"
@@ -178,6 +182,9 @@ function Controller() {
         color: "white",
         width: "100%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "INICIAR SESIÓN",
         id: "registro"
     });
@@ -188,7 +195,7 @@ function Controller() {
     var win = $.login;
     $.inputCorreo.value = "prueba3";
     $.inputClave.value = "123";
-    __defers["$.__views.__alloyId6!click!atras"] && $.__views.__alloyId6.addEventListener("click", atras);
+    __defers["$.__views.__alloyId24!click!atras"] && $.__views.__alloyId24.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);

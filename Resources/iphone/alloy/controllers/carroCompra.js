@@ -77,6 +77,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "carroCompra"
@@ -191,6 +192,9 @@ function Controller() {
         color: "white",
         width: "100%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "HACER PEDIDO",
         id: "pedido"
     });

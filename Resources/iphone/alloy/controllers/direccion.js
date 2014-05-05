@@ -50,27 +50,42 @@ function Controller() {
         }).getView();
         vista.open();
     }
+    function agregarDireccion() {
+        var vista = Alloy.createController("agregarDireccion", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
+        }).getView();
+        vista.open();
+    }
     function atras() {
         win.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    this.__controllerPath = "telefono";
+    this.__controllerPath = "direccion";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
     arguments[0] ? arguments[0]["$model"] : null;
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
     var __defers = {};
-    $.__views.telefono = Ti.UI.createWindow({
+    $.__views.direccion = Ti.UI.createWindow({
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
-        id: "telefono"
+        id: "direccion"
     });
-    $.__views.telefono && $.addTopLevelView($.__views.telefono);
+    $.__views.direccion && $.addTopLevelView($.__views.direccion);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
@@ -78,7 +93,7 @@ function Controller() {
         layout: "horizontal",
         id: "wrapper"
     });
-    $.__views.telefono.add($.__views.wrapper);
+    $.__views.direccion.add($.__views.wrapper);
     $.__views.menuImg = Ti.UI.createImageView({
         width: "14%",
         height: "100%",
@@ -124,7 +139,7 @@ function Controller() {
         layout: "horizontal",
         id: "marcas"
     });
-    $.__views.telefono.add($.__views.marcas);
+    $.__views.direccion.add($.__views.marcas);
     $.__views.flecha = Ti.UI.createImageView({
         width: "14%",
         height: "85%",
@@ -133,55 +148,48 @@ function Controller() {
     });
     $.__views.marcas.add($.__views.flecha);
     atras ? $.__views.flecha.addEventListener("click", atras) : __defers["$.__views.flecha!click!atras"] = true;
-    $.__views.telefonoTitulo = Ti.UI.createImageView({
+    $.__views.direccionTitulo = Ti.UI.createImageView({
         width: "72%",
         height: "85%",
-        id: "telefonoTitulo",
-        backgroundImage: "/img/telefono.jpg"
+        id: "direccionTitulo",
+        backgroundImage: "/img/direccion.jpg"
     });
-    $.__views.marcas.add($.__views.telefonoTitulo);
+    $.__views.marcas.add($.__views.direccionTitulo);
+    $.__views.casa = Ti.UI.createImageView({
+        left: "2%",
+        top: "25%",
+        bottom: "25%",
+        width: "10%",
+        height: "50%",
+        id: "casa",
+        backgroundImage: "/img/casa.png"
+    });
+    $.__views.direccionTitulo.add($.__views.casa);
     $.__views.margen = Ti.UI.createView({
         width: "100%",
         height: "3.1%",
         id: "margen",
         backgroundImage: "/img/Margen.jpg"
     });
-    $.__views.telefono.add($.__views.margen);
-    $.__views.main = Ti.UI.createView({
+    $.__views.direccion.add($.__views.margen);
+    $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "69.8%",
+        contentHeight: Ti.UI.SIZE,
         layout: "vertical",
-        id: "main"
+        scrollType: "vertical",
+        showVerticalScrollIndicator: "true",
+        id: "mainScroll"
     });
-    $.__views.telefono.add($.__views.main);
-    $.__views.viewTelefono = Ti.UI.createView({
-        width: "100%",
-        height: "7%",
-        id: "viewTelefono",
-        backgroundImage: "/img/labelTelefono.jpg"
-    });
-    $.__views.main.add($.__views.viewTelefono);
-    $.__views.inputTelefono = Ti.UI.createTextField({
-        height: "100%",
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-        left: "30%",
-        width: "70",
-        backgroundColor: "#f5f5f5",
-        color: "#585858",
-        font: {
-            fontSize: "12sp"
-        },
-        id: "inputTelefono"
-    });
-    $.__views.viewTelefono.add($.__views.inputTelefono);
+    $.__views.direccion.add($.__views.mainScroll);
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
         height: "7.6%",
         id: "footer"
     });
-    $.__views.telefono.add($.__views.footer);
-    $.__views.guardarTelefono = Ti.UI.createButton({
+    $.__views.direccion.add($.__views.footer);
+    $.__views.agregarDireccion = Ti.UI.createButton({
         backgroundColor: "#cc5122",
         color: "white",
         width: "100%",
@@ -189,14 +197,19 @@ function Controller() {
         font: {
             fontWeight: "bold"
         },
-        title: "GUARDAR",
-        id: "guardarTelefono"
+        title: "AGREGAR DIRECCIÓN",
+        id: "agregarDireccion"
     });
-    $.__views.footer.add($.__views.guardarTelefono);
+    $.__views.footer.add($.__views.agregarDireccion);
+    agregarDireccion ? $.__views.agregarDireccion.addEventListener("click", agregarDireccion) : __defers["$.__views.agregarDireccion!click!agregarDireccion"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var win = $.telefono;
+    var win = $.direccion;
     var args = arguments[0] || {};
+    var categorias = [];
+    categorias[1] = "Perro";
+    categorias[2] = "Gato";
+    categorias[3] = "TODAS";
     carro = args["carro"];
     token = args["token"];
     marcas = args["marcas"];
@@ -211,6 +224,7 @@ function Controller() {
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
+    __defers["$.__views.agregarDireccion!click!agregarDireccion"] && $.__views.agregarDireccion.addEventListener("click", agregarDireccion);
     _.extend($, exports);
 }
 

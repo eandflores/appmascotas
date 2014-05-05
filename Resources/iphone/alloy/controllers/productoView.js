@@ -98,6 +98,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "productoView"
@@ -157,13 +158,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId7 = Ti.UI.createImageView({
+    $.__views.__alloyId25 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId7"
+        id: "__alloyId25"
     });
-    $.__views.marcas.add($.__views.__alloyId7);
+    $.__views.marcas.add($.__views.__alloyId25);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -175,13 +176,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId8 = Ti.UI.createImageView({
+    $.__views.__alloyId26 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId8"
+        id: "__alloyId26"
     });
-    $.__views.marcas.add($.__views.__alloyId8);
+    $.__views.marcas.add($.__views.__alloyId26);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",
@@ -201,6 +202,9 @@ function Controller() {
         color: "white",
         width: "100%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "AGREGAR AL CARRO",
         id: "carro"
     });

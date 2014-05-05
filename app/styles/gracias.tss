@@ -3,7 +3,8 @@
 },
 ".container": {
 	backgroundColor:"white",
-	layout:"vertical"
+	layout:"vertical",
+	backgroundImage:"/img/Fondo.jpg"
 },
 "#wrapper": {
 	backgroundColor:"#cc5122",
@@ -80,7 +81,7 @@
 	color:"#585858",
 	font: {
         fontSize: '10sp'
-    },
+    }
 }
 "#footer":{
 	width:"100%",

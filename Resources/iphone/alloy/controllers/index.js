@@ -20,6 +20,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "index"
@@ -74,6 +75,9 @@ function Controller() {
         color: "white",
         width: "50%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "REGISTRARSE",
         id: "registro"
     });

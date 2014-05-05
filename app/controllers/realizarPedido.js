@@ -172,7 +172,8 @@ function productosGato(){
 }
 
 function setDireccion(){
-	
+	var vista = Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
+	vista.open();
 }
 
 function setCorreo(){
