@@ -9,50 +9,25 @@ categorias[2] = "Gato";
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
 
+token = args['token'];
+carro = args['carro'];
+
+marcas = args['marcas'];
+productos = args['productos'];
+medios = args['medios'];
+direcciones = args['direcciones'];
+
+medio = args['medio'];
+direccion = args['direccion'];
+correo = args['correo'];
+telefono = args['telefono'];
+
 Ti.App.categoria_actual = args['categoria'];
 Ti.App.marca_actual = args['marca'];
-carro = args['carro'];
-token = args['token'];
 
-var marc = [];
-var prod = [];
+ordenarProductos(Ti.App.categoria_actual,Ti.App.marca_actual);
 
-xhrMarcas = Ti.Network.createHTTPClient({
-	onload: function(e){
-		var marcas = JSON.parse(this.responseText);
-		getProductos(marcas);
-	},
-	onerror: function(e){
-		alert("Error de conexión con el servidor.");
-	}
-});
-
-xhrMarcas.open('GET','http://tiendapet.cl/api/marcas');
-xhrMarcas.send();
-
-function getProductos(marcas){
-	xhrProductos = Ti.Network.createHTTPClient({
-		onload: function(e){
-			var productos = JSON.parse(this.responseText);
-			marc = marcas;
-			prod = productos;
-	
-			ordenarProductos(marc,prod,Ti.App.categoria_actual,Ti.App.marca_actual);
-		},
-		onerror: function(e){
-			alert("Error de conexión con el servidor.");
-		}
-	});
-	
-	xhrProductos.open('GET','http://tiendapet.cl/api/productos');
-	xhrProductos.send();
-	
-}
-
-function ordenarProductos(marcas,productos,categoria,marca){
-		
-	marc = marcas;
-	prod = productos;
+function ordenarProductos(categoria,marca){
 	
 	Ti.App.categoria_actual = categoria;
 	Ti.App.marca_actual = marca;
@@ -166,7 +141,8 @@ function ordenarProductos(marcas,productos,categoria,marca){
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
 				},
-				text : "$"+productos[i]['producto_precios'][j]['sku_price']
+				text : productos[i]['producto_precios'][j]['sku_description']+
+					" x $"+productos[i]['producto_precios'][j]['sku_price']
 			});
 			
 			var ImageViewFlecha = Ti.UI.createImageView({
@@ -216,24 +192,23 @@ function ordenarProductos(marcas,productos,categoria,marca){
 }
 
 function productosPerroGato(){
-	ordenarProductos(marc,prod,categorias[3],"TODAS");
+	ordenarProductos(categorias[3],"TODAS");
 }
 
 function productosPerro(){
-	ordenarProductos(marc,prod,categorias[1],"TODAS");
+	ordenarProductos(categorias[1],"TODAS");
 }
 
 function productosGato(){
-	ordenarProductos(marc,prod,categorias[2],"TODAS");
+	ordenarProductos(categorias[2],"TODAS");
 }
 
 function productosMarca(marca){
-	Titanium.API.info(Ti.App.marca_actual); 
 	if(marca == Ti.App.marca_actual){
-		ordenarProductos(marc,prod,"TODAS","TODAS");	
+		ordenarProductos("TODAS","TODAS");	
 	}
 	else{
-		ordenarProductos(marc,prod,"TODAS",marca);	
+		ordenarProductos("TODAS",marca);	
 	}
 }
 
@@ -241,7 +216,6 @@ function productosView(producto){
 	var mainScroll = $.mainScroll;
 	mainScroll.removeAllChildren();
 	
-	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marc,productos: prod,producto: producto}).getView();
-	Ti.API.info(token+" "+carro);
+	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,producto: producto}).getView();
 	vista.open();
 }

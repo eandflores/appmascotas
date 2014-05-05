@@ -9,10 +9,18 @@ categorias[2] = "Gato";
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
 
-var marcas = args['marcas'];
-var productos = args['productos'];
 var carro = args['carro'];
 var token = args['token'];
+
+var marcas = args['marcas'];
+var productos = args['productos'];
+medios = args['medios'];
+direcciones = args['direcciones'];
+
+medio = args['medio'];
+direccion = args['direccion'];
+correo = args['correo'];
+telefono = args['telefono'];
 
 var marcasScroll = $.marcasScroll;
 
@@ -404,31 +412,31 @@ Main.add(DescripcionContenido);
 		
 function productosPerroGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: [],categoria: categorias[3], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS"}).getView();
 	vista.open();
 }
 
 function productosPerro(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,categoria: categorias[1], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS"}).getView();
 	vista.open();
 }
 
 function productosGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,categoria: categorias[2], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS"}).getView();
 	vista.open();
 }
 
 function productosMarca(marca){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,categoria: categorias[3], marca: marca}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: marca}).getView();
 	vista.open();
 }
 
 function carroCompra(){
 	
 	carro.push({'id' : productoPrecio['id'], 'qty' : InputCantidad.value});
-	var vista = Alloy.createController('carroCompra',{token: token,carro: carro,marcas: marcas,productos: productos}).getView();
+	var vista = Alloy.createController('carroCompra',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
 	vista.open();
 }

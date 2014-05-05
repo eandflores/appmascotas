@@ -2,7 +2,15 @@ function Controller() {
     function productosPerroGato() {
         var vista = Alloy.createController("productos", {
             token: token,
-            carro: [],
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS"
         }).getView();
@@ -12,6 +20,14 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS"
         }).getView();
@@ -21,6 +37,14 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS"
         }).getView();
@@ -30,6 +54,14 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[3],
             marca: marca
         }).getView();
@@ -44,7 +76,13 @@ function Controller() {
             token: token,
             carro: carro,
             marcas: marcas,
-            productos: productos
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
         }).getView();
         vista.open();
     }
@@ -119,13 +157,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId1 = Ti.UI.createImageView({
+    $.__views.__alloyId7 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId1"
+        id: "__alloyId7"
     });
-    $.__views.marcas.add($.__views.__alloyId1);
+    $.__views.marcas.add($.__views.__alloyId7);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -137,13 +175,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId2 = Ti.UI.createImageView({
+    $.__views.__alloyId8 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId2"
+        id: "__alloyId8"
     });
-    $.__views.marcas.add($.__views.__alloyId2);
+    $.__views.marcas.add($.__views.__alloyId8);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",
@@ -175,10 +213,16 @@ function Controller() {
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
-    var marcas = args["marcas"];
-    var productos = args["productos"];
     var carro = args["carro"];
     var token = args["token"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    medios = args["medios"];
+    direcciones = args["direcciones"];
+    medio = args["medio"];
+    direccion = args["direccion"];
+    correo = args["correo"];
+    telefono = args["telefono"];
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({

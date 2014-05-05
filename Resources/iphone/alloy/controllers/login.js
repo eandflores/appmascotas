@@ -10,13 +10,7 @@ function Controller() {
             onload: function() {
                 var response = JSON.parse(this.responseText);
                 var token = response["token"];
-                var vista = Alloy.createController("productos", {
-                    token: token,
-                    carro: [],
-                    categoria: "TODAS",
-                    marca: "TODAS"
-                }).getView();
-                vista.open();
+                getMarcas(token);
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
@@ -27,6 +21,46 @@ function Controller() {
             email: email,
             password: password
         });
+    }
+    function getMarcas(token) {
+        xhrMarcas = Ti.Network.createHTTPClient({
+            onload: function() {
+                var marcas = JSON.parse(this.responseText);
+                getProductos(token, marcas);
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+        xhrMarcas.send();
+    }
+    function getProductos(token, marcas) {
+        xhrProductos = Ti.Network.createHTTPClient({
+            onload: function() {
+                var productos = JSON.parse(this.responseText);
+                var vista = Alloy.createController("productos", {
+                    token: token,
+                    carro: [],
+                    marcas: marcas,
+                    productos: productos,
+                    medios: [],
+                    direcciones: [],
+                    medio: null,
+                    direccion: null,
+                    correo: null,
+                    telefono: null,
+                    categoria: "TODAS",
+                    marca: "TODAS"
+                }).getView();
+                vista.open();
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhrProductos.open("GET", "http://tiendapet.cl/api/productos");
+        xhrProductos.send();
     }
     function atras() {
         win.close();
@@ -63,15 +97,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
-    $.__views.__alloyId0 = Ti.UI.createImageView({
+    $.__views.__alloyId6 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId0"
+        id: "__alloyId6"
     });
-    $.__views.marcas.add($.__views.__alloyId0);
-    atras ? $.__views.__alloyId0.addEventListener("click", atras) : __defers["$.__views.__alloyId0!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId6);
+    atras ? $.__views.__alloyId6.addEventListener("click", atras) : __defers["$.__views.__alloyId6!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "52.2%",
@@ -154,7 +188,7 @@ function Controller() {
     var win = $.login;
     $.inputCorreo.value = "prueba3";
     $.inputClave.value = "123";
-    __defers["$.__views.__alloyId0!click!atras"] && $.__views.__alloyId0.addEventListener("click", atras);
+    __defers["$.__views.__alloyId6!click!atras"] && $.__views.__alloyId6.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);

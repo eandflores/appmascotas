@@ -1,0 +1,43 @@
+<Alloy>
+	<Window class="container">
+		<View id="wrapper">
+			<ImageView id="menuImg"></ImageView>
+			<ImageView id="perrogato" onClick="productosPerroGato"></ImageView>
+			<ImageView id="perro" onClick="productosPerro"></ImageView>
+			<ImageView id="gato" onClick="productosGato"></ImageView>
+			<ImageView id="lupaImg"></ImageView>
+		</View>
+		<View id="marcas">
+			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
+			<ImageView id="pedidoTitulo" backgroundImage="/img/envioPedido.jpg"></ImageView>
+		</View>
+		<View id="envioGratis" backgroundImage="/img/envioGratis.jpg"></View>
+		<ScrollView id="mainScroll"></ScrollView>
+		<ScrollView id="envioScroll">
+			<View class="labelsPago" onClick="setDireccion">
+				<Label class="tituloLabel">DIRECCIÓN</Label>
+				<Label id="direccion" class="contenidoLabel"></Label>
+			</View>
+			<View class="labelsPago" onClick="setCorreo">
+				<Label class="tituloLabel">CORREO</Label>
+				<Label id="correo" class="contenidoLabel"></Label>
+			</View>
+			<View class="labelsPago" onClick="setMedioPago">
+				<Label class="tituloLabel">PAGO</Label>
+				<Label id="pago" class="contenidoLabel"></Label>
+			</View>
+			<View id class="labelsPago" onClick="setTelefono">
+				<Label class="tituloLabel">TELÉFONO</Label>
+				<Label id="telefono" class="contenidoLabel"></Label>
+			</View>
+			<View id class="labelsPago" onClick="setCupon">
+				<Label class="tituloLabel">CUPÓN DE DESCUENTO</Label>
+				<Label id="cupon" class="contenidoLabel"></Label>
+			</View>
+		</ScrollView>
+		<View id="nuevoProducto" backgroundImage="/img/agregarProducto.jpg" onClick="productosPerroGato"></View>
+		<View id="footer">
+			<Button id="pedido" onClick="gracias">REALIZAR PEDIDO</Button>
+		</View>
+	</Window>
+</Alloy>

@@ -59,15 +59,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
-    $.__views.__alloyId5 = Ti.UI.createImageView({
+    $.__views.__alloyId19 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId5"
+        id: "__alloyId19"
     });
-    $.__views.marcas.add($.__views.__alloyId5);
-    atras ? $.__views.__alloyId5.addEventListener("click", atras) : __defers["$.__views.__alloyId5!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId19);
+    atras ? $.__views.__alloyId19.addEventListener("click", atras) : __defers["$.__views.__alloyId19!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "49.2%",
@@ -147,7 +147,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var win = $.registro;
-    __defers["$.__views.__alloyId5!click!atras"] && $.__views.__alloyId5.addEventListener("click", atras);
+    __defers["$.__views.__alloyId19!click!atras"] && $.__views.__alloyId19.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);
 }

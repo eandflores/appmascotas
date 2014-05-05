@@ -3,6 +3,14 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS"
         }).getView();
@@ -12,6 +20,14 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS"
         }).getView();
@@ -21,8 +37,31 @@ function Controller() {
         var vista = Alloy.createController("productos", {
             token: token,
             carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS"
+        }).getView();
+        vista.open();
+    }
+    function realizarPedido() {
+        var vista = Alloy.createController("realizarPedido", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
         }).getView();
         vista.open();
     }
@@ -156,6 +195,7 @@ function Controller() {
         id: "pedido"
     });
     $.__views.footer.add($.__views.pedido);
+    realizarPedido ? $.__views.pedido.addEventListener("click", realizarPedido) : __defers["$.__views.pedido!click!realizarPedido"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -167,6 +207,12 @@ function Controller() {
     token = args["token"];
     marcas = args["marcas"];
     productos = args["productos"];
+    medios = args["medios"];
+    direcciones = args["direcciones"];
+    medio = args["medio"];
+    direccion = args["direccion"];
+    correo = args["correo"];
+    telefono = args["telefono"];
     var total_val = 0;
     var mainScroll = $.mainScroll;
     mainScroll.removeAllChildren();
@@ -272,9 +318,6 @@ function Controller() {
         ViewLabels.add(LabelGroup2);
         Main.add(ImageViewProducto);
         Main.add(ViewLabels);
-        Main.addEventListener("click", function() {
-            productosView(this["id"]);
-        });
         mainScroll.add(Main);
         mainScroll.add(Margen);
     }
@@ -284,6 +327,7 @@ function Controller() {
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.flecha!click!productosPerroGato"] && $.__views.flecha.addEventListener("click", productosPerroGato);
+    __defers["$.__views.pedido!click!realizarPedido"] && $.__views.pedido.addEventListener("click", realizarPedido);
     _.extend($, exports);
 }
 

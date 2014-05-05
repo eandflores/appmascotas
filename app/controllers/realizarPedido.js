@@ -1,3 +1,5 @@
+var win =  $.realizarPedido;
+
 var args = arguments[0] || {};
 
 var categorias = [];
@@ -22,8 +24,6 @@ direccion = args['direccion'];
 correo = args['correo'];
 telefono = args['telefono'];
 
-var total_val = 0;
-
 var mainScroll = $.mainScroll;
 mainScroll.removeAllChildren();
 
@@ -34,8 +34,6 @@ for(var i = 0; i < productos.length; i++){
 		for(var k = 0; k < carro.length; k++){
 			
 			if(carro[k]['id'] ==  productos[i]['producto_precios'][j]['id']){
-				
-				total_val = total_val + (carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price']);
 				
 				var Main = Ti.UI.createView({
 					width:"100%",
@@ -103,8 +101,8 @@ for(var i = 0; i < productos.length; i++){
 					top:"0%"
 				});
 				
-				var LabelPeso = Ti.UI.createLabel({
-					width:"35%",
+				var LabelDetalle = Ti.UI.createLabel({
+					width:"60%",
 					height:"50%",
 					color:"#5c5c5b",
 					top:"25%",
@@ -112,23 +110,12 @@ for(var i = 0; i < productos.length; i++){
 						fontFamily:"Noto Sans",
 						fontWeight:"bold"
 					},
-					text : productos[i]['producto_precios'][j]['sku_description']
+					text : productos[i]['producto_precios'][j]['sku_description']+
+							" x "+carro[k]['qty']
 				});
-				
-				var LabelCantidad = Ti.UI.createLabel({
-					width:"35%",
-					height:"50%",
-					color:"#5c5c5b",
-					top:"25%",
-					font:{
-						fontFamily:"Noto Sans",
-						fontWeight:"bold"
-					},
-					text :"Cant "+carro[k]['qty']
-				});
-				
+								
 				var LabelPrecio = Ti.UI.createLabel({
-					width:"30%",
+					width:"40%",
 					height:"50%",
 					color:"#5c5c5b",
 					top:"25%",
@@ -142,8 +129,7 @@ for(var i = 0; i < productos.length; i++){
 				LabelGroup.add(LabelNombre);
 				LabelGroup.add(LabelDescripcion);
 				
-				LabelGroup2.add(LabelPeso);
-				LabelGroup2.add(LabelCantidad);
+				LabelGroup2.add(LabelDetalle);
 				LabelGroup2.add(LabelPrecio);
 				
 				ViewLabels.add(LabelGroup);
@@ -159,8 +145,13 @@ for(var i = 0; i < productos.length; i++){
 	}
 }
 
-var total_label =  $.totalLabel;
-total_label.text = "$"+total_val;
+if(medio != null){
+	for(i = 0; i< medios.length;i++){
+		if(medios[i]['id'] == medio){
+			$.pago.text = medios[i]['paym_name'];
+		}
+	}
+}
 
 function productosPerroGato(){
 	
@@ -180,8 +171,33 @@ function productosGato(){
 	vista.open();
 }
 
-function realizarPedido(){
+function setDireccion(){
 	
-	var vista = Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
+}
+
+function setCorreo(){
+	
+}
+
+function setMedioPago(){
+	var vista = Alloy.createController('medioPago',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
 	vista.open();
+}
+
+function setTelefono(){
+	var vista = Alloy.createController('telefono',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
+	vista.open();
+}
+
+function setCupon(){
+	
+}
+
+function gracias(){
+	var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: null, direccion: null,correo: null,telefono: null}).getView();
+	vista.open();
+}
+
+function atras(){
+	win.close();
 }
