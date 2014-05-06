@@ -65,6 +65,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         id: "telefono"
     });
     $.__views.telefono && $.addTopLevelView($.__views.telefono);
@@ -153,7 +154,7 @@ function Controller() {
     $.__views.telefono.add($.__views.main);
     $.__views.viewTelefono = Ti.UI.createView({
         width: "100%",
-        height: "8%",
+        height: "7%",
         id: "viewTelefono",
         backgroundImage: "/img/labelTelefono.jpg"
     });
@@ -165,6 +166,9 @@ function Controller() {
         width: "70",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputTelefono"
     });
     $.__views.viewTelefono.add($.__views.inputTelefono);
@@ -180,6 +184,9 @@ function Controller() {
         color: "white",
         width: "100%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "GUARDAR",
         id: "guardarTelefono"
     });

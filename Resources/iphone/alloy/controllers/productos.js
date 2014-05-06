@@ -1,7 +1,8 @@
 function Controller() {
-    function ordenarProductos(categoria, marca) {
+    function ordenarProductos(categoria, marca, nombre) {
         Ti.App.categoria_actual = categoria;
         Ti.App.marca_actual = marca;
+        Ti.App.nombre = nombre;
         var marcasScroll = $.marcasScroll;
         for (var i = 0; marcas.length > i; i++) {
             var ImageViewMarca = Ti.UI.createImageView({
@@ -20,6 +21,40 @@ function Controller() {
         $.gato.backgroundImage = "/img/gato.jpg";
         "TODAS" == categoria ? $.perrogato.backgroundImage = "/img/perrogato2.jpg" : "Perro" == categoria ? $.perro.backgroundImage = "/img/perro2.jpg" : "Gato" == categoria && ($.gato.backgroundImage = "/img/gato2.jpg");
         var mainScroll = $.mainScroll;
+        if ("TODOS" != nombre) {
+            var resultados = Ti.UI.createView({
+                width: "100%",
+                height: "100px",
+                layout: "vertical"
+            });
+            var resultadoProducto = Ti.UI.createLabel({
+                width: "100%",
+                height: "50%",
+                textAlign: "center",
+                color: "gray",
+                font: {
+                    fontSize: "12sp",
+                    fontFamily: "Noto Sans",
+                    fontWeight: "bold"
+                }
+            });
+            var resultadoNombre = Ti.UI.createLabel({
+                width: "100%",
+                height: "50%",
+                textAlign: "center",
+                text: "CON EL NOMBRE DE : " + nombre,
+                color: "gray",
+                font: {
+                    fontSize: "12sp",
+                    fontFamily: "Noto Sans",
+                    fontWeight: "bold"
+                }
+            });
+            resultados.add(resultadoProducto);
+            resultados.add(resultadoNombre);
+            mainScroll.add(resultados);
+        }
+        var cant_productos = 0;
         for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
@@ -93,115 +128,129 @@ function Controller() {
             Main.addEventListener("click", function() {
                 productosView(this["id"]);
             });
-            if ("TODAS" == categoria && "TODAS" == marca) {
-                mainScroll.add(Main);
-                mainScroll.add(Margen);
-            } else if ("TODAS" == categoria && "TODAS" != marca) {
-                if (marca == productos[i]["marca_id"]) {
+            if ("TODOS" == nombre) {
+                if ("TODAS" == categoria && "TODAS" == marca) {
+                    mainScroll.add(Main);
+                    mainScroll.add(Margen);
+                } else if ("TODAS" == categoria && "TODAS" != marca) {
+                    if (marca == productos[i]["marca_id"]) {
+                        mainScroll.add(Main);
+                        mainScroll.add(Margen);
+                    }
+                } else if ("TODAS" != categoria && "TODAS" == marca) {
+                    if (categoria == productos[i]["tipo"]) {
+                        mainScroll.add(Main);
+                        mainScroll.add(Margen);
+                    }
+                } else if ("TODAS" != categoria && "TODAS" != marca && categoria == productos[i]["tipo"] && marca == productos[i]["marca_id"]) {
                     mainScroll.add(Main);
                     mainScroll.add(Margen);
                 }
-            } else if ("TODAS" != categoria && "TODAS" == marca) {
-                if (categoria == productos[i]["tipo"]) {
-                    mainScroll.add(Main);
-                    mainScroll.add(Margen);
-                }
-            } else if ("TODAS" != categoria && "TODAS" != marca && categoria == productos[i]["tipo"] && marca == productos[i]["marca_id"]) {
+            } else if (null != productos[i]["brand"].toLowerCase().match(nombre.toLowerCase()) || null != productos[i]["prod_name"].toLowerCase().match(nombre.toLowerCase())) {
+                cant_productos += 1;
                 mainScroll.add(Main);
                 mainScroll.add(Margen);
             }
         }
+        "TODOS" != nombre && (resultadoProducto.text = "SE HAN ENCONTRADO " + cant_productos + " PRODUCTOS");
     }
     function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[3],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        ordenarProductos(categorias[3], "TODAS", "TODOS");
     }
     function productosPerro() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[1],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        ordenarProductos(categorias[1], "TODAS", "TODOS");
     }
     function productosGato() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[2],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        ordenarProductos(categorias[2], "TODAS", "TODOS");
     }
     function productosMarca(marca) {
         if (marca == Ti.App.marca_actual) {
-            var vista = Alloy.createController("productos", {
-                token: token,
-                carro: carro,
-                marcas: marcas,
-                productos: productos,
-                medios: medios,
-                direcciones: direcciones,
-                medio: medio,
-                direccion: direccion,
-                correo: correo,
-                telefono: telefono,
-                categoria: "TODAS",
-                marca: "TODAS"
-            }).getView();
-            vista.open();
+            $.mainScroll.removeAllChildren();
+            $.marcasScroll.removeAllChildren();
+            ordenarProductos("TODAS", "TODAS", "TODOS");
         } else {
-            var vista = Alloy.createController("productos", {
-                token: token,
-                carro: carro,
-                marcas: marcas,
-                productos: productos,
-                medios: medios,
-                direcciones: direcciones,
-                medio: medio,
-                direccion: direccion,
-                correo: correo,
-                telefono: telefono,
-                categoria: "TODAS",
-                marca: marca
-            }).getView();
-            vista.open();
+            $.mainScroll.removeAllChildren();
+            $.marcasScroll.removeAllChildren();
+            ordenarProductos("TODAS", marca, "TODOS");
         }
     }
+    function buscarProducto() {
+        var winModal;
+        var viewModal;
+        var buscar;
+        var inputsBuscar;
+        var lupa;
+        var cerrar;
+        var winModal = Ti.UI.createWindow({
+            backgroundColor: "#000",
+            width: "100%",
+            top: "3.5%",
+            height: "9.1%"
+        });
+        var viewModal = Ti.UI.createView({
+            width: "100%",
+            height: "100%",
+            layout: "horizontal",
+            backgroundImage: "/img/fondoBuscar.jpg",
+            top: "0%"
+        });
+        var buscar = Ti.UI.createTextField({
+            width: "72%",
+            height: "100%",
+            hintText: "¿Que es lo que buscas?",
+            color: "white",
+            textAlign: "center"
+        });
+        var inputsBuscar = Ti.UI.createView({
+            width: "28%",
+            height: "100%",
+            layout: "horizontal"
+        });
+        var lupa = Ti.UI.createView({
+            width: "40%",
+            height: "70%",
+            left: "5%",
+            right: "5%",
+            top: "15%",
+            bottom: "15%",
+            backgroundImage: "/img/lupaBuscar.jpg"
+        });
+        lupa.addEventListener("click", function() {
+            productosNombre(buscar.value);
+        });
+        var cerrar = Ti.UI.createView({
+            left: "7.5%",
+            right: "7.5%",
+            top: "25%",
+            bottom: "25%",
+            width: "25%",
+            height: "50%",
+            backgroundImage: "/img/cerrar.jpg"
+        });
+        cerrar.addEventListener("click", function() {
+            winModal.close();
+        });
+        viewModal.add(buscar);
+        inputsBuscar.add(lupa);
+        inputsBuscar.add(cerrar);
+        viewModal.add(inputsBuscar);
+        winModal.add(viewModal);
+        winModal.open();
+    }
+    function productosNombre(nombre) {
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        ordenarProductos("TODAS", "TODAS", nombre);
+    }
     function productosView(producto) {
-        var mainScroll = $.mainScroll;
-        marcasScroll = null;
-        mainScroll = null;
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
         var vista = Alloy.createController("productoView", {
             token: token,
             carro: carro,
@@ -327,6 +376,7 @@ function Controller() {
     $.__views.productos.add($.__views.mainScroll);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    $.productos;
     var args = arguments[0] || {};
     var categorias = [];
     categorias[1] = "Perro";
@@ -344,7 +394,8 @@ function Controller() {
     telefono = args["telefono"];
     Ti.App.categoria_actual = args["categoria"];
     Ti.App.marca_actual = args["marca"];
-    ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual);
+    Ti.App.nombre = args["nombre"];
+    ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual, Ti.App.nombre);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

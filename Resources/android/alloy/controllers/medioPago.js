@@ -113,6 +113,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         id: "medioPago"
     });
     $.__views.medioPago && $.addTopLevelView($.__views.medioPago);

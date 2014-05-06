@@ -50,8 +50,8 @@ function Controller() {
         }).getView();
         vista.open();
     }
-    function realizarPedido() {
-        var vista = Alloy.createController("realizarPedido", {
+    function agregarDireccion() {
+        var vista = Alloy.createController("agregarDireccion", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -65,22 +65,25 @@ function Controller() {
         }).getView();
         vista.open();
     }
+    function atras() {
+        win.close();
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    this.__controllerPath = "carroCompra";
+    this.__controllerPath = "direccion";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
     arguments[0] ? arguments[0]["$model"] : null;
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
     var __defers = {};
-    $.__views.carroCompra = Ti.UI.createWindow({
+    $.__views.direccion = Ti.UI.createWindow({
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
-        id: "carroCompra"
+        id: "direccion"
     });
-    $.__views.carroCompra && $.addTopLevelView($.__views.carroCompra);
+    $.__views.direccion && $.addTopLevelView($.__views.direccion);
     $.__views.wrapper = Ti.UI.createView({
         backgroundColor: "#cc5122",
         width: "100%",
@@ -88,7 +91,7 @@ function Controller() {
         layout: "horizontal",
         id: "wrapper"
     });
-    $.__views.carroCompra.add($.__views.wrapper);
+    $.__views.direccion.add($.__views.wrapper);
     $.__views.menuImg = Ti.UI.createImageView({
         width: "14%",
         height: "100%",
@@ -134,7 +137,7 @@ function Controller() {
         layout: "horizontal",
         id: "marcas"
     });
-    $.__views.carroCompra.add($.__views.marcas);
+    $.__views.direccion.add($.__views.marcas);
     $.__views.flecha = Ti.UI.createImageView({
         width: "14%",
         height: "85%",
@@ -142,50 +145,49 @@ function Controller() {
         backgroundImage: "/img/FlechaIzq.jpg"
     });
     $.__views.marcas.add($.__views.flecha);
-    productosPerroGato ? $.__views.flecha.addEventListener("click", productosPerroGato) : __defers["$.__views.flecha!click!productosPerroGato"] = true;
-    $.__views.carro = Ti.UI.createImageView({
+    atras ? $.__views.flecha.addEventListener("click", atras) : __defers["$.__views.flecha!click!atras"] = true;
+    $.__views.direccionTitulo = Ti.UI.createImageView({
         width: "72%",
         height: "85%",
-        id: "carro",
-        backgroundImage: "/img/carro.jpg"
+        id: "direccionTitulo",
+        backgroundImage: "/img/direccion.jpg"
     });
-    $.__views.marcas.add($.__views.carro);
+    $.__views.marcas.add($.__views.direccionTitulo);
+    $.__views.casa = Ti.UI.createImageView({
+        left: "2%",
+        top: "25%",
+        bottom: "25%",
+        width: "10%",
+        height: "50%",
+        id: "casa",
+        backgroundImage: "/img/casa.png"
+    });
+    $.__views.direccionTitulo.add($.__views.casa);
+    $.__views.margen = Ti.UI.createView({
+        width: "100%",
+        height: "3.1%",
+        id: "margen",
+        backgroundImage: "/img/Margen.jpg"
+    });
+    $.__views.direccion.add($.__views.margen);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
-        height: "61.9%",
+        height: "69.8%",
         contentHeight: Ti.UI.SIZE,
         layout: "vertical",
         scrollType: "vertical",
         showVerticalScrollIndicator: "true",
         id: "mainScroll"
     });
-    $.__views.carroCompra.add($.__views.mainScroll);
-    $.__views.total = Ti.UI.createView({
-        height: "10.9%",
-        width: "100%",
-        id: "total",
-        backgroundImage: "/img/totalFondo.jpg"
-    });
-    $.__views.carroCompra.add($.__views.total);
-    $.__views.totalLabel = Ti.UI.createLabel({
-        height: "100%",
-        right: "5.6%",
-        color: "gray",
-        font: {
-            fontFamily: "Noto Sans",
-            fontWeight: "bold"
-        },
-        id: "totalLabel"
-    });
-    $.__views.total.add($.__views.totalLabel);
+    $.__views.direccion.add($.__views.mainScroll);
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
         height: "7.6%",
         id: "footer"
     });
-    $.__views.carroCompra.add($.__views.footer);
-    $.__views.pedido = Ti.UI.createButton({
+    $.__views.direccion.add($.__views.footer);
+    $.__views.agregarDireccion = Ti.UI.createButton({
         backgroundColor: "#cc5122",
         color: "white",
         width: "100%",
@@ -193,13 +195,14 @@ function Controller() {
         font: {
             fontWeight: "bold"
         },
-        title: "HACER PEDIDO",
-        id: "pedido"
+        title: "AGREGAR DIRECCIÓN",
+        id: "agregarDireccion"
     });
-    $.__views.footer.add($.__views.pedido);
-    realizarPedido ? $.__views.pedido.addEventListener("click", realizarPedido) : __defers["$.__views.pedido!click!realizarPedido"] = true;
+    $.__views.footer.add($.__views.agregarDireccion);
+    agregarDireccion ? $.__views.agregarDireccion.addEventListener("click", agregarDireccion) : __defers["$.__views.agregarDireccion!click!agregarDireccion"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var win = $.direccion;
     var args = arguments[0] || {};
     var categorias = [];
     categorias[1] = "Perro";
@@ -215,121 +218,11 @@ function Controller() {
     direccion = args["direccion"];
     correo = args["correo"];
     telefono = args["telefono"];
-    var total_val = 0;
-    var mainScroll = $.mainScroll;
-    mainScroll.removeAllChildren();
-    for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) for (var k = 0; carro.length > k; k++) if (carro[k]["id"] == productos[i]["producto_precios"][j]["id"]) {
-        total_val += carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"];
-        var Main = Ti.UI.createView({
-            width: "100%",
-            layout: "horizontal",
-            height: "232px",
-            id: productos[i]["producto_precios"][j]["id"]
-        });
-        var Margen = Ti.UI.createView({
-            width: "100%",
-            height: "2px",
-            backgroundColor: "#e8e8e8"
-        });
-        var ImageViewProducto = Ti.UI.createImageView({
-            backgroundImage: productos[i]["prod_pic"],
-            width: "25%",
-            height: "100%"
-        });
-        var ViewLabels = Ti.UI.createView({
-            width: "75%",
-            height: "100%",
-            layout: "vertical",
-            top: "0%"
-        });
-        var LabelGroup = Ti.UI.createView({
-            width: "75%",
-            height: "60%",
-            layout: "vertical",
-            top: "0%"
-        });
-        var LabelNombre = Ti.UI.createLabel({
-            color: "#cc5122",
-            width: "100%",
-            height: "40%",
-            top: "20%",
-            left: "8%",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: productos[i]["brand"]
-        });
-        var LabelDescripcion = Ti.UI.createLabel({
-            color: "gray",
-            width: "100%",
-            height: "40%",
-            top: "0%",
-            left: "8%",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: productos[i]["prod_name"]
-        });
-        var LabelGroup2 = Ti.UI.createView({
-            width: "75%",
-            height: "40%",
-            layout: "horizontal",
-            top: "0%"
-        });
-        var LabelPeso = Ti.UI.createLabel({
-            width: "35%",
-            height: "50%",
-            color: "#5c5c5b",
-            top: "25%",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: productos[i]["producto_precios"][j]["sku_description"]
-        });
-        var LabelCantidad = Ti.UI.createLabel({
-            width: "35%",
-            height: "50%",
-            color: "#5c5c5b",
-            top: "25%",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: "Cant " + carro[k]["qty"]
-        });
-        var LabelPrecio = Ti.UI.createLabel({
-            width: "30%",
-            height: "50%",
-            color: "#5c5c5b",
-            top: "25%",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: "$" + carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"]
-        });
-        LabelGroup.add(LabelNombre);
-        LabelGroup.add(LabelDescripcion);
-        LabelGroup2.add(LabelPeso);
-        LabelGroup2.add(LabelCantidad);
-        LabelGroup2.add(LabelPrecio);
-        ViewLabels.add(LabelGroup);
-        ViewLabels.add(LabelGroup2);
-        Main.add(ImageViewProducto);
-        Main.add(ViewLabels);
-        mainScroll.add(Main);
-        mainScroll.add(Margen);
-    }
-    var total_label = $.totalLabel;
-    total_label.text = "$" + total_val;
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
-    __defers["$.__views.flecha!click!productosPerroGato"] && $.__views.flecha.addEventListener("click", productosPerroGato);
-    __defers["$.__views.pedido!click!realizarPedido"] && $.__views.pedido.addEventListener("click", realizarPedido);
+    __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
+    __defers["$.__views.agregarDireccion!click!agregarDireccion"] && $.__views.agregarDireccion.addEventListener("click", agregarDireccion);
     _.extend($, exports);
 }
 

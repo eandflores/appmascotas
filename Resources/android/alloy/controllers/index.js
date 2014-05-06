@@ -20,6 +20,7 @@ function Controller() {
         navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
+        backgroundImage: "/img/Fondo.jpg",
         id: "index"
     });
     $.__views.index && $.addTopLevelView($.__views.index);
@@ -72,6 +73,9 @@ function Controller() {
         color: "white",
         width: "50%",
         height: "100%",
+        font: {
+            fontWeight: "bold"
+        },
         title: "REGISTRARSE",
         id: "registro"
     });

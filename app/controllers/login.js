@@ -54,7 +54,7 @@ function getProductos(token,marcas){
 		onload: function(e){
 			var productos = JSON.parse(this.responseText);
 		
-			var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],medio: null, direccion: null,correo: null,telefono: null,categoria: 'TODAS',marca: 'TODAS'}).getView();
+			var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],medio: null, direccion: null,correo: null,telefono: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS"}).getView();
 			vista.open();
 		},
 		onerror: function(e){

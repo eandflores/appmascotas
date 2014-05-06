@@ -51,7 +51,8 @@ function Controller() {
                     correo: null,
                     telefono: null,
                     categoria: "TODAS",
-                    marca: "TODAS"
+                    marca: "TODAS",
+                    nombre: "TODOS"
                 }).getView();
                 vista.open();
             },

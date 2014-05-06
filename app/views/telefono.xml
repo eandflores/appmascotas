@@ -5,7 +5,7 @@
 			<ImageView id="perrogato" onClick="productosPerroGato"></ImageView>
 			<ImageView id="perro" onClick="productosPerro"></ImageView>
 			<ImageView id="gato" onClick="productosGato"></ImageView>
-			<ImageView id="lupaImg"></ImageView>
+			<ImageView id="lupaImg" onClick="buscarProducto"></ImageView>
 		</View>
 		<View id="marcas">
 			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
