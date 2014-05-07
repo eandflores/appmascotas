@@ -5,8 +5,9 @@ function Controller() {
         Ti.App.nombre = nombre;
         var marcasScroll = $.marcasScroll;
         for (var i = 0; marcas.length > i; i++) {
-            var ImageViewMarca = Ti.UI.createImageView({
-                backgroundImage: marcas[i]["banner"],
+            var ImageViewMarca = Utils.RemoteImage({
+                image: marcas[i]["banner"],
+                defaultImage: "/img/Doguitos.jpg",
                 width: "153.6px",
                 id: marcas[i]["id"],
                 height: "100%"
@@ -67,8 +68,9 @@ function Controller() {
                 height: "2px",
                 backgroundColor: "#e8e8e8"
             });
-            var ImageViewProducto = Ti.UI.createImageView({
-                backgroundImage: productos[i]["prod_pic"],
+            var ImageViewProducto = Utils.RemoteImage({
+                image: productos[i]["prod_pic"],
+                defaultImage: "/img/Perro1.jpg",
                 width: "25%",
                 height: "100%"
             });
@@ -187,7 +189,6 @@ function Controller() {
         var inputsBuscar;
         var lupa;
         var cerrar;
-        $.wrapper.opacity = 0;
         var winModal = Ti.UI.createWindow({
             backgroundColor: "#000",
             width: "100%",
@@ -206,10 +207,6 @@ function Controller() {
             width: "72%",
             height: "100%",
             hintText: "¿Que es lo que buscas?",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
             textAlign: "center",
             color: "white",
             backgroundColor: "#cb5122"
@@ -252,6 +249,7 @@ function Controller() {
             winModal.close();
             return true;
         });
+        $.wrapper.opacity = 0;
         viewModal.add(buscar);
         inputsBuscar.add(lupa);
         inputsBuscar.add(cerrar);

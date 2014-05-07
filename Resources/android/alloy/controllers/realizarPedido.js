@@ -1,4 +1,97 @@
 function Controller() {
+    function buscarProducto() {
+        var winModal;
+        var viewModal;
+        var buscar;
+        var inputsBuscar;
+        var lupa;
+        var cerrar;
+        $.wrapper.opacity = 0;
+        var winModal = Ti.UI.createWindow({
+            backgroundColor: "#000",
+            width: "100%",
+            height: "100%",
+            opacity: .85,
+            navBarHidden: "true"
+        });
+        var viewModal = Ti.UI.createView({
+            width: "100%",
+            height: "9.5%",
+            layout: "horizontal",
+            backgroundImage: "/img/fondoBuscar.jpg",
+            top: "0%"
+        });
+        var buscar = Ti.UI.createTextField({
+            width: "72%",
+            height: "100%",
+            hintText: "¿Que es lo que buscas?",
+            textAlign: "center",
+            color: "white",
+            backgroundColor: "#cb5122"
+        });
+        var inputsBuscar = Ti.UI.createView({
+            width: "28%",
+            height: "100%",
+            backgroundColor: "#cb5122",
+            layout: "horizontal"
+        });
+        var lupa = Ti.UI.createView({
+            width: "40%",
+            height: "70%",
+            left: "5%",
+            right: "5%",
+            top: "15%",
+            bottom: "15%",
+            backgroundImage: "/img/lupaBuscar.jpg"
+        });
+        lupa.addEventListener("click", function() {
+            $.wrapper.opacity = 1;
+            winModal.close();
+            productosNombre(buscar.value);
+        });
+        var cerrar = Ti.UI.createView({
+            left: "7.5%",
+            right: "7.5%",
+            top: "25%",
+            bottom: "25%",
+            width: "25%",
+            height: "50%",
+            backgroundImage: "/img/cerrar.jpg"
+        });
+        cerrar.addEventListener("click", function() {
+            $.wrapper.opacity = 1;
+            winModal.close();
+        });
+        winModal.addEventListener("android:back", function() {
+            $.wrapper.opacity = 1;
+            winModal.close();
+            return true;
+        });
+        viewModal.add(buscar);
+        inputsBuscar.add(lupa);
+        inputsBuscar.add(cerrar);
+        viewModal.add(inputsBuscar);
+        winModal.add(viewModal);
+        winModal.open();
+    }
+    function productosNombre(nombre) {
+        var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre
+        }).getView();
+        vista.open();
+    }
     function productosPerroGato() {
         var vista = Alloy.createController("productos", {
             token: token,
@@ -177,6 +270,7 @@ function Controller() {
         id: "lupaImg"
     });
     $.__views.wrapper.add($.__views.lupaImg);
+    buscarProducto ? $.__views.lupaImg.addEventListener("click", buscarProducto) : __defers["$.__views.lupaImg!click!buscarProducto"] = true;
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
@@ -457,8 +551,9 @@ function Controller() {
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var ImageViewProducto = Ti.UI.createImageView({
-            backgroundImage: productos[i]["prod_pic"],
+        var ImageViewProducto = Utils.RemoteImage({
+            image: productos[i]["prod_pic"],
+            defaultImage: "/img/Perro1.jpg",
             width: "25%",
             height: "100%"
         });
@@ -541,6 +636,7 @@ function Controller() {
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
+    __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
     __defers["$.__views.__alloyId29!click!setDireccion"] && $.__views.__alloyId29.addEventListener("click", setDireccion);
     __defers["$.__views.__alloyId31!click!setCorreo"] && $.__views.__alloyId31.addEventListener("click", setCorreo);

@@ -74,27 +74,33 @@ function Controller() {
         var inputsBuscar;
         var lupa;
         var cerrar;
+        $.wrapper.opacity = 0;
         var winModal = Ti.UI.createWindow({
             backgroundColor: "#000",
             width: "100%",
-            height: "9.5%"
+            height: "100%",
+            opacity: .85,
+            navBarHidden: "true"
         });
         var viewModal = Ti.UI.createView({
             width: "100%",
-            height: "100%",
+            height: "9.5%",
             layout: "horizontal",
-            backgroundImage: "/img/fondoBuscar.jpg"
+            backgroundImage: "/img/fondoBuscar.jpg",
+            top: "0%"
         });
         var buscar = Ti.UI.createTextField({
             width: "72%",
             height: "100%",
             hintText: "¿Que es lo que buscas?",
+            textAlign: "center",
             color: "white",
-            textAlign: "center"
+            backgroundColor: "#cb5122"
         });
         var inputsBuscar = Ti.UI.createView({
             width: "28%",
             height: "100%",
+            backgroundColor: "#cb5122",
             layout: "horizontal"
         });
         var lupa = Ti.UI.createView({
@@ -107,6 +113,8 @@ function Controller() {
             backgroundImage: "/img/lupaBuscar.jpg"
         });
         lupa.addEventListener("click", function() {
+            $.wrapper.opacity = 1;
+            winModal.close();
             productosNombre(buscar.value);
         });
         var cerrar = Ti.UI.createView({
@@ -119,7 +127,13 @@ function Controller() {
             backgroundImage: "/img/cerrar.jpg"
         });
         cerrar.addEventListener("click", function() {
+            $.wrapper.opacity = 1;
             winModal.close();
+        });
+        winModal.addEventListener("android:back", function() {
+            $.wrapper.opacity = 1;
+            winModal.close();
+            return true;
         });
         viewModal.add(buscar);
         inputsBuscar.add(lupa);
@@ -307,8 +321,9 @@ function Controller() {
     telefono = args["telefono"];
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
-        var ImageViewMarca = Ti.UI.createImageView({
-            backgroundImage: marcas[i]["imagen"],
+        var ImageViewMarca = Utils.RemoteImage({
+            image: marcas[i]["banner"],
+            defaultImage: "/img/Doguitos.jpg",
             width: "153.6px",
             id: marcas[i]["id"],
             height: "100%"
@@ -334,8 +349,9 @@ function Controller() {
         layout: "horizontal",
         height: "28.7%"
     });
-    var ImageViewProducto = Ti.UI.createImageView({
-        backgroundImage: producto["prod_pic"],
+    var ImageViewProducto = Utils.RemoteImage({
+        image: producto["prod_pic"],
+        defaultImage: "/iimg/Perro1.jpg",
         width: "25%",
         height: "100%"
     });

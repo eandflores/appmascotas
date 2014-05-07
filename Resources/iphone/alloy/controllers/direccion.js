@@ -1,4 +1,85 @@
 function Controller() {
+    function buscarProducto() {
+        var winModal;
+        var viewModal;
+        var buscar;
+        var inputsBuscar;
+        var lupa;
+        var cerrar;
+        var winModal = Ti.UI.createWindow({
+            backgroundColor: "#000",
+            width: "100%",
+            top: "3.5%",
+            height: "9.1%"
+        });
+        var viewModal = Ti.UI.createView({
+            width: "100%",
+            height: "100%",
+            layout: "horizontal",
+            backgroundImage: "/img/fondoBuscar.jpg",
+            top: "0%"
+        });
+        var buscar = Ti.UI.createTextField({
+            width: "72%",
+            height: "100%",
+            hintText: "¿Que es lo que buscas?",
+            color: "white",
+            textAlign: "center"
+        });
+        var inputsBuscar = Ti.UI.createView({
+            width: "28%",
+            height: "100%",
+            layout: "horizontal"
+        });
+        var lupa = Ti.UI.createView({
+            width: "40%",
+            height: "70%",
+            left: "5%",
+            right: "5%",
+            top: "15%",
+            bottom: "15%",
+            backgroundImage: "/img/lupaBuscar.jpg"
+        });
+        lupa.addEventListener("click", function() {
+            productosNombre(buscar.value);
+        });
+        var cerrar = Ti.UI.createView({
+            left: "7.5%",
+            right: "7.5%",
+            top: "25%",
+            bottom: "25%",
+            width: "25%",
+            height: "50%",
+            backgroundImage: "/img/cerrar.jpg"
+        });
+        cerrar.addEventListener("click", function() {
+            winModal.close();
+        });
+        viewModal.add(buscar);
+        inputsBuscar.add(lupa);
+        inputsBuscar.add(cerrar);
+        viewModal.add(inputsBuscar);
+        winModal.add(viewModal);
+        winModal.open();
+    }
+    function productosNombre(nombre) {
+        var vista = Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre
+        }).getView();
+        vista.open();
+    }
     function productosPerroGato() {
         var vista = Alloy.createController("productos", {
             token: token,
@@ -132,6 +213,7 @@ function Controller() {
         id: "lupaImg"
     });
     $.__views.wrapper.add($.__views.lupaImg);
+    buscarProducto ? $.__views.lupaImg.addEventListener("click", buscarProducto) : __defers["$.__views.lupaImg!click!buscarProducto"] = true;
     $.__views.marcas = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
@@ -223,6 +305,7 @@ function Controller() {
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
+    __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
     __defers["$.__views.agregarDireccion!click!agregarDireccion"] && $.__views.agregarDireccion.addEventListener("click", agregarDireccion);
     _.extend($, exports);

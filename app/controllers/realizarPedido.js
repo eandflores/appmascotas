@@ -48,8 +48,9 @@ for(var i = 0; i < productos.length; i++){
 					backgroundColor:"#e8e8e8"
 				});
 				
-				var ImageViewProducto = Ti.UI.createImageView({
-					backgroundImage : productos[i]['prod_pic'],
+				var ImageViewProducto = Utils.RemoteImage({
+					image : productos[i]['prod_pic'],
+					defaultImage: "/img/Perro1.jpg",
 					width:"25%",
 					height:"100%"
 				});
@@ -301,19 +302,19 @@ function productosNombre(nombre){
 
 function productosPerroGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS"}).getView();
 	vista.open();
 }
 
 function productosPerro(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS"}).getView();
 	vista.open();
 }
 
 function productosGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS"}).getView();
+	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS"}).getView();
 	vista.open();
 }
 

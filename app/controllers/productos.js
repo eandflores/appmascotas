@@ -39,8 +39,9 @@ function ordenarProductos(categoria,marca,nombre){
 	var marcasScroll = $.marcasScroll;
 
 	for(var i = 0; i < marcas.length; i++){
-		var ImageViewMarca = Ti.UI.createImageView({
-			backgroundImage : marcas[i]['banner'],
+		var ImageViewMarca = Utils.RemoteImage({
+			image : marcas[i]['banner'],
+			defaultImage: "/img/Doguitos.jpg",
 			width:"153.6px",
 			id: marcas[i]['id'],
 			height:"100%"
@@ -133,8 +134,9 @@ function ordenarProductos(categoria,marca,nombre){
 				backgroundColor:"#e8e8e8"
 			});
 			
-			var ImageViewProducto = Ti.UI.createImageView({
-				backgroundImage : productos[i]['prod_pic'],
+			var ImageViewProducto = Utils.RemoteImage({
+				image : productos[i]['prod_pic'],
+				defaultImage: "/img/Perro1.jpg",
 				width:"25%",
 				height:"100%"
 			});
@@ -343,7 +345,6 @@ function buscarProducto(){
 		});
 	}
 	else{
-		$.wrapper.opacity = 0;
 		
 		var winModal = Ti.UI.createWindow({
 	        backgroundColor : '#000',
@@ -413,6 +414,8 @@ function buscarProducto(){
 			winModal.close();
 			return true;
 		});
+		
+		$.wrapper.opacity = 0;
 	}
 	
 	viewModal.add(buscar);
