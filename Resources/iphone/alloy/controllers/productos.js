@@ -56,7 +56,6 @@ function Controller() {
             mainScroll.add(resultados);
         }
         var cant_productos = 0;
-        winCargando.close();
         for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
@@ -155,6 +154,7 @@ function Controller() {
                 mainScroll.add(Margen);
             }
         }
+        winCargando.close();
         "TODOS" != nombre && (resultadoProducto.text = "SE HAN ENCONTRADO " + cant_productos + " PRODUCTOS");
     }
     function productosPerroGato() {

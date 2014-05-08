@@ -167,9 +167,7 @@ function ordenarProductos(categoria,marca,nombre){
 	
 	var cant_productos = 0;
 	
-	winCargando.close();
-	
-	for(var i = 0; i < productos.length; i++){
+	for(var i = 55; i < 65; i++){
 		
 		for(var j = 0; j < productos[i]['producto_precios'].length; j++){
 			
@@ -291,6 +289,8 @@ function ordenarProductos(categoria,marca,nombre){
 			}
 		}
 	}
+	
+	winCargando.close();
 	
 	if(nombre != "TODOS"){
 		resultadoProducto.text = "SE HAN ENCONTRADO "+cant_productos+" PRODUCTOS";

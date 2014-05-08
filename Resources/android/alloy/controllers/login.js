@@ -65,7 +65,7 @@ function Controller() {
                 winCargando.close();
             }
         });
-        xhrProductos.open("GET", "http://tiendapet.cl/api/productos");
+        xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
         xhrProductos.send();
     }
     function atras() {
