@@ -4,6 +4,7 @@ function Controller() {
         vista.open();
     }
     function registro() {
+        winCargando.open();
         var email = $.inputCorreo.value;
         var password = $.inputClave.value;
         xhr = Ti.Network.createHTTPClient({
@@ -14,6 +15,7 @@ function Controller() {
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
+                winCargando.close();
             }
         });
         xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
@@ -30,6 +32,7 @@ function Controller() {
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
+                winCargando.close();
             }
         });
         xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
@@ -54,10 +57,12 @@ function Controller() {
                     marca: "TODAS",
                     nombre: "TODOS"
                 }).getView();
+                winCargando.close();
                 vista.open();
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
+                winCargando.close();
             }
         });
         xhrProductos.open("GET", "http://tiendapet.cl/api/productos");
@@ -194,6 +199,28 @@ function Controller() {
     var win = $.login;
     $.inputCorreo.value = "prueba3";
     $.inputClave.value = "123";
+    var winCargando;
+    var labelCargando;
+    var winCargando = Ti.UI.createWindow({
+        backgroundColor: "#000",
+        width: "100%",
+        height: "100%",
+        opacity: .7,
+        navBarHidden: "true"
+    });
+    var labelCargando = Ti.UI.createLabel({
+        width: "100%",
+        height: "20%",
+        top: "40%",
+        bottom: "40%",
+        text: "CARGANDO...",
+        textAlign: "center",
+        color: "white",
+        font: {
+            fontWeight: "bold"
+        }
+    });
+    winCargando.add(labelCargando);
     __defers["$.__views.__alloyId24!click!atras"] && $.__views.__alloyId24.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);

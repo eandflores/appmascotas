@@ -187,14 +187,15 @@ Peso.addEventListener("click",function(){
 	        backgroundColor : '#000',
 	        width:'100%',
 	        height:'100%',
-	        opacity:0.40
+	        opacity:0.40,
+	        navBarHidden: "true"
 	    });
 	    
 	    var viewModalPeso = Ti.UI.createView({
 			width:"100%",
 			height:"18.7%",
 			layout:"vertical",
-			top:"33.5%"
+			top:"36%"
 		});
 	}
 	
@@ -299,14 +300,15 @@ Cantidad.addEventListener("click",function(){
 	        backgroundColor : '#000',
 	        width:'100%',
 	        height:'100%',
-	        opacity:0.40
+	        opacity:0.40,
+	        navBarHidden: "true"
 	    });
 	    
 	    var viewModalCantidad = Ti.UI.createView({
 			width:"100%",
 			height:"18.7%",
 			layout:"vertical",
-			top:"43%"
+			top:"45%"
 		});
 	}
 	

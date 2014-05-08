@@ -93,7 +93,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -110,7 +111,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[1],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -127,7 +129,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[2],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -144,7 +147,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: marca
+            marca: marca,
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -354,8 +358,9 @@ function Controller() {
     var marcasScroll = $.marcasScroll;
     marcasScroll.removeAllChildren();
     for (var i = 0; marcas.length > i; i++) {
-        var ImageViewMarca = Ti.UI.createImageView({
-            backgroundImage: marcas[i]["banner"],
+        var ImageViewMarca = Utils.RemoteImage({
+            image: marcas[i]["banner"],
+            defaultImage: "/img/Doguitos.jpg",
             width: "153.6px",
             id: marcas[i]["id"],
             height: "100%"

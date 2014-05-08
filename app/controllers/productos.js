@@ -28,9 +28,59 @@ Ti.App.categoria_actual = args['categoria'];
 Ti.App.marca_actual = args['marca'];
 Ti.App.nombre = args['nombre'];
 
+if(Titanium.Platform.name == "iPhone OS"){
+	var winCargando = Ti.UI.createWindow({
+        backgroundColor : '#000',
+        width:'100%',
+        top: "3.5%",
+        height:'96.5%',
+        opacity:0.70
+        
+    });
+    
+    var labelCargando = Ti.UI.createLabel({
+		width:"100%",
+		height:"20%",
+		top:"40%",
+		bottom:"40%",
+		text:"CARGANDO...",
+		textAlign: "center",
+		color:"white",
+		font: {
+			fontWeight:"bold"
+		}
+	});
+}
+else{
+	var winCargando = Ti.UI.createWindow({
+        backgroundColor : '#000',
+        width:'100%',
+        height:'100%',
+        opacity:0.70,
+        navBarHidden: "true"
+    });
+    
+     var labelCargando = Ti.UI.createLabel({
+		width:"100%",
+		height:"20%",
+		top:"40%",
+		bottom:"40%",
+		text:"CARGANDO...",
+		textAlign: "center",
+		color:"white",
+		font: {
+			fontWeight:"bold"
+		}
+	});
+}
+
+winCargando.add(labelCargando);
+
 ordenarProductos(Ti.App.categoria_actual,Ti.App.marca_actual,Ti.App.nombre);
 
 function ordenarProductos(categoria,marca,nombre){
+	
+	//$.mainScroll.setOpacity(1);
 	
 	Ti.App.categoria_actual = categoria;
 	Ti.App.marca_actual = marca;
@@ -116,7 +166,9 @@ function ordenarProductos(categoria,marca,nombre){
 	}
 	
 	var cant_productos = 0;
-	 
+	
+	winCargando.close();
+	
 	for(var i = 0; i < productos.length; i++){
 		
 		for(var j = 0; j < productos[i]['producto_precios'].length; j++){
@@ -247,6 +299,8 @@ function ordenarProductos(categoria,marca,nombre){
 
 function productosPerroGato(){
 	
+	winCargando.open();
+	//$.mainScroll.setOpacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 	
@@ -254,6 +308,9 @@ function productosPerroGato(){
 }
 
 function productosPerro(){
+	
+	winCargando.open();
+	//$.mainScroll.setOpacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 	
@@ -262,6 +319,8 @@ function productosPerro(){
 
 function productosGato(){
 	
+	winCargando.open();
+	//$.mainScroll.setOpacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 	
@@ -269,18 +328,16 @@ function productosGato(){
 }
 
 function productosMarca(marca){
+	
+	winCargando.open();
+	//$.mainScroll.setOpacity(0);
+	$.mainScroll.removeAllChildren();
+	$.marcasScroll.removeAllChildren();
+		
 	if(marca == Ti.App.marca_actual){
-		
-		$.mainScroll.removeAllChildren();
-		$.marcasScroll.removeAllChildren();
-		
 		ordenarProductos("TODAS","TODAS","TODOS");	
 	}
 	else{
-		
-		$.mainScroll.removeAllChildren();
-		$.marcasScroll.removeAllChildren();
-	
 		ordenarProductos("TODAS",marca,"TODOS");
 	}
 }
@@ -428,6 +485,8 @@ function buscarProducto(){
 
 function productosNombre(nombre){
 	
+	winCargando.open();
+	//$.mainScroll.setOpacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 	
@@ -436,6 +495,8 @@ function productosNombre(nombre){
 
 function productosView(producto){
 	
+	winCargando.open();
+	//$.mainScroll.setOopacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 	

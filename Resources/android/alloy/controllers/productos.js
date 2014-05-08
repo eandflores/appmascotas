@@ -56,6 +56,7 @@ function Controller() {
             mainScroll.add(resultados);
         }
         var cant_productos = 0;
+        winCargando.close();
         for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
@@ -157,30 +158,28 @@ function Controller() {
         "TODOS" != nombre && (resultadoProducto.text = "SE HAN ENCONTRADO " + cant_productos + " PRODUCTOS");
     }
     function productosPerroGato() {
+        winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
         ordenarProductos(categorias[3], "TODAS", "TODOS");
     }
     function productosPerro() {
+        winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
         ordenarProductos(categorias[1], "TODAS", "TODOS");
     }
     function productosGato() {
+        winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
         ordenarProductos(categorias[2], "TODAS", "TODOS");
     }
     function productosMarca(marca) {
-        if (marca == Ti.App.marca_actual) {
-            $.mainScroll.removeAllChildren();
-            $.marcasScroll.removeAllChildren();
-            ordenarProductos("TODAS", "TODAS", "TODOS");
-        } else {
-            $.mainScroll.removeAllChildren();
-            $.marcasScroll.removeAllChildren();
-            ordenarProductos("TODAS", marca, "TODOS");
-        }
+        winCargando.open();
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        marca == Ti.App.marca_actual ? ordenarProductos("TODAS", "TODAS", "TODOS") : ordenarProductos("TODAS", marca, "TODOS");
     }
     function buscarProducto() {
         var winModal;
@@ -258,11 +257,13 @@ function Controller() {
         winModal.open();
     }
     function productosNombre(nombre) {
+        winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
         ordenarProductos("TODAS", "TODAS", nombre);
     }
     function productosView(producto) {
+        winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
         var vista = Alloy.createController("productoView", {
@@ -407,6 +408,28 @@ function Controller() {
     Ti.App.categoria_actual = args["categoria"];
     Ti.App.marca_actual = args["marca"];
     Ti.App.nombre = args["nombre"];
+    var winCargando;
+    var labelCargando;
+    var winCargando = Ti.UI.createWindow({
+        backgroundColor: "#000",
+        width: "100%",
+        height: "100%",
+        opacity: .7,
+        navBarHidden: "true"
+    });
+    var labelCargando = Ti.UI.createLabel({
+        width: "100%",
+        height: "20%",
+        top: "40%",
+        bottom: "40%",
+        text: "CARGANDO...",
+        textAlign: "center",
+        color: "white",
+        font: {
+            fontWeight: "bold"
+        }
+    });
+    winCargando.add(labelCargando);
     ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual, Ti.App.nombre);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);

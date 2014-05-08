@@ -12,7 +12,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -29,7 +30,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[1],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -46,7 +48,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[2],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -63,7 +66,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: marca
+            marca: marca,
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -144,7 +148,8 @@ function Controller() {
             telefono: telefono,
             categoria: "TODAS",
             marca: "TODAS",
-            nombre: nombre
+            nombre: nombre,
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -311,8 +316,9 @@ function Controller() {
     telefono = args["telefono"];
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
-        var ImageViewMarca = Ti.UI.createImageView({
-            backgroundImage: marcas[i]["imagen"],
+        var ImageViewMarca = Utils.RemoteImage({
+            image: marcas[i]["banner"],
+            defaultImage: "/img/Doguitos.jpg",
             width: "153.6px",
             id: marcas[i]["id"],
             height: "100%"
@@ -338,8 +344,9 @@ function Controller() {
         layout: "horizontal",
         height: "28.7%"
     });
-    var ImageViewProducto = Ti.UI.createImageView({
-        backgroundImage: producto["prod_pic"],
+    var ImageViewProducto = Utils.RemoteImage({
+        image: producto["prod_pic"],
+        defaultImage: "/iimg/Perro1.jpg",
         width: "25%",
         height: "100%"
     });

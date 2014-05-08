@@ -12,7 +12,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -29,7 +30,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[1],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -46,7 +48,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[2],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -63,7 +66,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: marca
+            marca: marca,
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -156,7 +160,8 @@ function Controller() {
             telefono: telefono,
             categoria: "TODAS",
             marca: "TODAS",
-            nombre: nombre
+            nombre: nombre,
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -431,13 +436,14 @@ function Controller() {
             backgroundColor: "#000",
             width: "100%",
             height: "100%",
-            opacity: .4
+            opacity: .4,
+            navBarHidden: "true"
         });
         var viewModalPeso = Ti.UI.createView({
             width: "100%",
             height: "18.7%",
             layout: "vertical",
-            top: "33.5%"
+            top: "36%"
         });
         var FlechaArrPeso = Ti.UI.createImageView({
             width: "9.4%",
@@ -513,13 +519,14 @@ function Controller() {
             backgroundColor: "#000",
             width: "100%",
             height: "100%",
-            opacity: .4
+            opacity: .4,
+            navBarHidden: "true"
         });
         var viewModalCantidad = Ti.UI.createView({
             width: "100%",
             height: "18.7%",
             layout: "vertical",
-            top: "43%"
+            top: "45%"
         });
         var FlechaArrCantidad = Ti.UI.createImageView({
             width: "9.4%",

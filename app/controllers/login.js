@@ -1,6 +1,57 @@
 var win =  $.login;
+
+
+
 $.inputCorreo.value = "prueba3";
 $.inputClave.value = "123";
+
+if(Titanium.Platform.name == "iPhone OS"){
+	var winCargando = Ti.UI.createWindow({
+        backgroundColor : '#000',
+        width:'100%',
+        top: "3.5%",
+        height:'96.5%',
+        opacity:0.70
+        
+    });
+    
+    var labelCargando = Ti.UI.createLabel({
+		width:"100%",
+		height:"20%",
+		top:"40%",
+		bottom:"40%",
+		text:"CARGANDO...",
+		textAlign: "center",
+		color:"white",
+		font: {
+			fontWeight:"bold"
+		}
+	});
+}
+else{
+	var winCargando = Ti.UI.createWindow({
+        backgroundColor : '#000',
+        width:'100%',
+        height:'100%',
+        opacity:0.70,
+        navBarHidden: "true"
+    });
+    
+     var labelCargando = Ti.UI.createLabel({
+		width:"100%",
+		height:"20%",
+		top:"40%",
+		bottom:"40%",
+		text:"CARGANDO...",
+		textAlign: "center",
+		color:"white",
+		font: {
+			fontWeight:"bold"
+		}
+	});
+}
+
+winCargando.add(labelCargando);
 
 function recuperarContraseña(){
 	
@@ -9,6 +60,8 @@ function recuperarContraseña(){
 }
 
 function registro(){
+	
+	winCargando.open();
 	
 	var email = $.inputCorreo.value;
 	var password = $.inputClave.value;
@@ -25,6 +78,7 @@ function registro(){
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
+			winCargando.close();
 		}
 	});
 	
@@ -41,6 +95,7 @@ function getMarcas(token){
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
+			winCargando.close();
 		}
 	});
 	
@@ -55,10 +110,12 @@ function getProductos(token,marcas){
 			var productos = JSON.parse(this.responseText);
 		
 			var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],medio: null, direccion: null,correo: null,telefono: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS"}).getView();
+			winCargando.close();
 			vista.open();
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
+			winCargando.close();
 		}
 	});
 	

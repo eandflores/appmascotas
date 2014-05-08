@@ -153,7 +153,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -170,7 +171,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[1],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -187,7 +189,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[2],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }

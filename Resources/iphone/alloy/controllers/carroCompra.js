@@ -93,7 +93,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[3],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -110,7 +111,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[1],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -127,7 +129,8 @@ function Controller() {
             correo: correo,
             telefono: telefono,
             categoria: categorias[2],
-            marca: "TODAS"
+            marca: "TODAS",
+            nombre: "TODOS"
         }).getView();
         vista.open();
     }
@@ -315,8 +318,9 @@ function Controller() {
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var ImageViewProducto = Ti.UI.createImageView({
-            backgroundImage: productos[i]["prod_pic"],
+        var ImageViewProducto = Utils.RemoteImage({
+            image: productos[i]["prod_pic"],
+            defaultImage: "/img/Perro1.jpg",
             width: "25%",
             height: "100%"
         });
