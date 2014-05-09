@@ -75,7 +75,7 @@ function Controller() {
         winModal.open();
     }
     function productosNombre(nombre) {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -89,11 +89,10 @@ function Controller() {
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -107,11 +106,10 @@ function Controller() {
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerro() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -125,11 +123,10 @@ function Controller() {
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -143,11 +140,10 @@ function Controller() {
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function realizarPedido() {
-        var vista = Alloy.createController("realizarPedido", {
+        Alloy.createController("realizarPedido", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -158,8 +154,10 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
+    }
+    function atras() {
+        $.carroCompra.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "carroCompra";
@@ -239,7 +237,7 @@ function Controller() {
         backgroundImage: "/img/FlechaIzq.jpg"
     });
     $.__views.marcas.add($.__views.flecha);
-    productosPerroGato ? $.__views.flecha.addEventListener("click", productosPerroGato) : __defers["$.__views.flecha!click!productosPerroGato"] = true;
+    atras ? $.__views.flecha.addEventListener("click", atras) : __defers["$.__views.flecha!click!atras"] = true;
     $.__views.carro = Ti.UI.createImageView({
         width: "72%",
         height: "85%",
@@ -302,19 +300,18 @@ function Controller() {
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
-    carro = args["carro"];
-    token = args["token"];
-    marcas = args["marcas"];
-    productos = args["productos"];
-    medios = args["medios"];
-    direcciones = args["direcciones"];
-    medio = args["medio"];
-    direccion = args["direccion"];
-    correo = args["correo"];
-    telefono = args["telefono"];
+    var carro = args["carro"];
+    var token = args["token"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    var correo = args["correo"];
+    var telefono = args["telefono"];
     var total_val = 0;
-    var mainScroll = $.mainScroll;
-    mainScroll.removeAllChildren();
+    $.mainScroll.removeAllChildren();
     for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) for (var k = 0; carro.length > k; k++) if (carro[k]["id"] == productos[i]["producto_precios"][j]["id"]) {
         total_val += carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"];
         var Main = Ti.UI.createView({
@@ -328,7 +325,7 @@ function Controller() {
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var ImageViewProducto = Utils.RemoteImage({
+        var ImageViewProducto = Ti.UI.createImageView({
             image: productos[i]["prod_pic"],
             defaultImage: "/img/Perro1.jpg",
             width: "25%",
@@ -418,16 +415,15 @@ function Controller() {
         ViewLabels.add(LabelGroup2);
         Main.add(ImageViewProducto);
         Main.add(ViewLabels);
-        mainScroll.add(Main);
-        mainScroll.add(Margen);
+        $.mainScroll.add(Main);
+        $.mainScroll.add(Margen);
     }
-    var total_label = $.totalLabel;
-    total_label.text = "$" + total_val;
+    $.totalLabel.text = "$" + total_val;
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
-    __defers["$.__views.flecha!click!productosPerroGato"] && $.__views.flecha.addEventListener("click", productosPerroGato);
+    __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
     __defers["$.__views.pedido!click!realizarPedido"] && $.__views.pedido.addEventListener("click", realizarPedido);
     _.extend($, exports);
 }

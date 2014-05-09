@@ -8,7 +8,7 @@
 			<ImageView id="lupaImg" onClick="buscarProducto"></ImageView>
 		</View>
 		<View id="marcas">
-			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="productosPerroGato"></ImageView>
+			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
 			<ImageView id="carro" backgroundImage="/img/carro.jpg"></ImageView>
 		</View>
 		<ScrollView id="mainScroll"></ScrollView>

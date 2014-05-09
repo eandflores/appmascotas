@@ -1,6 +1,6 @@
 function Controller() {
     function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -14,11 +14,10 @@ function Controller() {
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerro() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -32,11 +31,10 @@ function Controller() {
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -50,11 +48,10 @@ function Controller() {
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosMarca(marca) {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -68,8 +65,7 @@ function Controller() {
             categoria: categorias[3],
             marca: marca,
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function buscarProducto() {
         var winModal;
@@ -147,7 +143,7 @@ function Controller() {
         winModal.open();
     }
     function productosNombre(nombre) {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -162,15 +158,14 @@ function Controller() {
             marca: "TODAS",
             nombre: nombre,
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function carroCompra() {
         carro.push({
             id: productoPrecio["id"],
             qty: InputCantidad.value
         });
-        var vista = Alloy.createController("carroCompra", {
+        Alloy.createController("carroCompra", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -181,8 +176,7 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productoView";
@@ -318,13 +312,12 @@ function Controller() {
     var token = args["token"];
     var marcas = args["marcas"];
     var productos = args["productos"];
-    medios = args["medios"];
-    direcciones = args["direcciones"];
-    medio = args["medio"];
-    direccion = args["direccion"];
-    correo = args["correo"];
-    telefono = args["telefono"];
-    var marcasScroll = $.marcasScroll;
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    var correo = args["correo"];
+    var telefono = args["telefono"];
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
             image: marcas[i]["brand_logo"],
@@ -336,9 +329,8 @@ function Controller() {
         ImageViewMarca.addEventListener("click", function() {
             productosMarca(this["id"]);
         });
-        marcasScroll.add(ImageViewMarca);
+        $.marcasScroll.add(ImageViewMarca);
     }
-    var Main = $.Main;
     var producto;
     var indice;
     var productoPrecio;
@@ -356,7 +348,7 @@ function Controller() {
     });
     var ImageViewProducto = Ti.UI.createImageView({
         image: producto["prod_pic"],
-        defaultImage: "/iimg/Perro1.jpg",
+        defaultImage: "/img/Perro1.jpg",
         width: "25%",
         height: "100%"
     });
@@ -604,15 +596,15 @@ function Controller() {
         height: "0.2%",
         backgroundColor: "#e8e8e8"
     });
-    Main.add(Producto);
-    Main.add(Borde1);
-    Main.add(Peso);
-    Main.add(Borde2);
-    Main.add(Cantidad);
-    Main.add(Borde3);
-    Main.add(DescripcionTitulo);
-    Main.add(Borde4);
-    Main.add(DescripcionContenido);
+    $.Main.add(Producto);
+    $.Main.add(Borde1);
+    $.Main.add(Peso);
+    $.Main.add(Borde2);
+    $.Main.add(Cantidad);
+    $.Main.add(Borde3);
+    $.Main.add(DescripcionTitulo);
+    $.Main.add(Borde4);
+    $.Main.add(DescripcionContenido);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

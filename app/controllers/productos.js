@@ -1,5 +1,3 @@
-var win =  $.productos;
-
 var args = arguments[0] || {};
 
 var categorias = [];
@@ -11,22 +9,22 @@ categorias[2] = "Gato";
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
 
-token = args['token'];
-carro = args['carro'];
+var token = args['token'];
+var carro = args['carro'];
 
-marcas = args['marcas'];
-productos = args['productos'];
-medios = args['medios'];
-direcciones = args['direcciones'];
+var marcas = args['marcas'];
+var productos = args['productos'];
+var medios = args['medios'];
+var direcciones = args['direcciones'];
 
-medio = args['medio'];
-direccion = args['direccion'];
-correo = args['correo'];
-telefono = args['telefono'];
+var medio = args['medio'];
+var direccion = args['direccion'];
+var correo = args['correo'];
+var telefono = args['telefono'];
 
-categoria = args['categoria'];
-marca = args['marca'];
-nombre = args['nombre'];
+var categoria = args['categoria'];
+var marca = args['marca'];
+var nombre = args['nombre'];
 
 if(Titanium.Platform.name == "iPhone OS"){
 	var winCargando = Ti.UI.createWindow({
@@ -79,8 +77,6 @@ winCargando.add(labelCargando);
 ordenarProductos(categoria,marca,nombre);
 
 function ordenarProductos(categoria,marca,nombre){
-	
-	var marcasScroll = $.marcasScroll;
 
 	for(var i = 0; i < marcas.length; i++){
 		var ImageViewMarca = Ti.UI.createImageView({
@@ -103,7 +99,7 @@ function ordenarProductos(categoria,marca,nombre){
 			marcasScroll.add(ImageViewMarca);	
 		}
 		*/
-		marcasScroll.add(ImageViewMarca);
+		$.marcasScroll.add(ImageViewMarca);
 	}
 	
 	$.perrogato.backgroundImage = "/img/perrogato.jpg";
@@ -119,8 +115,6 @@ function ordenarProductos(categoria,marca,nombre){
 	else if(categoria == "Gato"){
 		$.gato.backgroundImage = "/img/gato2.jpg";
 	}
-	
-	var mainScroll = $.mainScroll;
 	
 	if(nombre != "TODOS"){
 		var resultados = Ti.UI.createView({
@@ -156,7 +150,7 @@ function ordenarProductos(categoria,marca,nombre){
 		
 		resultados.add(resultadoProducto);
 		resultados.add(resultadoNombre);
-		mainScroll.add(resultados);
+		$.mainScroll.add(resultados);
 	}
 	
 	var cant_productos = 0;
@@ -165,120 +159,465 @@ function ordenarProductos(categoria,marca,nombre){
 		
 		for(var j = 0; j < productos[i]['producto_precios'].length; j++){
 			
-			var Main = Ti.UI.createView({
-				width:"100%",
-				layout:'horizontal',
-				height:"232px",
-				id: productos[i]['producto_precios'][j]['id']
-			});
-			
-			var Margen = Ti.UI.createView({
-				width:"100%",
-				height:"2px",
-				backgroundColor:"#e8e8e8"
-			});
-			
-			var ImageViewProducto = Ti.UI.createImageView({
-				image : productos[i]['prod_pic'],
-				defaultImage: "/img/Perro1.jpg",
-				width:"25%",
-				height:"100%"
-			});
-			
-			var LabelGroup = Ti.UI.createView({
-				width:"68%",
-				height:"100%",
-				layout:"vertical",
-				top:"0%"
-			});
-			
-			var LabelNombre = Ti.UI.createLabel({
-				color:"#cc5122",
-				width:"100%",
-				height:"20%",
-				top:"20%",
-				left:"8%",
-				font:{
-					fontFamily:"Noto Sans",
-					fontWeight:"bold"
-				},
-				text : productos[i]['brand']
-			});
-			
-			var LabelDescripcion = Ti.UI.createLabel({
-				color:"gray",
-				width:"100%",
-				height:"20%",
-				top:"0%",
-				left:"8%",
-				font:{
-					fontFamily:"Noto Sans",
-					fontWeight:"bold"
-				},
-				text : productos[i]['prod_name']
-			});
-			
-			var LabelPrecio = Ti.UI.createLabel({
-				width:"100%",
-				height:"20%",
-				color:"#5c5c5b",
-				top:"0%",
-				left:"8%",
-				font:{
-					fontFamily:"Noto Sans",
-					fontWeight:"bold"
-				},
-				text : productos[i]['producto_precios'][j]['sku_description']+
-					" x $"+productos[i]['producto_precios'][j]['sku_price']
-			});
-			
-			var ImageViewFlecha = Ti.UI.createImageView({
-				width:"7%",
-				height:"100%",
-				backgroundImage : "/img/Flecha.jpg"
-			});
-			
-			LabelGroup.add(LabelNombre);
-			LabelGroup.add(LabelDescripcion);
-			LabelGroup.add(LabelPrecio);
-			
-			Main.add(ImageViewProducto);
-			Main.add(LabelGroup);
-			Main.add(ImageViewFlecha);
-			
-			Main.addEventListener("click",function(){
-				productosView(this['id']);
-			});
-			
 			if(nombre == "TODOS"){
 				if((categoria == "TODAS") && (marca == "TODAS")){
-					mainScroll.add(Main);	
-					mainScroll.add(Margen);	
+					
+					var Main = Ti.UI.createView({
+						width:"100%",
+						layout:'horizontal',
+						height:"232px",
+						id: productos[i]['producto_precios'][j]['id']
+					});
+					
+					var Margen = Ti.UI.createView({
+						width:"100%",
+						height:"2px",
+						backgroundColor:"#e8e8e8"
+					});
+					
+					var ImageViewProducto = Ti.UI.createImageView({
+						image : productos[i]['prod_pic'],
+						defaultImage: "/img/Perro1.jpg",
+						width:"25%",
+						height:"100%"
+					});
+					
+					var LabelGroup = Ti.UI.createView({
+						width:"68%",
+						height:"100%",
+						layout:"vertical",
+						top:"0%"
+					});
+					
+					var LabelNombre = Ti.UI.createLabel({
+						color:"#cc5122",
+						width:"100%",
+						height:"20%",
+						top:"20%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['brand']
+					});
+					
+					var LabelDescripcion = Ti.UI.createLabel({
+						color:"gray",
+						width:"100%",
+						height:"20%",
+						top:"0%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['prod_name']
+					});
+					
+					var LabelPrecio = Ti.UI.createLabel({
+						width:"100%",
+						height:"20%",
+						color:"#5c5c5b",
+						top:"0%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['producto_precios'][j]['sku_description']+
+							" x $"+productos[i]['producto_precios'][j]['sku_price']
+					});
+					
+					var ImageViewFlecha = Ti.UI.createImageView({
+						width:"7%",
+						height:"100%",
+						backgroundImage : "/img/Flecha.jpg"
+					});
+					
+					LabelGroup.add(LabelNombre);
+					LabelGroup.add(LabelDescripcion);
+					LabelGroup.add(LabelPrecio);
+					
+					Main.add(ImageViewProducto);
+					Main.add(LabelGroup);
+					Main.add(ImageViewFlecha);
+					
+					Main.addEventListener("click",function(){
+						productosView(this['id']);
+					});
+			
+					$.mainScroll.add(Main);	
+					$.mainScroll.add(Margen);	
 				}
 				else if((categoria == "TODAS") && (marca != "TODAS")){
 					if(marca == productos[i]['marca_id']){	
-						mainScroll.add(Main);
-						mainScroll.add(Margen);	
+						
+						var Main = Ti.UI.createView({
+							width:"100%",
+							layout:'horizontal',
+							height:"232px",
+							id: productos[i]['producto_precios'][j]['id']
+						});
+						
+						var Margen = Ti.UI.createView({
+							width:"100%",
+							height:"2px",
+							backgroundColor:"#e8e8e8"
+						});
+						
+						var ImageViewProducto = Ti.UI.createImageView({
+							image : productos[i]['prod_pic'],
+							defaultImage: "/img/Perro1.jpg",
+							width:"25%",
+							height:"100%"
+						});
+						
+						var LabelGroup = Ti.UI.createView({
+							width:"68%",
+							height:"100%",
+							layout:"vertical",
+							top:"0%"
+						});
+						
+						var LabelNombre = Ti.UI.createLabel({
+							color:"#cc5122",
+							width:"100%",
+							height:"20%",
+							top:"20%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['brand']
+						});
+						
+						var LabelDescripcion = Ti.UI.createLabel({
+							color:"gray",
+							width:"100%",
+							height:"20%",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['prod_name']
+						});
+						
+						var LabelPrecio = Ti.UI.createLabel({
+							width:"100%",
+							height:"20%",
+							color:"#5c5c5b",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['producto_precios'][j]['sku_description']+
+								" x $"+productos[i]['producto_precios'][j]['sku_price']
+						});
+						
+						var ImageViewFlecha = Ti.UI.createImageView({
+							width:"7%",
+							height:"100%",
+							backgroundImage : "/img/Flecha.jpg"
+						});
+						
+						LabelGroup.add(LabelNombre);
+						LabelGroup.add(LabelDescripcion);
+						LabelGroup.add(LabelPrecio);
+						
+						Main.add(ImageViewProducto);
+						Main.add(LabelGroup);
+						Main.add(ImageViewFlecha);
+						
+						Main.addEventListener("click",function(){
+							productosView(this['id']);
+						});
+				
+						$.mainScroll.add(Main);
+						$.mainScroll.add(Margen);	
 					}	
 				}
 				else if((categoria != "TODAS") && (marca == "TODAS")){
 					if(categoria == productos[i]['tipo']){
-						mainScroll.add(Main);	
-						mainScroll.add(Margen);	
+						
+						var Main = Ti.UI.createView({
+							width:"100%",
+							layout:'horizontal',
+							height:"232px",
+							id: productos[i]['producto_precios'][j]['id']
+						});
+						
+						var Margen = Ti.UI.createView({
+							width:"100%",
+							height:"2px",
+							backgroundColor:"#e8e8e8"
+						});
+						
+						var ImageViewProducto = Ti.UI.createImageView({
+							image : productos[i]['prod_pic'],
+							defaultImage: "/img/Perro1.jpg",
+							width:"25%",
+							height:"100%"
+						});
+						
+						var LabelGroup = Ti.UI.createView({
+							width:"68%",
+							height:"100%",
+							layout:"vertical",
+							top:"0%"
+						});
+						
+						var LabelNombre = Ti.UI.createLabel({
+							color:"#cc5122",
+							width:"100%",
+							height:"20%",
+							top:"20%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['brand']
+						});
+						
+						var LabelDescripcion = Ti.UI.createLabel({
+							color:"gray",
+							width:"100%",
+							height:"20%",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['prod_name']
+						});
+						
+						var LabelPrecio = Ti.UI.createLabel({
+							width:"100%",
+							height:"20%",
+							color:"#5c5c5b",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['producto_precios'][j]['sku_description']+
+								" x $"+productos[i]['producto_precios'][j]['sku_price']
+						});
+						
+						var ImageViewFlecha = Ti.UI.createImageView({
+							width:"7%",
+							height:"100%",
+							backgroundImage : "/img/Flecha.jpg"
+						});
+						
+						LabelGroup.add(LabelNombre);
+						LabelGroup.add(LabelDescripcion);
+						LabelGroup.add(LabelPrecio);
+						
+						Main.add(ImageViewProducto);
+						Main.add(LabelGroup);
+						Main.add(ImageViewFlecha);
+						
+						Main.addEventListener("click",function(){
+							productosView(this['id']);
+						});
+				
+						$.mainScroll.add(Main);	
+						$.mainScroll.add(Margen);	
 					}
 				}
 				else if((categoria != "TODAS") && (marca != "TODAS")){
 					if((categoria == productos[i]['tipo']) && (marca == productos[i]['marca_id'])){
-						mainScroll.add(Main);	
-						mainScroll.add(Margen);	
+						
+						var Main = Ti.UI.createView({
+							width:"100%",
+							layout:'horizontal',
+							height:"232px",
+							id: productos[i]['producto_precios'][j]['id']
+						});
+						
+						var Margen = Ti.UI.createView({
+							width:"100%",
+							height:"2px",
+							backgroundColor:"#e8e8e8"
+						});
+						
+						var ImageViewProducto = Ti.UI.createImageView({
+							image : productos[i]['prod_pic'],
+							defaultImage: "/img/Perro1.jpg",
+							width:"25%",
+							height:"100%"
+						});
+						
+						var LabelGroup = Ti.UI.createView({
+							width:"68%",
+							height:"100%",
+							layout:"vertical",
+							top:"0%"
+						});
+						
+						var LabelNombre = Ti.UI.createLabel({
+							color:"#cc5122",
+							width:"100%",
+							height:"20%",
+							top:"20%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['brand']
+						});
+						
+						var LabelDescripcion = Ti.UI.createLabel({
+							color:"gray",
+							width:"100%",
+							height:"20%",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['prod_name']
+						});
+						
+						var LabelPrecio = Ti.UI.createLabel({
+							width:"100%",
+							height:"20%",
+							color:"#5c5c5b",
+							top:"0%",
+							left:"8%",
+							font:{
+								fontFamily:"Noto Sans",
+								fontWeight:"bold"
+							},
+							text : productos[i]['producto_precios'][j]['sku_description']+
+								" x $"+productos[i]['producto_precios'][j]['sku_price']
+						});
+						
+						var ImageViewFlecha = Ti.UI.createImageView({
+							width:"7%",
+							height:"100%",
+							backgroundImage : "/img/Flecha.jpg"
+						});
+						
+						LabelGroup.add(LabelNombre);
+						LabelGroup.add(LabelDescripcion);
+						LabelGroup.add(LabelPrecio);
+						
+						Main.add(ImageViewProducto);
+						Main.add(LabelGroup);
+						Main.add(ImageViewFlecha);
+						
+						Main.addEventListener("click",function(){
+							productosView(this['id']);
+						});
+				
+						$.mainScroll.add(Main);	
+						$.mainScroll.add(Margen);	
 					}	
 				}
 			}
 			else{
 				if(productos[i]['brand'].toLowerCase().match(nombre.toLowerCase()) != null || productos[i]['prod_name'].toLowerCase().match(nombre.toLowerCase()) != null){
 					cant_productos = cant_productos + 1;
-					mainScroll.add(Main);	
-					mainScroll.add(Margen);	
+					
+					var Main = Ti.UI.createView({
+						width:"100%",
+						layout:'horizontal',
+						height:"232px",
+						id: productos[i]['producto_precios'][j]['id']
+					});
+					
+					var Margen = Ti.UI.createView({
+						width:"100%",
+						height:"2px",
+						backgroundColor:"#e8e8e8"
+					});
+					
+					var ImageViewProducto = Ti.UI.createImageView({
+						image : productos[i]['prod_pic'],
+						defaultImage: "/img/Perro1.jpg",
+						width:"25%",
+						height:"100%"
+					});
+					
+					var LabelGroup = Ti.UI.createView({
+						width:"68%",
+						height:"100%",
+						layout:"vertical",
+						top:"0%"
+					});
+					
+					var LabelNombre = Ti.UI.createLabel({
+						color:"#cc5122",
+						width:"100%",
+						height:"20%",
+						top:"20%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['brand']
+					});
+					
+					var LabelDescripcion = Ti.UI.createLabel({
+						color:"gray",
+						width:"100%",
+						height:"20%",
+						top:"0%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['prod_name']
+					});
+					
+					var LabelPrecio = Ti.UI.createLabel({
+						width:"100%",
+						height:"20%",
+						color:"#5c5c5b",
+						top:"0%",
+						left:"8%",
+						font:{
+							fontFamily:"Noto Sans",
+							fontWeight:"bold"
+						},
+						text : productos[i]['producto_precios'][j]['sku_description']+
+							" x $"+productos[i]['producto_precios'][j]['sku_price']
+					});
+					
+					var ImageViewFlecha = Ti.UI.createImageView({
+						width:"7%",
+						height:"100%",
+						backgroundImage : "/img/Flecha.jpg"
+					});
+					
+					LabelGroup.add(LabelNombre);
+					LabelGroup.add(LabelDescripcion);
+					LabelGroup.add(LabelPrecio);
+					
+					Main.add(ImageViewProducto);
+					Main.add(LabelGroup);
+					Main.add(ImageViewFlecha);
+					
+					Main.addEventListener("click",function(){
+						productosView(this['id']);
+					});
+			
+					$.mainScroll.add(Main);	
+					$.mainScroll.add(Margen);	
 				}
 			}
 		}
@@ -286,6 +625,11 @@ function ordenarProductos(categoria,marca,nombre){
 	
 	winCargando.close();
 	
+	//Por si no se cierra la ventana
+	setTimeout(function(){
+	   winCargando.close();
+	}, 2000);
+
 	if(nombre != "TODOS"){
 		resultadoProducto.text = "SE HAN ENCONTRADO "+cant_productos+" PRODUCTOS";
 	}
@@ -495,5 +839,6 @@ function productosView(producto){
 	$.marcasScroll.removeAllChildren();
 	
 	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,producto: producto}).getView();
+	winCargando.close();
 	vista.open();
 }

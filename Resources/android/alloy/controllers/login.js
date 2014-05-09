@@ -1,17 +1,16 @@
 function Controller() {
     function recuperarContraseña() {
-        var vista = Alloy.createController("recuperarContrasena").getView();
-        vista.open();
+        Alloy.createController("recuperarContrasena").getView().open();
     }
     function registro() {
         winCargando.open();
         var email = $.inputCorreo.value;
         var password = $.inputClave.value;
-        xhr = Ti.Network.createHTTPClient({
+        var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 var response = JSON.parse(this.responseText);
                 var token = response["token"];
-                getMarcas(token);
+                getProductos(token, marcas);
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
@@ -24,22 +23,8 @@ function Controller() {
             password: password
         });
     }
-    function getMarcas(token) {
-        xhrMarcas = Ti.Network.createHTTPClient({
-            onload: function() {
-                var marcas = JSON.parse(this.responseText);
-                getProductos(token, marcas);
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-                winCargando.close();
-            }
-        });
-        xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
-        xhrMarcas.send();
-    }
     function getProductos(token, marcas) {
-        xhrProductos = Ti.Network.createHTTPClient({
+        var xhrProductos = Ti.Network.createHTTPClient({
             onload: function() {
                 var productos = JSON.parse(this.responseText);
                 var vista = Alloy.createController("productos", {
@@ -69,7 +54,7 @@ function Controller() {
         xhrProductos.send();
     }
     function atras() {
-        win.close();
+        $.login.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "login";
@@ -196,7 +181,8 @@ function Controller() {
     registro ? $.__views.registro.addEventListener("click", registro) : __defers["$.__views.registro!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var win = $.login;
+    var args = arguments[0] || {};
+    var marcas = args["marcas"];
     $.inputCorreo.value = "prueba3";
     $.inputClave.value = "123";
     var winCargando;

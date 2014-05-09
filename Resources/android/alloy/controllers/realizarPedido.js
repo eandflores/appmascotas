@@ -75,7 +75,7 @@ function Controller() {
         winModal.open();
     }
     function productosNombre(nombre) {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -89,11 +89,10 @@ function Controller() {
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -107,11 +106,10 @@ function Controller() {
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerro() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -125,11 +123,10 @@ function Controller() {
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -143,11 +140,10 @@ function Controller() {
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function setDireccion() {
-        var vista = Alloy.createController("direccion", {
+        Alloy.createController("direccion", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -158,12 +154,11 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function setCorreo() {}
     function setMedioPago() {
-        var vista = Alloy.createController("medioPago", {
+        Alloy.createController("medioPago", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -174,11 +169,10 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function setTelefono() {
-        var vista = Alloy.createController("telefono", {
+        Alloy.createController("telefono", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -189,12 +183,11 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function setCupon() {}
     function gracias() {
-        var vista = Alloy.createController("gracias", {
+        Alloy.createController("gracias", {
             token: token,
             carro: [],
             marcas: marcas,
@@ -205,11 +198,10 @@ function Controller() {
             direccion: null,
             correo: null,
             telefono: null
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function atras() {
-        win.close();
+        $.realizarPedido.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "realizarPedido";
@@ -524,24 +516,22 @@ function Controller() {
     gracias ? $.__views.pedido.addEventListener("click", gracias) : __defers["$.__views.pedido!click!gracias"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var win = $.realizarPedido;
     var args = arguments[0] || {};
     var categorias = [];
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
-    carro = args["carro"];
-    token = args["token"];
-    marcas = args["marcas"];
-    productos = args["productos"];
-    medios = args["medios"];
-    direcciones = args["direcciones"];
-    medio = args["medio"];
-    direccion = args["direccion"];
-    correo = args["correo"];
-    telefono = args["telefono"];
-    var mainScroll = $.mainScroll;
-    mainScroll.removeAllChildren();
+    var carro = args["carro"];
+    var token = args["token"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    var correo = args["correo"];
+    var telefono = args["telefono"];
+    $.mainScroll.removeAllChildren();
     for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) for (var k = 0; carro.length > k; k++) if (carro[k]["id"] == productos[i]["producto_precios"][j]["id"]) {
         var Main = Ti.UI.createView({
             width: "100%",
@@ -554,7 +544,7 @@ function Controller() {
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var ImageViewProducto = Utils.RemoteImage({
+        var ImageViewProducto = Ti.UI.createImageView({
             image: productos[i]["prod_pic"],
             defaultImage: "/img/Perro1.jpg",
             width: "25%",
@@ -632,8 +622,8 @@ function Controller() {
         ViewLabels.add(LabelGroup2);
         Main.add(ImageViewProducto);
         Main.add(ViewLabels);
-        mainScroll.add(Main);
-        mainScroll.add(Margen);
+        $.mainScroll.add(Main);
+        $.mainScroll.add(Margen);
     }
     if (null != medio) for (i = 0; medios.length > i; i++) medios[i]["id"] == medio && ($.pago.text = medios[i]["paym_name"]);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);

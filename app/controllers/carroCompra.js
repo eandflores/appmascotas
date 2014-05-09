@@ -9,23 +9,22 @@ categorias[2] = "Gato";
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
 
-carro = args['carro'];
-token = args['token'];
+var carro = args['carro'];
+var token = args['token'];
 
-marcas = args['marcas'];
-productos = args['productos'];
-medios = args['medios'];
-direcciones = args['direcciones'];
+var marcas = args['marcas'];
+var productos = args['productos'];
+var medios = args['medios'];
+var direcciones = args['direcciones'];
 
-medio = args['medio'];
-direccion = args['direccion'];
-correo = args['correo'];
-telefono = args['telefono'];
+var medio = args['medio'];
+var direccion = args['direccion'];
+var correo = args['correo'];
+var telefono = args['telefono'];
 
 var total_val = 0;
 
-var mainScroll = $.mainScroll;
-mainScroll.removeAllChildren();
+$.mainScroll.removeAllChildren();
 
 for(var i = 0; i < productos.length; i++){
 	
@@ -50,7 +49,7 @@ for(var i = 0; i < productos.length; i++){
 					backgroundColor:"#e8e8e8"
 				});
 				
-				var ImageViewProducto = Utils.RemoteImage({
+				var ImageViewProducto = Ti.UI.createImageView({
 					image : productos[i]['prod_pic'],
 					defaultImage : "/img/Perro1.jpg",
 					width:"25%",
@@ -153,15 +152,14 @@ for(var i = 0; i < productos.length; i++){
 				Main.add(ImageViewProducto);
 				Main.add(ViewLabels);
 				
-				mainScroll.add(Main);	
-				mainScroll.add(Margen);
+				$.mainScroll.add(Main);	
+				$.mainScroll.add(Margen);
 			}
 		}
 	}
 }
 
-var total_label =  $.totalLabel;
-total_label.text = "$"+total_val;
+$.totalLabel.text = "$"+total_val;
 
 function buscarProducto(){
 	if(Titanium.Platform.name == "iPhone OS"){
@@ -305,30 +303,29 @@ function buscarProducto(){
 
 
 function productosNombre(nombre){
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre}).getView();
-	vista.open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre}).getView().open();
 }
 
 function productosPerroGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS"}).getView();
-	vista.open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS"}).getView().open();
 }
 
 function productosPerro(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS"}).getView();
-	vista.open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS"}).getView().open();
 }
 
 function productosGato(){
 	
-	var vista = Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS"}).getView();
-	vista.open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS"}).getView().open();
 }
 
 function realizarPedido(){
 	
-	var vista = Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView();
-	vista.open();
+	Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+}
+
+function atras(){
+	$.carroCompra.close();
 }

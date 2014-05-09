@@ -1,6 +1,6 @@
-var win =  $.login;
+var args = arguments[0] || {};
 
-
+var marcas = args['marcas'];
 
 $.inputCorreo.value = "prueba3";
 $.inputClave.value = "123";
@@ -55,8 +55,7 @@ winCargando.add(labelCargando);
 
 function recuperarContraseña(){
 	
-	var vista = Alloy.createController('recuperarContrasena').getView();
-	vista.open();
+	Alloy.createController('recuperarContrasena').getView().open();
 }
 
 function registro(){
@@ -66,14 +65,13 @@ function registro(){
 	var email = $.inputCorreo.value;
 	var password = $.inputClave.value;
 	
-	xhr = Ti.Network.createHTTPClient({
+	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
-			//alert("Iniciando sesión, espere unos segundos.");
-
+			
 			var response = JSON.parse(this.responseText);
 			var token = response['token'];
 			
-			getMarcas(token);
+			getProductos(token,marcas);
 
 		},
 		onerror: function(e){
@@ -86,26 +84,9 @@ function registro(){
 	xhr.send({"email" : email,"password" : password});
 }
 
-function getMarcas(token){
-	
-	xhrMarcas = Ti.Network.createHTTPClient({
-		onload: function(e){
-			var marcas = JSON.parse(this.responseText);
-			getProductos(token,marcas);
-		},
-		onerror: function(e){
-			alert("Error de conexión con el servidor.");
-			winCargando.close();
-		}
-	});
-	
-	xhrMarcas.open('GET','http://tiendapet.cl/api/marcas');
-	xhrMarcas.send();
-} 
-
 function getProductos(token,marcas){
 	
-	xhrProductos = Ti.Network.createHTTPClient({
+	var xhrProductos = Ti.Network.createHTTPClient({
 		onload: function(e){
 			var productos = JSON.parse(this.responseText);
 		
@@ -125,5 +106,5 @@ function getProductos(token,marcas){
 }
 
 function atras(){
-	win.close();
+	$.login.close();
 }
