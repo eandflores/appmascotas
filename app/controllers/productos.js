@@ -24,9 +24,9 @@ direccion = args['direccion'];
 correo = args['correo'];
 telefono = args['telefono'];
 
-Ti.App.categoria_actual = args['categoria'];
-Ti.App.marca_actual = args['marca'];
-Ti.App.nombre = args['nombre'];
+categoria = args['categoria'];
+marca = args['marca'];
+nombre = args['nombre'];
 
 if(Titanium.Platform.name == "iPhone OS"){
 	var winCargando = Ti.UI.createWindow({
@@ -76,23 +76,17 @@ else{
 
 winCargando.add(labelCargando);
 
-ordenarProductos(Ti.App.categoria_actual,Ti.App.marca_actual,Ti.App.nombre);
+ordenarProductos(categoria,marca,nombre);
 
 function ordenarProductos(categoria,marca,nombre){
-	
-	//$.mainScroll.setOpacity(1);
-	
-	Ti.App.categoria_actual = categoria;
-	Ti.App.marca_actual = marca;
-	Ti.App.nombre = nombre;
 	
 	var marcasScroll = $.marcasScroll;
 
 	for(var i = 0; i < marcas.length; i++){
-		var ImageViewMarca = Utils.RemoteImage({
-			image : marcas[i]['banner'],
+		var ImageViewMarca = Ti.UI.createImageView({
+			image : marcas[i]['brand_logo'],
 			defaultImage: "/img/Doguitos.jpg",
-			width:"153.6px",
+			width:"250px",
 			id: marcas[i]['id'],
 			height:"100%"
 		});
@@ -184,7 +178,7 @@ function ordenarProductos(categoria,marca,nombre){
 				backgroundColor:"#e8e8e8"
 			});
 			
-			var ImageViewProducto = Utils.RemoteImage({
+			var ImageViewProducto = Ti.UI.createImageView({
 				image : productos[i]['prod_pic'],
 				defaultImage: "/img/Perro1.jpg",
 				width:"25%",
@@ -327,18 +321,18 @@ function productosGato(){
 	ordenarProductos(categorias[2],"TODAS","TODOS");
 }
 
-function productosMarca(marca){
+function productosMarca(marcaParam){
 	
 	winCargando.open();
 	//$.mainScroll.setOpacity(0);
 	$.mainScroll.removeAllChildren();
 	$.marcasScroll.removeAllChildren();
 		
-	if(marca == Ti.App.marca_actual){
+	if(marca == marcaParam){
 		ordenarProductos("TODAS","TODAS","TODOS");	
 	}
 	else{
-		ordenarProductos("TODAS",marca,"TODOS");
+		ordenarProductos("TODAS",marcaParam,"TODOS");
 	}
 }
 

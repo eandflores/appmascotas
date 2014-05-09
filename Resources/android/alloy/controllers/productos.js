@@ -1,14 +1,11 @@
 function Controller() {
     function ordenarProductos(categoria, marca, nombre) {
-        Ti.App.categoria_actual = categoria;
-        Ti.App.marca_actual = marca;
-        Ti.App.nombre = nombre;
         var marcasScroll = $.marcasScroll;
         for (var i = 0; marcas.length > i; i++) {
-            var ImageViewMarca = Utils.RemoteImage({
-                image: marcas[i]["banner"],
+            var ImageViewMarca = Ti.UI.createImageView({
+                image: marcas[i]["brand_logo"],
                 defaultImage: "/img/Doguitos.jpg",
-                width: "153.6px",
+                width: "250px",
                 id: marcas[i]["id"],
                 height: "100%"
             });
@@ -68,7 +65,7 @@ function Controller() {
                 height: "2px",
                 backgroundColor: "#e8e8e8"
             });
-            var ImageViewProducto = Utils.RemoteImage({
+            var ImageViewProducto = Ti.UI.createImageView({
                 image: productos[i]["prod_pic"],
                 defaultImage: "/img/Perro1.jpg",
                 width: "25%",
@@ -175,11 +172,11 @@ function Controller() {
         $.marcasScroll.removeAllChildren();
         ordenarProductos(categorias[2], "TODAS", "TODOS");
     }
-    function productosMarca(marca) {
+    function productosMarca(marcaParam) {
         winCargando.open();
         $.mainScroll.removeAllChildren();
         $.marcasScroll.removeAllChildren();
-        marca == Ti.App.marca_actual ? ordenarProductos("TODAS", "TODAS", "TODOS") : ordenarProductos("TODAS", marca, "TODOS");
+        marca == marcaParam ? ordenarProductos("TODAS", "TODAS", "TODOS") : ordenarProductos("TODAS", marcaParam, "TODOS");
     }
     function buscarProducto() {
         var winModal;
@@ -405,9 +402,9 @@ function Controller() {
     direccion = args["direccion"];
     correo = args["correo"];
     telefono = args["telefono"];
-    Ti.App.categoria_actual = args["categoria"];
-    Ti.App.marca_actual = args["marca"];
-    Ti.App.nombre = args["nombre"];
+    categoria = args["categoria"];
+    marca = args["marca"];
+    nombre = args["nombre"];
     var winCargando;
     var labelCargando;
     var winCargando = Ti.UI.createWindow({
@@ -430,7 +427,7 @@ function Controller() {
         }
     });
     winCargando.add(labelCargando);
-    ordenarProductos(Ti.App.categoria_actual, Ti.App.marca_actual, Ti.App.nombre);
+    ordenarProductos(categoria, marca, nombre);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

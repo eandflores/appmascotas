@@ -28,10 +28,10 @@ var cant_productos = 0;
 
 for(var i = 0; i < marcas.length; i++){
 	
-	var ImageViewMarca = Utils.RemoteImage({
-		image : marcas[i]['banner'],
+	var ImageViewMarca = Ti.UI.createImageView({
+		image : marcas[i]['brand_logo'],
 		defaultImage: "/img/Doguitos.jpg",
-		width:"153.6px",
+		width:"250px",
 		id: marcas[i]['id'],
 		height:"100%"
 	});
@@ -78,7 +78,7 @@ var Producto = Ti.UI.createView({
 	height:"28.7%"
 });
 
-var ImageViewProducto = Utils.RemoteImage({
+var ImageViewProducto = Ti.UI.createImageView({
 	image : producto['prod_pic'],
 	defaultImage: "/iimg/Perro1.jpg",
 	width:"25%",

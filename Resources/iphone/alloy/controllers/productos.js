@@ -56,7 +56,7 @@ function Controller() {
             mainScroll.add(resultados);
         }
         var cant_productos = 0;
-        for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
+        for (var i = 55; 65 > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",

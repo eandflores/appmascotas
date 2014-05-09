@@ -326,10 +326,10 @@ function Controller() {
     telefono = args["telefono"];
     var marcasScroll = $.marcasScroll;
     for (var i = 0; marcas.length > i; i++) {
-        var ImageViewMarca = Utils.RemoteImage({
-            image: marcas[i]["banner"],
+        var ImageViewMarca = Ti.UI.createImageView({
+            image: marcas[i]["brand_logo"],
             defaultImage: "/img/Doguitos.jpg",
-            width: "153.6px",
+            width: "250px",
             id: marcas[i]["id"],
             height: "100%"
         });
@@ -354,7 +354,7 @@ function Controller() {
         layout: "horizontal",
         height: "28.7%"
     });
-    var ImageViewProducto = Utils.RemoteImage({
+    var ImageViewProducto = Ti.UI.createImageView({
         image: producto["prod_pic"],
         defaultImage: "/iimg/Perro1.jpg",
         width: "25%",
