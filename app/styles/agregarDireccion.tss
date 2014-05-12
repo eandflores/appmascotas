@@ -58,12 +58,16 @@
     }
 },
 ".textFieldDireccion":{
-	width:"68.8%",
-	height:"100%",
-	color:"#d9d9d9",
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
 	font: {
 		fontWeight:"bold"
-    }
+   },
+   backgroundColor:"#d8d8d8"
 },
 ".numero":{
 	keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD

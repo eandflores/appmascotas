@@ -1,4 +1,158 @@
 function Controller() {
+    function productosNombre(nombre) {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre,
+            pagina: 1
+        }).getView().open();
+    }
+    function productosPerroGato() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[3],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function productosPerro() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[1],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function productosGato() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: categorias[2],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function setDireccion() {
+        Alloy.createController("direccion", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
+        }).getView().open();
+    }
+    function setCorreo() {}
+    function setMedioPago() {
+        Alloy.createController("medioPago", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
+        }).getView().open();
+    }
+    function setTelefono() {
+        Alloy.createController("telefono", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
+        }).getView().open();
+    }
+    function setCupon() {}
+    function gracias() {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                var response = JSON.parse(this.responseText);
+                Ti.API.info(response);
+                Alloy.createController("gracias", {
+                    token: token,
+                    carro: [],
+                    marcas: marcas,
+                    productos: productos,
+                    medios: medios,
+                    direcciones: direcciones,
+                    medio: null,
+                    direccion: null,
+                    correo: null,
+                    telefono: null
+                }).getView().open();
+            },
+            onerror: function(e) {
+                alert(e);
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/comprar");
+        xhr.send({
+            user_token: token,
+            pago: medio,
+            cart: carro,
+            direccion: {
+                calle: "",
+                comuna: "",
+                ciudad: "",
+                telefono: ""
+            }
+        });
+    }
+    function atras() {
+        $.realizarPedido.close();
+    }
     function buscarProducto() {
         var winModal;
         var viewModal;
@@ -73,135 +227,6 @@ function Controller() {
         viewModal.add(inputsBuscar);
         winModal.add(viewModal);
         winModal.open();
-    }
-    function productosNombre(nombre) {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: "TODAS",
-            marca: "TODAS",
-            nombre: nombre
-        }).getView().open();
-    }
-    function productosPerroGato() {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[3],
-            marca: "TODAS",
-            nombre: "TODOS"
-        }).getView().open();
-    }
-    function productosPerro() {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[1],
-            marca: "TODAS",
-            nombre: "TODOS"
-        }).getView().open();
-    }
-    function productosGato() {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[2],
-            marca: "TODAS",
-            nombre: "TODOS"
-        }).getView().open();
-    }
-    function setDireccion() {
-        Alloy.createController("direccion", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
-        }).getView().open();
-    }
-    function setCorreo() {}
-    function setMedioPago() {
-        Alloy.createController("medioPago", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
-        }).getView().open();
-    }
-    function setTelefono() {
-        Alloy.createController("telefono", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
-        }).getView().open();
-    }
-    function setCupon() {}
-    function gracias() {
-        Alloy.createController("gracias", {
-            token: token,
-            carro: [],
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: null,
-            direccion: null,
-            correo: null,
-            telefono: null
-        }).getView().open();
-    }
-    function atras() {
-        $.realizarPedido.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "realizarPedido";
@@ -316,16 +341,16 @@ function Controller() {
         id: "envioScroll"
     });
     $.__views.realizarPedido.add($.__views.envioScroll);
-    $.__views.__alloyId29 = Ti.UI.createView({
+    $.__views.__alloyId23 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
         height: "96px",
         layout: "vertical",
-        id: "__alloyId29"
+        id: "__alloyId23"
     });
-    $.__views.envioScroll.add($.__views.__alloyId29);
-    setDireccion ? $.__views.__alloyId29.addEventListener("click", setDireccion) : __defers["$.__views.__alloyId29!click!setDireccion"] = true;
-    $.__views.__alloyId30 = Ti.UI.createLabel({
+    $.__views.envioScroll.add($.__views.__alloyId23);
+    setDireccion ? $.__views.__alloyId23.addEventListener("click", setDireccion) : __defers["$.__views.__alloyId23!click!setDireccion"] = true;
+    $.__views.__alloyId24 = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
         height: "50%",
@@ -335,9 +360,9 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "DIRECCIÓN",
-        id: "__alloyId30"
+        id: "__alloyId24"
     });
-    $.__views.__alloyId29.add($.__views.__alloyId30);
+    $.__views.__alloyId23.add($.__views.__alloyId24);
     $.__views.direccion = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
@@ -349,17 +374,17 @@ function Controller() {
         },
         id: "direccion"
     });
-    $.__views.__alloyId29.add($.__views.direccion);
-    $.__views.__alloyId31 = Ti.UI.createView({
+    $.__views.__alloyId23.add($.__views.direccion);
+    $.__views.__alloyId25 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
         height: "96px",
         layout: "vertical",
-        id: "__alloyId31"
+        id: "__alloyId25"
     });
-    $.__views.envioScroll.add($.__views.__alloyId31);
-    setCorreo ? $.__views.__alloyId31.addEventListener("click", setCorreo) : __defers["$.__views.__alloyId31!click!setCorreo"] = true;
-    $.__views.__alloyId32 = Ti.UI.createLabel({
+    $.__views.envioScroll.add($.__views.__alloyId25);
+    setCorreo ? $.__views.__alloyId25.addEventListener("click", setCorreo) : __defers["$.__views.__alloyId25!click!setCorreo"] = true;
+    $.__views.__alloyId26 = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
         height: "50%",
@@ -369,9 +394,9 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "CORREO",
-        id: "__alloyId32"
+        id: "__alloyId26"
     });
-    $.__views.__alloyId31.add($.__views.__alloyId32);
+    $.__views.__alloyId25.add($.__views.__alloyId26);
     $.__views.correo = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
@@ -383,17 +408,17 @@ function Controller() {
         },
         id: "correo"
     });
-    $.__views.__alloyId31.add($.__views.correo);
-    $.__views.__alloyId33 = Ti.UI.createView({
+    $.__views.__alloyId25.add($.__views.correo);
+    $.__views.__alloyId27 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
         height: "96px",
         layout: "vertical",
-        id: "__alloyId33"
+        id: "__alloyId27"
     });
-    $.__views.envioScroll.add($.__views.__alloyId33);
-    setMedioPago ? $.__views.__alloyId33.addEventListener("click", setMedioPago) : __defers["$.__views.__alloyId33!click!setMedioPago"] = true;
-    $.__views.__alloyId34 = Ti.UI.createLabel({
+    $.__views.envioScroll.add($.__views.__alloyId27);
+    setMedioPago ? $.__views.__alloyId27.addEventListener("click", setMedioPago) : __defers["$.__views.__alloyId27!click!setMedioPago"] = true;
+    $.__views.__alloyId28 = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
         height: "50%",
@@ -403,9 +428,9 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "PAGO",
-        id: "__alloyId34"
+        id: "__alloyId28"
     });
-    $.__views.__alloyId33.add($.__views.__alloyId34);
+    $.__views.__alloyId27.add($.__views.__alloyId28);
     $.__views.pago = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
@@ -417,7 +442,7 @@ function Controller() {
         },
         id: "pago"
     });
-    $.__views.__alloyId33.add($.__views.pago);
+    $.__views.__alloyId27.add($.__views.pago);
     $.__views.id = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
@@ -427,7 +452,7 @@ function Controller() {
     });
     $.__views.envioScroll.add($.__views.id);
     setTelefono ? $.__views.id.addEventListener("click", setTelefono) : __defers["$.__views.id!click!setTelefono"] = true;
-    $.__views.__alloyId35 = Ti.UI.createLabel({
+    $.__views.__alloyId29 = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
         height: "50%",
@@ -437,9 +462,9 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "TELÉFONO",
-        id: "__alloyId35"
+        id: "__alloyId29"
     });
-    $.__views.id.add($.__views.__alloyId35);
+    $.__views.id.add($.__views.__alloyId29);
     $.__views.telefono = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
@@ -461,7 +486,7 @@ function Controller() {
     });
     $.__views.envioScroll.add($.__views.id);
     setCupon ? $.__views.id.addEventListener("click", setCupon) : __defers["$.__views.id!click!setCupon"] = true;
-    $.__views.__alloyId36 = Ti.UI.createLabel({
+    $.__views.__alloyId30 = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
         height: "50%",
@@ -471,9 +496,9 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "CUPÓN DE DESCUENTO",
-        id: "__alloyId36"
+        id: "__alloyId30"
     });
-    $.__views.id.add($.__views.__alloyId36);
+    $.__views.id.add($.__views.__alloyId30);
     $.__views.cupon = Ti.UI.createLabel({
         left: "7%",
         width: "86%",
@@ -631,9 +656,9 @@ function Controller() {
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
-    __defers["$.__views.__alloyId29!click!setDireccion"] && $.__views.__alloyId29.addEventListener("click", setDireccion);
-    __defers["$.__views.__alloyId31!click!setCorreo"] && $.__views.__alloyId31.addEventListener("click", setCorreo);
-    __defers["$.__views.__alloyId33!click!setMedioPago"] && $.__views.__alloyId33.addEventListener("click", setMedioPago);
+    __defers["$.__views.__alloyId23!click!setDireccion"] && $.__views.__alloyId23.addEventListener("click", setDireccion);
+    __defers["$.__views.__alloyId25!click!setCorreo"] && $.__views.__alloyId25.addEventListener("click", setCorreo);
+    __defers["$.__views.__alloyId27!click!setMedioPago"] && $.__views.__alloyId27.addEventListener("click", setMedioPago);
     __defers["$.__views.id!click!setTelefono"] && $.__views.id.addEventListener("click", setTelefono);
     __defers["$.__views.id!click!setCupon"] && $.__views.id.addEventListener("click", setCupon);
     __defers["$.__views.nuevoProducto!click!productosPerroGato"] && $.__views.nuevoProducto.addEventListener("click", productosPerroGato);

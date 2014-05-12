@@ -40,7 +40,8 @@ function Controller() {
                     telefono: null,
                     categoria: "TODAS",
                     marca: "TODAS",
-                    nombre: "TODOS"
+                    nombre: "TODOS",
+                    pagina: 1
                 }).getView();
                 winCargando.close();
                 vista.open();
@@ -89,15 +90,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
-    $.__views.__alloyId24 = Ti.UI.createImageView({
+    $.__views.__alloyId18 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId24"
+        id: "__alloyId18"
     });
-    $.__views.marcas.add($.__views.__alloyId24);
-    atras ? $.__views.__alloyId24.addEventListener("click", atras) : __defers["$.__views.__alloyId24!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId18);
+    atras ? $.__views.__alloyId18.addEventListener("click", atras) : __defers["$.__views.__alloyId18!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "52.2%",
@@ -209,7 +210,7 @@ function Controller() {
         }
     });
     winCargando.add(labelCargando);
-    __defers["$.__views.__alloyId24!click!atras"] && $.__views.__alloyId24.addEventListener("click", atras);
+    __defers["$.__views.__alloyId18!click!atras"] && $.__views.__alloyId18.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);

@@ -1,6 +1,5 @@
 function Controller() {
     function cargarMedios(medios) {
-        var mainScroll = $.mainScroll;
         for (i = 0; medios.length > i; i++) {
             var MedioPago = Ti.UI.createView({
                 backgroundImage: "/img/flechaPagos.jpg",
@@ -28,8 +27,8 @@ function Controller() {
                 text: medios[i]["paym_name"]
             });
             MedioPago.add(Label);
-            mainScroll.add(MedioPago);
-            mainScroll.add(Margen);
+            $.mainScroll.add(MedioPago);
+            $.mainScroll.add(Margen);
         }
     }
     function buscarProducto() {
@@ -108,7 +107,7 @@ function Controller() {
         winModal.open();
     }
     function productosNombre(nombre) {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -122,11 +121,10 @@ function Controller() {
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function selectMedio(medio_id) {
-        var vista = Alloy.createController("realizarPedido", {
+        Alloy.createController("realizarPedido", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -137,11 +135,10 @@ function Controller() {
             direccion: direccion,
             correo: correo,
             telefono: telefono
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -155,11 +152,10 @@ function Controller() {
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosPerro() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -173,11 +169,10 @@ function Controller() {
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function productosGato() {
-        var vista = Alloy.createController("productos", {
+        Alloy.createController("productos", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -191,11 +186,10 @@ function Controller() {
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS"
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function atras() {
-        win.close();
+        $.medioPago.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "medioPago";
@@ -302,20 +296,19 @@ function Controller() {
     $.__views.medioPago.add($.__views.mainScroll);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var win = $.medioPago;
     var args = arguments[0] || {};
-    carro = args["carro"];
-    token = args["token"];
-    marcas = args["marcas"];
-    productos = args["productos"];
-    medios = args["medios"];
-    direcciones = args["direcciones"];
-    medio = args["medio"];
-    direccion = args["direccion"];
-    correo = args["correo"];
-    telefono = args["telefono"];
+    var carro = args["carro"];
+    var token = args["token"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    var correo = args["correo"];
+    var telefono = args["telefono"];
     if (medios.length > 0) cargarMedios(medios); else {
-        xhr = Ti.Network.createHTTPClient({
+        var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 medios = JSON.parse(this.responseText);
                 cargarMedios(medios);

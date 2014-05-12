@@ -2,7 +2,7 @@ function Controller() {
     function registro() {
         var email = $.inputCorreo.value;
         var password = $.inputContraseña.value;
-        xhr = Ti.Network.createHTTPClient({
+        var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 var response = JSON.parse(this.responseText);
                 var token = response["token"];
@@ -25,7 +25,7 @@ function Controller() {
         });
     }
     function atras() {
-        win.close();
+        $.registro.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "registro";
@@ -60,15 +60,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
-    $.__views.__alloyId37 = Ti.UI.createImageView({
+    $.__views.__alloyId31 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId37"
+        id: "__alloyId31"
     });
-    $.__views.marcas.add($.__views.__alloyId37);
-    atras ? $.__views.__alloyId37.addEventListener("click", atras) : __defers["$.__views.__alloyId37!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId31);
+    atras ? $.__views.__alloyId31.addEventListener("click", atras) : __defers["$.__views.__alloyId31!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "49.2%",
@@ -150,8 +150,7 @@ function Controller() {
     registro ? $.__views.registrarse.addEventListener("click", registro) : __defers["$.__views.registrarse!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var win = $.registro;
-    __defers["$.__views.__alloyId37!click!atras"] && $.__views.__alloyId37.addEventListener("click", atras);
+    __defers["$.__views.__alloyId31!click!atras"] && $.__views.__alloyId31.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);
 }

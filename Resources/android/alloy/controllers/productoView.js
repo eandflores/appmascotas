@@ -13,7 +13,8 @@ function Controller() {
             telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS",
-            nombre: "TODOS"
+            nombre: "TODOS",
+            pagina: 1
         }).getView().open();
     }
     function productosPerro() {
@@ -30,7 +31,8 @@ function Controller() {
             telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS",
-            nombre: "TODOS"
+            nombre: "TODOS",
+            pagina: 1
         }).getView().open();
     }
     function productosGato() {
@@ -47,7 +49,8 @@ function Controller() {
             telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS",
-            nombre: "TODOS"
+            nombre: "TODOS",
+            pagina: 1
         }).getView().open();
     }
     function productosMarca(marca) {
@@ -64,7 +67,45 @@ function Controller() {
             telefono: telefono,
             categoria: categorias[3],
             marca: marca,
-            nombre: "TODOS"
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function productosNombre(nombre) {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre,
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function carroCompra() {
+        carro.push({
+            id: productoPrecio["id"],
+            qty: InputCantidad.value
+        });
+        Alloy.createController("carroCompra", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            correo: correo,
+            telefono: telefono
         }).getView().open();
     }
     function buscarProducto() {
@@ -142,42 +183,6 @@ function Controller() {
         winModal.add(viewModal);
         winModal.open();
     }
-    function productosNombre(nombre) {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: "TODAS",
-            marca: "TODAS",
-            nombre: nombre,
-            nombre: "TODOS"
-        }).getView().open();
-    }
-    function carroCompra() {
-        carro.push({
-            id: productoPrecio["id"],
-            qty: InputCantidad.value
-        });
-        Alloy.createController("carroCompra", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
-        }).getView().open();
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productoView";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -249,13 +254,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId25 = Ti.UI.createImageView({
+    $.__views.__alloyId19 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId25"
+        id: "__alloyId19"
     });
-    $.__views.marcas.add($.__views.__alloyId25);
+    $.__views.marcas.add($.__views.__alloyId19);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -267,13 +272,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId26 = Ti.UI.createImageView({
+    $.__views.__alloyId20 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId26"
+        id: "__alloyId20"
     });
-    $.__views.marcas.add($.__views.__alloyId26);
+    $.__views.marcas.add($.__views.__alloyId20);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",

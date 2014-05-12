@@ -17,31 +17,31 @@
 		<View id="main">
 			<View class="input">
 				<Label class="labelDireccion">Calle</Label>
-				<TextField class="textFieldDireccion"></TextField>>
+				<TextField id="calle" class="textFieldDireccion"></TextField>>
 			</View>
 			<View class="input" backgroundImage="/img/labelOscuro.jpg">
 				<Label class="labelDireccion">Nro.</Label>
-				<TextField class="textFieldDireccion numero"></TextField>>
+				<TextField id="numero" class="textFieldDireccion numero"></TextField>>
 			</View>
 			<View class="input">
 				<Label class="labelDireccion">Depto.</Label>
-				<TextField class="textFieldDireccion numero"></TextField>>
+				<TextField id="departamento" class="textFieldDireccion numero"></TextField>>
 			</View>
 			<View class="input" backgroundImage="/img/labelOscuro.jpg">
 				<Label class="labelDireccion">Esquina</Label>
-				<TextField class="textFieldDireccion"></TextField>>
+				<TextField id="esquina" class="textFieldDireccion"></TextField>>
 			</View>
 			<View class="input">
 				<Label class="labelDireccion">Comuna</Label>
-				<TextField class="textFieldDireccion"></TextField>>
+				<TextField id="comuna" class="textFieldDireccion"></TextField>>
 			</View>
 			<View class="input" backgroundImage="/img/labelOscuro.jpg">
 				<Label class="labelDireccion">Teléfono</Label>
-				<TextField class="textFieldDireccion numero"></TextField>>
+				<TextField id="telefono" class="textFieldDireccion numero"></TextField>>
 			</View>
 		</View>
 		<View id="footer">
-			<Button id="agregar">AGREGAR</Button>
+			<Button id="agregar" onClick="guardar">AGREGAR</Button>
 		</View>
 	</Window>
 </Alloy>

@@ -1,10 +1,8 @@
-var win =  $.registro;
-
 function registro(){
 	var email = $.inputCorreo.value;
 	var password = $.inputContraseña.value;
 	
-	xhr = Ti.Network.createHTTPClient({
+	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
 			var response = JSON.parse(this.responseText);
 			var token = response['token'];
@@ -22,5 +20,5 @@ function registro(){
 }
 
 function atras(){
-	win.close();
+	$.registro.close();
 }
