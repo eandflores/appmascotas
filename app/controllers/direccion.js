@@ -17,34 +17,142 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
+
+if(direcciones.length > 0){
+	cargarDirecciones(direcciones);
+}
+else{
+	var xhr = Ti.Network.createHTTPClient({
+		onload: function(e){
+			direcciones = JSON.parse(this.responseText);
+			
+			cargarDirecciones(direcciones);
+	
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+		}
+	});
+	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.send();
+}
+
+function cargarDirecciones(direcciones){
+	
+	for(i=0;i<direcciones.length;i++){
+		
+		var Direccion = Ti.UI.createView({
+			width:"100%",
+			height:"73px",
+			layout:"horizontal"
+		});
+		
+		var EliminarDireccion = Ti.UI.createView({
+			backgroundImage:"/img/eliminarDireccion.jpg",
+			width:"14.8%",
+			id: direcciones[i]['id'],
+			height:"100%"
+		});
+		
+		EliminarDireccion.addEventListener("click",function(){
+			eliminarDireccion(this['id']);
+		});
+		
+		var SeleccionarDireccion = Ti.UI.createView({
+			backgroundImage:"/img/seleccionarDireccion.jpg",
+			width:"85.2%",
+			id: direcciones[i],
+			height:"100%",
+		});
+		
+		SeleccionarDireccion.addEventListener("click",function(){
+			selectDireccion(this['id']);
+		});
+		
+		var Margen = Ti.UI.createView({
+			width:"100%",
+			height:"2px",
+			backgroundColor:"#e8e8e8"
+		});
+		
+		var Label = Ti.UI.createLabel({
+			right:"20%",
+			width:"80%",
+			height:"100%",
+			color:"#5c5c5b",
+			font:{
+				fontFamily:"Noto Sans",
+				fontWeight:"bold"
+			},
+			text: direcciones[i]['direccion']
+		});
+		
+		SeleccionarDireccion.add(Label);
+		Direccion.add(EliminarDireccion);
+		Direccion.add(SeleccionarDireccion);
+		$.mainScroll.add(Direccion);
+		$.mainScroll.add(Margen);
+	}
+	
+}
+
+function selectDireccion(direccion_selected){
+	Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected}).getView().open();
+}
+
+function eliminarDireccion(direccion_id){
+	/*
+	var xhr = Ti.Network.createHTTPClient({
+		onload: function(e){
+			var response = JSON.parse(this.responseText);
+			Ti.API.info(response);
+			
+			direcciones = null;
+			
+			if(direccion != 0){
+				if(direccion_id == direccion['id']){
+					direccion = null;
+				}
+			}
+			
+			Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+		},
+		onerror: function(e){
+			alert(e);
+		}
+	});
+	
+	xhr.open('POST','http://tiendapet.cl/api/usuario/direccionesEliminar/?direccion='+direccion_id);
+	xhr.send(); 
+	*/
+}
 
 function productosPerroGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosNombre(nombre){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function agregarDireccion(){
 	
-	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function atras(){

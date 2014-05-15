@@ -1,4 +1,105 @@
 function Controller() {
+    function productosNombre(nombre) {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre,
+            pagina: 1
+        }).getView().open();
+    }
+    function productosPerroGato() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
+            categoria: categorias[3],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function productosPerro() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
+            categoria: categorias[1],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function productosGato() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
+            categoria: categorias[2],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
+    function guardar() {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    JSON.parse(this.responseText);
+                    usuario["cust_phone"] = $.inputTelefono.value;
+                    Alloy.createController("realizarPedido", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+        xhr.send({
+            telefono: $.inputTelefono.value
+        });
+    }
+    function atras() {
+        win.close();
+    }
     function buscarProducto() {
         var winModal;
         var viewModal;
@@ -61,78 +162,6 @@ function Controller() {
         viewModal.add(inputsBuscar);
         winModal.add(viewModal);
         winModal.open();
-    }
-    function productosNombre(nombre) {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: "TODAS",
-            marca: "TODAS",
-            nombre: nombre
-        }).getView();
-        vista.open();
-    }
-    function productosPerroGato() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[3],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
-    }
-    function productosPerro() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[1],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
-    }
-    function productosGato() {
-        var vista = Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono,
-            categoria: categorias[2],
-            marca: "TODAS"
-        }).getView();
-        vista.open();
-    }
-    function atras() {
-        win.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "telefono";
@@ -275,25 +304,32 @@ function Controller() {
         id: "guardarTelefono"
     });
     $.__views.footer.add($.__views.guardarTelefono);
+    guardar ? $.__views.guardarTelefono.addEventListener("click", guardar) : __defers["$.__views.guardarTelefono!click!guardar"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
     var win = $.telefono;
     var args = arguments[0] || {};
-    carro = args["carro"];
-    token = args["token"];
-    marcas = args["marcas"];
-    productos = args["productos"];
-    medios = args["medios"];
-    direcciones = args["direcciones"];
-    medio = args["medio"];
-    direccion = args["direccion"];
-    correo = args["correo"];
-    telefono = args["telefono"];
+    var categorias = [];
+    categorias[1] = "Perro";
+    categorias[2] = "Gato";
+    categorias[3] = "TODAS";
+    var args = arguments[0] || {};
+    var carro = args["carro"];
+    var token = args["token"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    $.inputTelefono.value = usuario["cust_phone"];
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
+    __defers["$.__views.guardarTelefono!click!guardar"] && $.__views.guardarTelefono.addEventListener("click", guardar);
     _.extend($, exports);
 }
 

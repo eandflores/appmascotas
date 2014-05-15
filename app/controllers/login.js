@@ -67,11 +67,16 @@ function registro(){
 	
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
-			
-			var response = JSON.parse(this.responseText);
-			var token = response['token'];
-			
-			getProductos(token,marcas);
+			try{
+				var response = JSON.parse(this.responseText);
+				var token = response['token'];
+				
+				getProductos(token,marcas);
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+			}
 
 		},
 		onerror: function(e){
@@ -88,11 +93,17 @@ function getProductos(token,marcas){
 	
 	var xhrProductos = Ti.Network.createHTTPClient({
 		onload: function(e){
-			var productos = JSON.parse(this.responseText);
+			try{
+				var productos = JSON.parse(this.responseText);
 		
-			var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],medio: null, direccion: null,correo: null,telefono: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
-			winCargando.close();
-			vista.open();
+				var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
+				winCargando.close();
+				vista.open();
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+			}
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");

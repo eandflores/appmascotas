@@ -17,10 +17,9 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
 
 $.marcasScroll.removeAllChildren();
 
@@ -55,33 +54,33 @@ for(i = 0; i< medios.length;i++){
 }
 
 function productosNombre(nombre){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 
 function productosPerroGato(){
 		
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio,direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1],marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1],marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosMarca(marca){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: marca,nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: marca,nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function finalizar(){
 	
-	Alloy.createController('fin',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+	Alloy.createController('fin',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function buscarProducto(){

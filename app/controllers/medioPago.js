@@ -1,5 +1,18 @@
+var win =  $.medioPago;
+
 var args = arguments[0] || {};
-	
+
+var categorias = [];
+
+// Los productos deben estar encasillados entre una de estas 2 categorias
+categorias[1] = "Perro";
+categorias[2] = "Gato";
+
+//Categoria usada cuando se desea buscar productos de todas las categorias
+categorias[3] = "TODAS";
+
+var args = arguments[0] || {};
+
 var carro = args['carro'];
 var token = args['token'];
 
@@ -8,10 +21,9 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
 
 if(medios.length > 0){
 	cargarMedios(medios);
@@ -19,10 +31,13 @@ if(medios.length > 0){
 else{
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
-			medios = JSON.parse(this.responseText);
-			
-			cargarMedios(medios);
-	
+			try{
+				medios = JSON.parse(this.responseText);
+				cargarMedios(medios);
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+			}
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
@@ -39,7 +54,7 @@ function cargarMedios(medios){
 		var MedioPago = Ti.UI.createView({
 			backgroundImage:"/img/flechaPagos.jpg",
 			width:"100%",
-			id: medios[i]['id'],
+			id: medios[i],
 			height:"98px"
 		});
 		
@@ -70,6 +85,35 @@ function cargarMedios(medios){
 		$.mainScroll.add(Margen);
 	}
 	
+}
+
+function productosPerroGato(){
+	
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+}
+
+function productosPerro(){
+	
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+}
+
+function productosGato(){
+	
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+}
+
+function productosNombre(nombre){
+	
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+}
+
+function selectMedio(medio_selected){
+	
+	Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio_selected, direccion: direccion}).getView().open();
+}
+
+function atras(){
+	$.medioPago.close();
 }
 
 function buscarProducto(){
@@ -210,33 +254,4 @@ function buscarProducto(){
 	viewModal.add(inputsBuscar);
 	winModal.add(viewModal);
 	winModal.open();
-}
-
-
-function productosNombre(nombre){
-	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre}).getView().open();
-}
-
-function selectMedio(medio_id){
-	Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio_id, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
-}
-
-function productosPerroGato(){
-	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS"}).getView().open();
-}
-
-function productosPerro(){
-	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS"}).getView().open();
-}
-
-function productosGato(){
-	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS"}).getView().open();
-}
-
-function atras(){
-	$.medioPago.close();
 }

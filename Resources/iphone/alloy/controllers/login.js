@@ -8,9 +8,14 @@ function Controller() {
         var password = $.inputClave.value;
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
-                var response = JSON.parse(this.responseText);
-                var token = response["token"];
-                getProductos(token, marcas);
+                try {
+                    var response = JSON.parse(this.responseText);
+                    var token = response["token"];
+                    getProductos(token, marcas);
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
@@ -26,25 +31,29 @@ function Controller() {
     function getProductos(token, marcas) {
         var xhrProductos = Ti.Network.createHTTPClient({
             onload: function() {
-                var productos = JSON.parse(this.responseText);
-                var vista = Alloy.createController("productos", {
-                    token: token,
-                    carro: [],
-                    marcas: marcas,
-                    productos: productos,
-                    medios: [],
-                    direcciones: [],
-                    medio: null,
-                    direccion: null,
-                    correo: null,
-                    telefono: null,
-                    categoria: "TODAS",
-                    marca: "TODAS",
-                    nombre: "TODOS",
-                    pagina: 1
-                }).getView();
-                winCargando.close();
-                vista.open();
+                try {
+                    var productos = JSON.parse(this.responseText);
+                    var vista = Alloy.createController("productos", {
+                        token: token,
+                        carro: [],
+                        marcas: marcas,
+                        productos: productos,
+                        medios: [],
+                        direcciones: [],
+                        usuario: null,
+                        medio: null,
+                        direccion: null,
+                        categoria: "TODAS",
+                        marca: "TODAS",
+                        nombre: "TODOS",
+                        pagina: 1
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
@@ -90,15 +99,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.login.add($.__views.marcas);
-    $.__views.__alloyId18 = Ti.UI.createImageView({
+    $.__views.__alloyId20 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId18"
+        id: "__alloyId20"
     });
-    $.__views.marcas.add($.__views.__alloyId18);
-    atras ? $.__views.__alloyId18.addEventListener("click", atras) : __defers["$.__views.__alloyId18!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId20);
+    atras ? $.__views.__alloyId20.addEventListener("click", atras) : __defers["$.__views.__alloyId20!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "52.2%",
@@ -210,7 +219,7 @@ function Controller() {
         }
     });
     winCargando.add(labelCargando);
-    __defers["$.__views.__alloyId18!click!atras"] && $.__views.__alloyId18.addEventListener("click", atras);
+    __defers["$.__views.__alloyId20!click!atras"] && $.__views.__alloyId20.addEventListener("click", atras);
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
     _.extend($, exports);

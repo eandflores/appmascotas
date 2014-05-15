@@ -18,7 +18,7 @@
 			</View>
 		</View>
 		<View id="footer">
-			<Button id="guardarTelefono">GUARDAR</Button>
+			<Button id="guardarTelefono" onClick="guardar">GUARDAR</Button>
 		</View>
 	</Window>
 </Alloy>

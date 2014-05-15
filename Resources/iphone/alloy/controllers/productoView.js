@@ -9,8 +9,6 @@ function Controller() {
             direcciones: direcciones,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -25,10 +23,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -43,10 +40,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,10 +57,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[3],
             marca: marca,
             nombre: "TODOS",
@@ -79,10 +74,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -102,10 +96,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
+            direccion: direccion
         }).getView().open();
     }
     function buscarProducto() {
@@ -244,13 +237,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId19 = Ti.UI.createImageView({
+    $.__views.__alloyId21 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId19"
+        id: "__alloyId21"
     });
-    $.__views.marcas.add($.__views.__alloyId19);
+    $.__views.marcas.add($.__views.__alloyId21);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -262,13 +255,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId20 = Ti.UI.createImageView({
+    $.__views.__alloyId22 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId20"
+        id: "__alloyId22"
     });
-    $.__views.marcas.add($.__views.__alloyId20);
+    $.__views.marcas.add($.__views.__alloyId22);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",
@@ -309,10 +302,9 @@ function Controller() {
     var productos = args["productos"];
     var medios = args["medios"];
     var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    var correo = args["correo"];
-    var telefono = args["telefono"];
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
             image: marcas[i]["brand_logo"],

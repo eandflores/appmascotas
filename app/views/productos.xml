@@ -13,6 +13,6 @@
 			<ImageView class="flecha" backgroundImage="/img/FlechaDer.jpg"></ImageView>
 		</View>
 		<ScrollView id="mainScroll"></ScrollView>
-		<View id="paginasView"></View>
+		<ScrollView id="paginasView"></ScrollView>
 	</Window>
 </Alloy>

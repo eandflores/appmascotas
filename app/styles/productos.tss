@@ -44,6 +44,10 @@
 	height:"5%",
 	layout:'horizontal',
 	backgroundColor:"#cc5122",
+	contentWidth: Ti.UI.SIZE,
+	scrollType: 'horizontal',
+	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
+	showHorizontalScrollIndicator:"true",
 },
 "#perrogato":{
 	width:"28%",

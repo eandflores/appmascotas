@@ -7,10 +7,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -25,10 +24,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -43,10 +41,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,10 +58,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -72,34 +68,43 @@ function Controller() {
         }).getView().open();
     }
     function guardar() {
+        var direccionString = "";
+        "" != $.calle.value && (direccionString += $.calle.value + " ");
+        "" != $.numero.value && (direccionString += $.numero.value + " ");
+        "" != $.departamento.value && (direccionString += $.departamento.value + " ");
+        "" != $.esquina.value && (direccionString += $.esquina.value + " ");
+        "" != $.telefono.value && (direccionString += $.telefono.value);
+        var direccionPost = {
+            direccion: direccionString,
+            comuna: $.comuna.value,
+            ciudad: $.ciudad.value
+        };
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
-                var response = JSON.parse(this.responseText);
-                Ti.API.info(response);
-                Alloy.createController("direccion", {
-                    token: token,
-                    carro: carro,
-                    marcas: marcas,
-                    productos: productos,
-                    medios: medios,
-                    direcciones: direcciones,
-                    medio: medio,
-                    direccion: direccion,
-                    correo: correo,
-                    telefono: telefono
-                }).getView().open();
+                try {
+                    JSON.parse(this.responseText);
+                    direcciones.push(direccionPost);
+                    Alloy.createController("direccion", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                }
             },
-            onerror: function(e) {
-                alert(e);
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones");
-        xhr.send({
-            user_token: token,
-            direccion: "",
-            comuna: $.comuna.value,
-            ciudad: $.comuna.value
-        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones/?user_token=" + token);
+        xhr.send(direccionPost);
     }
     function atras() {
         $.agregarDireccion.close();
@@ -441,11 +446,11 @@ function Controller() {
         font: {
             fontWeight: "bold"
         },
-        text: "Comuna",
+        text: "Ciudad",
         id: "__alloyId9"
     });
     $.__views.__alloyId8.add($.__views.__alloyId9);
-    $.__views.comuna = Ti.UI.createTextField({
+    $.__views.ciudad = Ti.UI.createTextField({
         height: "80%",
         width: "60%",
         right: "8.8%",
@@ -456,9 +461,9 @@ function Controller() {
             fontWeight: "bold"
         },
         backgroundColor: "#d8d8d8",
-        id: "comuna"
+        id: "ciudad"
     });
-    $.__views.__alloyId8.add($.__views.comuna);
+    $.__views.__alloyId8.add($.__views.ciudad);
     $.__views.__alloyId10 = Ti.UI.createView({
         width: "100%",
         height: "10%",
@@ -475,10 +480,43 @@ function Controller() {
         font: {
             fontWeight: "bold"
         },
-        text: "Teléfono",
+        text: "Comuna",
         id: "__alloyId11"
     });
     $.__views.__alloyId10.add($.__views.__alloyId11);
+    $.__views.comuna = Ti.UI.createTextField({
+        height: "80%",
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8",
+        id: "comuna"
+    });
+    $.__views.__alloyId10.add($.__views.comuna);
+    $.__views.__alloyId12 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal",
+        id: "__alloyId12"
+    });
+    $.__views.main.add($.__views.__alloyId12);
+    $.__views.__alloyId13 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Teléfono",
+        id: "__alloyId13"
+    });
+    $.__views.__alloyId12.add($.__views.__alloyId13);
     $.__views.telefono = Ti.UI.createTextField({
         height: "80%",
         width: "60%",
@@ -493,7 +531,7 @@ function Controller() {
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
         id: "telefono"
     });
-    $.__views.__alloyId10.add($.__views.telefono);
+    $.__views.__alloyId12.add($.__views.telefono);
     $.__views.footer = Ti.UI.createView({
         layout: "horizontal",
         width: "100%",
@@ -527,11 +565,9 @@ function Controller() {
     var productos = args["productos"];
     var medios = args["medios"];
     var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    var correo = args["correo"];
-    var telefono = args["telefono"];
-    Ti.API.info(token);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

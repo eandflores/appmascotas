@@ -17,10 +17,9 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
 
 $.mainScroll.removeAllChildren();
 
@@ -144,46 +143,55 @@ for(var i = 0; i < productos.length; i++){
 }
 
 if(medio != null){
-	for(i = 0; i< medios.length;i++){
-		if(medios[i]['id'] == medio){
-			$.pago.text = medios[i]['paym_name'];
-		}
-	}
+	$.pago.text = medio['paym_name'];
+}
+if(direccion != null){
+	$.direccion.text = direccion['direccion'];
 }
 
+$.telefono.text = usuario['cust_phone'];
+$.correo.text = usuario['cust_email'];
+
+
 function productosNombre(nombre){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+	
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function productosPerroGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function setDireccion(){
-	Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+	
+	Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function setCorreo(){
 	
+	Alloy.createController('email',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+
 }
 
 function setMedioPago(){
-	Alloy.createController('medioPago',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+	
+	Alloy.createController('medioPago',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function setTelefono(){
-	Alloy.createController('telefono',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+	
+	Alloy.createController('telefono',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function setCupon(){
@@ -192,20 +200,30 @@ function setCupon(){
 
 function gracias(){
 	
-	var xhr = Ti.Network.createHTTPClient({
-		onload: function(e){
-			var response = JSON.parse(this.responseText);
-			Ti.API.info(response);
-					Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: null, direccion: null,correo: null,telefono: null}).getView().open();
+	if(medio != null && direccion != null){
+		var xhr = Ti.Network.createHTTPClient({
+			onload: function(e){
+				try{
+					var response = JSON.parse(this.responseText);
+					Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: null, direccion: null}).getView().open();
+				}
+				catch(e){
+					alert("Error de conexión con el servidor.");
+				}
 			},
-		onerror: function(e){
-			alert(e);
-		}
-	});
-	
-	xhr.open('POST','http://tiendapet.cl/api/comprar');
-	xhr.send({"user_token":token, "pago" : medio,"cart" : carro,"direccion" : {calle: "", comuna: "", ciudad: "", telefono: ""}}); 
-
+			onerror: function(e){
+				alert("Error de conexión con el servidor.");
+			}
+		});
+		Ti.API.info(medio['id']);
+		Ti.API.info(direccion['id']);
+		Ti.API.info(carro);
+		xhr.open('POST','http://tiendapet.cl/api/comprar?user_token='+token);
+		xhr.send({"pago" : medio['id'],"cart" : carro,"direccion" : direccion['id']}); 
+	}
+	else{
+		alert("Debe seleccionar una dirección y medio de pago.");
+	}
 }
 
 function atras(){

@@ -7,10 +7,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -25,10 +24,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -43,10 +41,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,10 +58,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -79,13 +75,24 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
+            direccion: direccion
         }).getView().open();
     }
-    function setCorreo() {}
+    function setCorreo() {
+        Alloy.createController("email", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
+    }
     function setMedioPago() {
         Alloy.createController("medioPago", {
             token: token,
@@ -94,10 +101,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
+            direccion: direccion
         }).getView().open();
     }
     function setTelefono() {
@@ -108,38 +114,38 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
-            direccion: direccion,
-            correo: correo,
-            telefono: telefono
+            direccion: direccion
         }).getView().open();
     }
     function setCupon() {}
     function gracias() {
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
-                var response = JSON.parse(this.responseText);
-                Ti.API.info(response);
-                Alloy.createController("gracias", {
-                    token: token,
-                    carro: [],
-                    marcas: marcas,
-                    productos: productos,
-                    medios: medios,
-                    direcciones: direcciones,
-                    medio: null,
-                    direccion: null,
-                    correo: null,
-                    telefono: null
-                }).getView().open();
+                try {
+                    JSON.parse(this.responseText);
+                    Alloy.createController("gracias", {
+                        token: token,
+                        carro: [],
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: null,
+                        direccion: null
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                }
             },
-            onerror: function(e) {
-                alert(e);
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/comprar");
+        xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=53612cabada79");
         xhr.send({
-            user_token: token,
             pago: medio,
             cart: carro,
             direccion: {
@@ -341,40 +347,6 @@ function Controller() {
         id: "envioScroll"
     });
     $.__views.realizarPedido.add($.__views.envioScroll);
-    $.__views.__alloyId23 = Ti.UI.createView({
-        backgroundImage: "/img/flechaPagos.jpg",
-        width: "100%",
-        height: "96px",
-        layout: "vertical",
-        id: "__alloyId23"
-    });
-    $.__views.envioScroll.add($.__views.__alloyId23);
-    setDireccion ? $.__views.__alloyId23.addEventListener("click", setDireccion) : __defers["$.__views.__alloyId23!click!setDireccion"] = true;
-    $.__views.__alloyId24 = Ti.UI.createLabel({
-        left: "7%",
-        width: "86%",
-        height: "50%",
-        color: "#cc5122",
-        font: {
-            fontFamily: "Noto Sans",
-            fontWeight: "bold"
-        },
-        text: "DIRECCIÓN",
-        id: "__alloyId24"
-    });
-    $.__views.__alloyId23.add($.__views.__alloyId24);
-    $.__views.direccion = Ti.UI.createLabel({
-        left: "7%",
-        width: "86%",
-        height: "50%",
-        color: "#5c5c5b",
-        font: {
-            fontFamily: "Noto Sans",
-            fontWeight: "bold"
-        },
-        id: "direccion"
-    });
-    $.__views.__alloyId23.add($.__views.direccion);
     $.__views.__alloyId25 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
@@ -383,32 +355,32 @@ function Controller() {
         id: "__alloyId25"
     });
     $.__views.envioScroll.add($.__views.__alloyId25);
-    setCorreo ? $.__views.__alloyId25.addEventListener("click", setCorreo) : __defers["$.__views.__alloyId25!click!setCorreo"] = true;
+    setDireccion ? $.__views.__alloyId25.addEventListener("click", setDireccion) : __defers["$.__views.__alloyId25!click!setDireccion"] = true;
     $.__views.__alloyId26 = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
-        text: "CORREO",
+        text: "DIRECCIÓN",
         id: "__alloyId26"
     });
     $.__views.__alloyId25.add($.__views.__alloyId26);
-    $.__views.correo = Ti.UI.createLabel({
+    $.__views.direccion = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
-        id: "correo"
+        id: "direccion"
     });
-    $.__views.__alloyId25.add($.__views.correo);
+    $.__views.__alloyId25.add($.__views.direccion);
     $.__views.__alloyId27 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
@@ -417,10 +389,44 @@ function Controller() {
         id: "__alloyId27"
     });
     $.__views.envioScroll.add($.__views.__alloyId27);
-    setMedioPago ? $.__views.__alloyId27.addEventListener("click", setMedioPago) : __defers["$.__views.__alloyId27!click!setMedioPago"] = true;
+    setCorreo ? $.__views.__alloyId27.addEventListener("click", setCorreo) : __defers["$.__views.__alloyId27!click!setCorreo"] = true;
     $.__views.__alloyId28 = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
+        height: "50%",
+        color: "#cc5122",
+        font: {
+            fontFamily: "Noto Sans",
+            fontWeight: "bold"
+        },
+        text: "CORREO",
+        id: "__alloyId28"
+    });
+    $.__views.__alloyId27.add($.__views.__alloyId28);
+    $.__views.correo = Ti.UI.createLabel({
+        left: "7%",
+        width: "80%",
+        height: "50%",
+        color: "#5c5c5b",
+        font: {
+            fontFamily: "Noto Sans",
+            fontWeight: "bold"
+        },
+        id: "correo"
+    });
+    $.__views.__alloyId27.add($.__views.correo);
+    $.__views.__alloyId29 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
+        width: "100%",
+        height: "96px",
+        layout: "vertical",
+        id: "__alloyId29"
+    });
+    $.__views.envioScroll.add($.__views.__alloyId29);
+    setMedioPago ? $.__views.__alloyId29.addEventListener("click", setMedioPago) : __defers["$.__views.__alloyId29!click!setMedioPago"] = true;
+    $.__views.__alloyId30 = Ti.UI.createLabel({
+        left: "7%",
+        width: "80%",
         height: "50%",
         color: "#cc5122",
         font: {
@@ -428,12 +434,12 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "PAGO",
-        id: "__alloyId28"
+        id: "__alloyId30"
     });
-    $.__views.__alloyId27.add($.__views.__alloyId28);
+    $.__views.__alloyId29.add($.__views.__alloyId30);
     $.__views.pago = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
@@ -442,7 +448,7 @@ function Controller() {
         },
         id: "pago"
     });
-    $.__views.__alloyId27.add($.__views.pago);
+    $.__views.__alloyId29.add($.__views.pago);
     $.__views.id = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
@@ -452,9 +458,9 @@ function Controller() {
     });
     $.__views.envioScroll.add($.__views.id);
     setTelefono ? $.__views.id.addEventListener("click", setTelefono) : __defers["$.__views.id!click!setTelefono"] = true;
-    $.__views.__alloyId29 = Ti.UI.createLabel({
+    $.__views.__alloyId31 = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#cc5122",
         font: {
@@ -462,12 +468,12 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "TELÉFONO",
-        id: "__alloyId29"
+        id: "__alloyId31"
     });
-    $.__views.id.add($.__views.__alloyId29);
+    $.__views.id.add($.__views.__alloyId31);
     $.__views.telefono = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
@@ -486,9 +492,9 @@ function Controller() {
     });
     $.__views.envioScroll.add($.__views.id);
     setCupon ? $.__views.id.addEventListener("click", setCupon) : __defers["$.__views.id!click!setCupon"] = true;
-    $.__views.__alloyId30 = Ti.UI.createLabel({
+    $.__views.__alloyId32 = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#cc5122",
         font: {
@@ -496,12 +502,12 @@ function Controller() {
             fontWeight: "bold"
         },
         text: "CUPÓN DE DESCUENTO",
-        id: "__alloyId30"
+        id: "__alloyId32"
     });
-    $.__views.id.add($.__views.__alloyId30);
+    $.__views.id.add($.__views.__alloyId32);
     $.__views.cupon = Ti.UI.createLabel({
         left: "7%",
-        width: "86%",
+        width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
@@ -552,10 +558,9 @@ function Controller() {
     var productos = args["productos"];
     var medios = args["medios"];
     var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    var correo = args["correo"];
-    var telefono = args["telefono"];
     $.mainScroll.removeAllChildren();
     for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) for (var k = 0; carro.length > k; k++) if (carro[k]["id"] == productos[i]["producto_precios"][j]["id"]) {
         var Main = Ti.UI.createView({
@@ -650,15 +655,18 @@ function Controller() {
         $.mainScroll.add(Main);
         $.mainScroll.add(Margen);
     }
-    if (null != medio) for (i = 0; medios.length > i; i++) medios[i]["id"] == medio && ($.pago.text = medios[i]["paym_name"]);
+    null != medio && ($.pago.text = medio["paym_name"]);
+    null != direccion && ($.direccion.text = direccion["direccion"]);
+    $.telefono.text = usuario["cust_phone"];
+    $.correo.text = usuario["cust_email"];
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
     __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
     __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
-    __defers["$.__views.__alloyId23!click!setDireccion"] && $.__views.__alloyId23.addEventListener("click", setDireccion);
-    __defers["$.__views.__alloyId25!click!setCorreo"] && $.__views.__alloyId25.addEventListener("click", setCorreo);
-    __defers["$.__views.__alloyId27!click!setMedioPago"] && $.__views.__alloyId27.addEventListener("click", setMedioPago);
+    __defers["$.__views.__alloyId25!click!setDireccion"] && $.__views.__alloyId25.addEventListener("click", setDireccion);
+    __defers["$.__views.__alloyId27!click!setCorreo"] && $.__views.__alloyId27.addEventListener("click", setCorreo);
+    __defers["$.__views.__alloyId29!click!setMedioPago"] && $.__views.__alloyId29.addEventListener("click", setMedioPago);
     __defers["$.__views.id!click!setTelefono"] && $.__views.id.addEventListener("click", setTelefono);
     __defers["$.__views.id!click!setCupon"] && $.__views.id.addEventListener("click", setCupon);
     __defers["$.__views.nuevoProducto!click!productosPerroGato"] && $.__views.nuevoProducto.addEventListener("click", productosPerroGato);

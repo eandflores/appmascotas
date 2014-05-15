@@ -57,10 +57,10 @@ function Controller() {
             productos_act.push(productos[i]);
         }
         var paginas = 0;
-        paginas = 0 != productos_act.length % 25 ? parseInt(productos_act.length / 25) + 1 : parseInt(productos_act.length / 25);
+        paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
         for (var i = 0; paginas > i; i++) {
             var paginaLabel = Ti.UI.createLabel({
-                width: "9.7%",
+                width: "48px",
                 height: "100%",
                 text: i + 1,
                 color: "white",
@@ -75,16 +75,16 @@ function Controller() {
                 productosPagina(this["id"]);
             });
             var margenPagina = Ti.UI.createView({
-                width: "0.3%",
+                width: "2px",
                 height: "70%",
                 top: "15%",
                 bottom: "15%%",
-                backgroundColor: "white"
+                backgroundColor: "#e67c53"
             });
             $.paginasView.add(paginaLabel);
             $.paginasView.add(margenPagina);
         }
-        for (var i = 25 * (pagina - 1); 25 * pagina > i; i++) if (productos_act.length > i) for (var j = 0; productos_act[i]["producto_precios"].length > j; j++) {
+        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i; i++) if (productos_act.length > i) for (var j = 0; productos_act[i]["producto_precios"].length > j; j++) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
@@ -246,10 +246,9 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
-            correo: correo,
-            telefono: telefono,
             producto: producto
         }).getView();
         vista.open();
@@ -390,13 +389,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productos.add($.__views.marcas);
-    $.__views.__alloyId21 = Ti.UI.createImageView({
+    $.__views.__alloyId23 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId21"
+        id: "__alloyId23"
     });
-    $.__views.marcas.add($.__views.__alloyId21);
+    $.__views.marcas.add($.__views.__alloyId23);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -408,13 +407,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId22 = Ti.UI.createImageView({
+    $.__views.__alloyId24 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId22"
+        id: "__alloyId24"
     });
-    $.__views.marcas.add($.__views.__alloyId22);
+    $.__views.marcas.add($.__views.__alloyId24);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "75.5%",
@@ -425,11 +424,15 @@ function Controller() {
         id: "mainScroll"
     });
     $.__views.productos.add($.__views.mainScroll);
-    $.__views.paginasView = Ti.UI.createView({
+    $.__views.paginasView = Ti.UI.createScrollView({
         width: "100%",
         height: "5%",
         layout: "horizontal",
         backgroundColor: "#cc5122",
+        contentWidth: Ti.UI.SIZE,
+        scrollType: "horizontal",
+        horizontalWrap: "false",
+        showHorizontalScrollIndicator: "true",
         id: "paginasView"
     });
     $.__views.productos.add($.__views.paginasView);
@@ -446,14 +449,14 @@ function Controller() {
     var productos = args["productos"];
     var medios = args["medios"];
     var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    var correo = args["correo"];
-    var telefono = args["telefono"];
     var categoria = args["categoria"];
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
+    var productosPaginacion = 15;
     var winCargando;
     var labelCargando;
     var winCargando = Ti.UI.createWindow({

@@ -54,11 +54,18 @@ function login(){
 	
 	var xhrMarcas = Ti.Network.createHTTPClient({
 		onload: function(e){
-			var marcas = JSON.parse(this.responseText);
+			try{
+				var marcas = JSON.parse(this.responseText);
 			
-			var vista = Alloy.createController('login',{marcas: marcas}).getView();
-			winCargando.close();
-			vista.open();
+				var vista = Alloy.createController('login',{marcas: marcas}).getView();
+				winCargando.close();
+				vista.open();
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+			}
+			
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");

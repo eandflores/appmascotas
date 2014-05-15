@@ -17,15 +17,16 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
 
 var categoria = args['categoria'];
 var marca = args['marca'];
 var nombre = args['nombre'];
 var pagina = args['pagina'];
+
+var productosPaginacion = 15;
 
 if(Titanium.Platform.name == "iPhone OS"){
 	var winCargando = Ti.UI.createWindow({
@@ -55,7 +56,7 @@ else{
         backgroundColor : '#000',
         width:'100%',
         height:'100%',
-        opacity:1,
+        opacity:0.9,
         navBarHidden: "true"
     });
     
@@ -189,16 +190,16 @@ function ordenarProductos(){
 	
 	var paginas = 0; 
 	
-	if((productos_act.length % 25) != 0){
-		paginas = parseInt(productos_act.length/25) + 1;
+	if((productos_act.length % productosPaginacion) != 0){
+		paginas = parseInt(productos_act.length/productosPaginacion) + 1;
 	}
 	else{
-		paginas = parseInt(productos_act.length/25);
+		paginas = parseInt(productos_act.length/productosPaginacion);
 	}
 	
 	for(var i = 0; i < paginas; i++){
 		var paginaLabel = Ti.UI.createLabel({
-			width:"9.7%",
+			width:"48px",
 			height:"100%",
 			text: (i+1),
 			color:"white",
@@ -215,20 +216,21 @@ function ordenarProductos(){
 		});
 		
 		var margenPagina = Ti.UI.createView({
-			width:"0.3%",
+			width:"2px",
 			height:"70%",
 			top:"15%",
 			bottom:"15%%",
-			backgroundColor:"white",
+			backgroundColor:"#e67c53",
 		});
 			
 		$.paginasView.add(paginaLabel);
 		$.paginasView.add(margenPagina);
 	}
 	
-	for(var i = (25*(pagina-1));i < (pagina*25); i++){
+	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion); i++){
 		
 		if(i < productos_act.length){
+			
 			for(var j = 0; j < productos_act[i]['producto_precios'].length; j++){
 				
 				var Main = Ti.UI.createView({
@@ -432,7 +434,7 @@ function productosPagina(paginaParam){
 
 function productosView(producto){
 	
-	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,producto: producto}).getView();
+	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,producto: producto}).getView();
 	vista.open();
 }
 

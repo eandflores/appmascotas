@@ -3,12 +3,17 @@ function Controller() {
         winCargando.open();
         var xhrMarcas = Ti.Network.createHTTPClient({
             onload: function() {
-                var marcas = JSON.parse(this.responseText);
-                var vista = Alloy.createController("login", {
-                    marcas: marcas
-                }).getView();
-                winCargando.close();
-                vista.open();
+                try {
+                    var marcas = JSON.parse(this.responseText);
+                    var vista = Alloy.createController("login", {
+                        marcas: marcas
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");

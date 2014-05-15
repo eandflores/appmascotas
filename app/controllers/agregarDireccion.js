@@ -17,51 +17,70 @@ var productos = args['productos'];
 var medios = args['medios'];
 var direcciones = args['direcciones'];
 
+var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
-var correo = args['correo'];
-var telefono = args['telefono'];
-Ti.API.info(token);
 
 function productosNombre(nombre){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function productosPerroGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
 	
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function guardar(){ 
-	//var direccionString = $.calle.value+" "+$.numero.value+" "+$.departamento.value+" "+$.esquina.value+" "+$.telefono.value;
-	//var direccionPost = ;
+	var direccionString = "";
+	
+	if($.calle.value != ""){
+		direccionString += $.calle.value+" ";
+	}
+	if($.numero.value != ""){
+		direccionString += $.numero.value+" ";
+	}
+	if($.departamento.value != ""){
+		direccionString += $.departamento.value+" ";
+	}
+	if($.esquina.value != ""){
+		direccionString += $.esquina.value+" ";
+	}
+	if($.telefono.value != ""){
+		direccionString += $.telefono.value;
+	}
+	
+	var direccionPost = {"direccion" : direccionString,"comuna" : $.comuna.value,"ciudad" : $.ciudad.value};
 	
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
-			var response = JSON.parse(this.responseText);
-			Ti.API.info(response);
+			try{
+				var response = JSON.parse(this.responseText);
 			
-			//direcciones.push(direccionPost);
-			Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio, direccion: direccion,correo: correo,telefono: telefono}).getView().open();
+				direcciones.push(direccionPost);
+				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+			}
 		},
 		onerror: function(e){
-			alert(e);
+			alert("Error de conexión con el servidor.");
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones');
-	xhr.send({"user_token":token, "direccion" : "","comuna" : $.comuna.value,"ciudad" : $.comuna.value}); 
+	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones/?user_token='+token);
+	xhr.send(direccionPost); 
 }
 
 function atras(){

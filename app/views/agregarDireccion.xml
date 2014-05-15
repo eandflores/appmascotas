@@ -32,10 +32,14 @@
 				<TextField id="esquina" class="textFieldDireccion"></TextField>>
 			</View>
 			<View class="input">
+				<Label class="labelDireccion">Ciudad</Label>
+				<TextField id="ciudad" class="textFieldDireccion"></TextField>>
+			</View>
+			<View class="input" backgroundImage="/img/labelOscuro.jpg">
 				<Label class="labelDireccion">Comuna</Label>
 				<TextField id="comuna" class="textFieldDireccion"></TextField>>
 			</View>
-			<View class="input" backgroundImage="/img/labelOscuro.jpg">
+			<View class="input">
 				<Label class="labelDireccion">Teléfono</Label>
 				<TextField id="telefono" class="textFieldDireccion numero"></TextField>>
 			</View>
