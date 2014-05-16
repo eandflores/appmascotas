@@ -145,6 +145,7 @@ function Controller() {
                     alert("Error de conexión con el servidor.");
                 }
             });
+            Ti.API.info(token);
             Ti.API.info(medio["id"]);
             Ti.API.info(direccion["id"]);
             Ti.API.info(carro);

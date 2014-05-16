@@ -24,7 +24,28 @@ function Controller() {
         xhrMarcas.send();
     }
     function registro() {
-        Alloy.createController("registro").getView().open();
+        winCargando.open();
+        var xhrMarcas = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    var marcas = JSON.parse(this.responseText);
+                    var vista = Alloy.createController("registro", {
+                        marcas: marcas
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+                winCargando.close();
+            }
+        });
+        xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+        xhrMarcas.send();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";

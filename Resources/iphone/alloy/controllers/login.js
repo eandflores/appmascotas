@@ -30,7 +30,7 @@ function Controller() {
     }
     function getProductos(token, marcas) {
         var xhrProductos = Ti.Network.createHTTPClient({
-            onload: function() {
+            onload: function(e) {
                 try {
                     var productos = JSON.parse(this.responseText);
                     var vista = Alloy.createController("productos", {
@@ -51,7 +51,7 @@ function Controller() {
                     winCargando.close();
                     vista.open();
                 } catch (e) {
-                    alert("Error de conexión con el servidor.");
+                    alert(e);
                     winCargando.close();
                 }
             },

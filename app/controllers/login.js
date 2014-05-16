@@ -101,7 +101,7 @@ function getProductos(token,marcas){
 				vista.open();
 			}
 			catch(e){
-				alert("Error de conexión con el servidor.");
+				alert(e);
 				winCargando.close();
 			}
 		},

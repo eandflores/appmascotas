@@ -121,40 +121,41 @@ function Controller() {
     }
     function setCupon() {}
     function gracias() {
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
-                try {
-                    JSON.parse(this.responseText);
-                    Alloy.createController("gracias", {
-                        token: token,
-                        carro: [],
-                        marcas: marcas,
-                        productos: productos,
-                        medios: medios,
-                        direcciones: direcciones,
-                        usuario: usuario,
-                        medio: null,
-                        direccion: null
-                    }).getView().open();
-                } catch (e) {
+        if (null != medio && null != direccion) {
+            var xhr = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        JSON.parse(this.responseText);
+                        Alloy.createController("gracias", {
+                            token: token,
+                            carro: [],
+                            marcas: marcas,
+                            productos: productos,
+                            medios: medios,
+                            direcciones: direcciones,
+                            usuario: usuario,
+                            medio: null,
+                            direccion: null
+                        }).getView().open();
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                    }
+                },
+                onerror: function() {
                     alert("Error de conexión con el servidor.");
                 }
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-            }
-        });
-        xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=53612cabada79");
-        xhr.send({
-            pago: medio,
-            cart: carro,
-            direccion: {
-                calle: "",
-                comuna: "",
-                ciudad: "",
-                telefono: ""
-            }
-        });
+            });
+            Ti.API.info(token);
+            Ti.API.info(medio["id"]);
+            Ti.API.info(direccion["id"]);
+            Ti.API.info(carro);
+            xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
+            xhr.send({
+                pago: medio["id"],
+                cart: carro,
+                direccion: direccion["id"]
+            });
+        } else alert("Debe seleccionar una dirección y medio de pago.");
     }
     function atras() {
         $.realizarPedido.close();
