@@ -1,36 +1,4 @@
 function Controller() {
-    function cargarMedios(medios) {
-        for (i = 0; medios.length > i; i++) {
-            var MedioPago = Ti.UI.createView({
-                backgroundImage: "/img/flechaPagos.jpg",
-                width: "100%",
-                id: medios[i],
-                height: "98px"
-            });
-            MedioPago.addEventListener("click", function() {
-                selectMedio(this["id"]);
-            });
-            var Margen = Ti.UI.createView({
-                width: "100%",
-                height: "2px",
-                backgroundColor: "#e8e8e8"
-            });
-            var Label = Ti.UI.createLabel({
-                left: "7%",
-                width: "86%",
-                height: "100%",
-                color: "#5c5c5b",
-                font: {
-                    fontFamily: "Noto Sans",
-                    fontWeight: "bold"
-                },
-                text: medios[i]["paym_name"]
-            });
-            MedioPago.add(Label);
-            $.mainScroll.add(MedioPago);
-            $.mainScroll.add(Margen);
-        }
-    }
     function productosPerroGato() {
         Alloy.createController("productos", {
             token: token,
@@ -301,22 +269,35 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    if (medios.length > 0) cargarMedios(medios); else {
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
-                try {
-                    medios = JSON.parse(this.responseText);
-                    cargarMedios(medios);
-                } catch (e) {
-                    alert("Error de conexión con el servidor.");
-                }
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-            }
+    for (i = 0; medios.length > i; i++) {
+        var MedioPago = Ti.UI.createView({
+            backgroundImage: "/img/flechaPagos.jpg",
+            width: "100%",
+            id: medios[i],
+            height: "98px"
         });
-        xhr.open("GET", "http://tiendapet.cl/api/pagos");
-        xhr.send();
+        MedioPago.addEventListener("click", function() {
+            selectMedio(this["id"]);
+        });
+        var Margen = Ti.UI.createView({
+            width: "100%",
+            height: "2px",
+            backgroundColor: "#e8e8e8"
+        });
+        var Label = Ti.UI.createLabel({
+            left: "7%",
+            width: "86%",
+            height: "100%",
+            color: "#5c5c5b",
+            font: {
+                fontFamily: "Noto Sans",
+                fontWeight: "bold"
+            },
+            text: medios[i]["paym_name"]
+        });
+        MedioPago.add(Label);
+        $.mainScroll.add(MedioPago);
+        $.mainScroll.add(Margen);
     }
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);

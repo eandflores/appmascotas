@@ -28,53 +28,105 @@ var pagina = args['pagina'];
 
 var productosPaginacion = 15;
 
-if(Titanium.Platform.name == "iPhone OS"){
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        top: "3.5%",
-        height:'96.5%',
-        opacity:0.70
-        
-    });
-    
-    var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
-}
-else{
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.9,
-        navBarHidden: "true"
-    });
-    
-     var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
+iniciarComponentes();
+cargarLoading();
+iniciarMenu(productos);
+
+var mainScroll = Ti.UI.createScrollView({
+	id:"mainScroll",
+	width:"100%",
+	height:"75.5%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true",
+});
+
+var paginasView = Ti.UI.createScrollView({
+	id:"paginasView",
+	width:"100%",
+	height:"5%",
+	layout:'horizontal',
+	backgroundColor:"#cc5122",
+	contentWidth: Ti.UI.SIZE,
+	scrollType: 'horizontal',
+	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
+	showHorizontalScrollIndicator:"true",
+});
+
+menuImg.addEventListener('click',function(e){
+	$.drawermenu.showhidemenu();
+});
+
+perrogato.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+perro.addEventListener("click",function(){
+	productosPerro();
+});
+
+gato.addEventListener("click",function(){
+	productosGato();
+});
+
+lupaImg.addEventListener("click",function(){
+	busquedaProducto();
+});
+
+function busquedaProducto(){
+	buscarProducto();
+	lupa.addEventListener("click",function(){
+		productosNombre(buscar.value);
 	});
 }
 
-winCargando.add(labelCargando);
+var marcasView = Ti.UI.createView({
+	id:"marcas",
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"10%",
+	layout:"horizontal"
+});
+
+var flechaIzq = Ti.UI.createImageView({
+	width:"14%",
+	height:"80%",
+	backgroundImage:"/img/FlechaIzq.jpg"
+});
+
+var flechaDer = Ti.UI.createImageView({
+	width:"14%",
+	height:"80%",
+	backgroundImage:"/img/FlechaDer.jpg"
+});
+
+var marcasScroll = Ti.UI.createScrollView({
+	id:"marcasScroll",
+	width: "72%",
+	contentWidth: Ti.UI.SIZE,
+	scrollType: 'horizontal',
+	layout: 'horizontal',
+	height:"85%",
+	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
+	showHorizontalScrollIndicator:"true",
+});
+
+marcasView.add(flechaIzq);
+marcasView.add(marcasScroll);
+marcasView.add(flechaDer);
+
+main.add(wrapper);
+main.add(marcasView);
+main.add(mainScroll);
+main.add(paginasView);
+
+$.drawermenu.init({
+    menuview:menu,
+    mainview:main,
+    duration:200,
+    parent: $.productos
+});
 
 ordenarProductos();
 
@@ -101,21 +153,21 @@ function ordenarProductos(){
 			marcasScroll.add(ImageViewMarca);	
 		}
 		*/
-		$.marcasScroll.add(ImageViewMarca);
+		marcasScroll.add(ImageViewMarca);
 	}
 	
-	$.perrogato.backgroundImage = "/img/perrogato.jpg";
-	$.perro.backgroundImage = "/img/perro.jpg";
-	$.gato.backgroundImage = "/img/gato.jpg";
+	perrogato.backgroundImage = "/img/perrogato.jpg";
+	perro.backgroundImage = "/img/perro.jpg";
+	gato.backgroundImage = "/img/gato.jpg";
 		
 	if(categoria == "TODAS"){
-		$.perrogato.backgroundImage = "/img/perrogato2.jpg";
+		perrogato.backgroundImage = "/img/perrogato2.jpg";
 	}
 	else if(categoria == "Perro"){
-		$.perro.backgroundImage = "/img/perro2.jpg";
+		perro.backgroundImage = "/img/perro2.jpg";
 	}
 	else if(categoria == "Gato"){
-		$.gato.backgroundImage = "/img/gato2.jpg";
+		gato.backgroundImage = "/img/gato2.jpg";
 	}
 	
 	if(nombre != "TODOS"){
@@ -152,7 +204,7 @@ function ordenarProductos(){
 		
 		resultados.add(resultadoProducto);
 		resultados.add(resultadoNombre);
-		$.mainScroll.add(resultados);
+		mainScroll.add(resultados);
 	}
 	
 	var cant_productos = 0;
@@ -223,8 +275,8 @@ function ordenarProductos(){
 			backgroundColor:"#e67c53",
 		});
 			
-		$.paginasView.add(paginaLabel);
-		$.paginasView.add(margenPagina);
+		paginasView.add(paginaLabel);
+		paginasView.add(margenPagina);
 	}
 	
 	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion); i++){
@@ -318,8 +370,8 @@ function ordenarProductos(){
 					productosView(this['id']);
 				});
 		
-				$.mainScroll.add(Main);	
-				$.mainScroll.add(Margen);	
+				mainScroll.add(Main);	
+				mainScroll.add(Margen);	
 			}
 		}
 	}
@@ -339,9 +391,9 @@ function ordenarProductos(){
 function productosPerroGato(){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categorias[3];
 	marca = "TODAS";
@@ -354,9 +406,9 @@ function productosPerroGato(){
 function productosPerro(){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categorias[1];
 	marca = "TODAS";
@@ -369,9 +421,9 @@ function productosPerro(){
 function productosGato(){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categorias[2];
 	marca = "TODAS";
@@ -384,9 +436,9 @@ function productosGato(){
 function productosMarca(marcaParam){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categorias[3];
 	nombre = "TODOS";
@@ -405,9 +457,9 @@ function productosMarca(marcaParam){
 function productosNombre(nombreParam){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categorias[3];
 	marca = "TODAS";
@@ -420,9 +472,9 @@ function productosNombre(nombreParam){
 function productosPagina(paginaParam){
 	
 	winCargando.open();
-	$.mainScroll.removeAllChildren();
-	$.marcasScroll.removeAllChildren();
-	$.paginasView.removeAllChildren();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
 	
 	categoria = categoria;
 	marca = marca;
@@ -435,146 +487,12 @@ function productosPagina(paginaParam){
 function productosView(producto){
 	
 	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,producto: producto}).getView();
+	winCargando.open();
+	mainScroll.removeAllChildren();
+	marcasScroll.removeAllChildren();
+	paginasView.removeAllChildren();
+	winCargando.close();
+	winCargando.close();
+	winCargando.close();
 	vista.open();
-}
-
-function buscarProducto(){
-	if(Titanium.Platform.name == "iPhone OS"){
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        top: "3.5%",
-	        height:'9.1%',
-	    });
-	    
-	    var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"100%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			color: "white",
-			textAlign:'center'
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			winModal.close();
-		});
-	}
-	else{
-		
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        height:'100%',
-	        opacity:0.85,
-	        navBarHidden: "true"
-	    });
-		
-		var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"9.5%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			textAlign:'center',
-			color:"white",
-			backgroundColor:"#cb5122"
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			backgroundColor:"#cb5122",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-		});
-		
-		winModal.addEventListener('android:back',function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			return true;
-		});
-		
-		$.wrapper.opacity = 0;
-	}
-	
-	viewModal.add(buscar);
-	inputsBuscar.add(lupa);
-	inputsBuscar.add(cerrar);
-	viewModal.add(inputsBuscar);
-	winModal.add(viewModal);
-	winModal.open();
 }

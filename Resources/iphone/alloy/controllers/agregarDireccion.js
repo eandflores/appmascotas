@@ -74,16 +74,11 @@ function Controller() {
         "" != $.departamento.value && (direccionString += $.departamento.value + " ");
         "" != $.esquina.value && (direccionString += $.esquina.value + " ");
         "" != $.telefono.value && (direccionString += $.telefono.value);
-        var direccionPost = {
-            direccion: direccionString,
-            comuna: $.comuna.value,
-            ciudad: $.ciudad.value
-        };
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 try {
-                    JSON.parse(this.responseText);
-                    direcciones.push(direccionPost);
+                    var response = JSON.parse(this.responseText);
+                    Ti.API.info(response);
                     Alloy.createController("direccion", {
                         token: token,
                         carro: carro,
@@ -104,7 +99,11 @@ function Controller() {
             }
         });
         xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones/?user_token=" + token);
-        xhr.send(direccionPost);
+        xhr.send({
+            direccion: direccionString,
+            comuna: $.comuna.value,
+            ciudad: $.ciudad.value
+        });
     }
     function atras() {
         $.agregarDireccion.close();
@@ -305,11 +304,11 @@ function Controller() {
     });
     $.__views.__alloyId0.add($.__views.__alloyId1);
     $.__views.calle = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -339,11 +338,11 @@ function Controller() {
     });
     $.__views.__alloyId2.add($.__views.__alloyId3);
     $.__views.numero = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -373,11 +372,11 @@ function Controller() {
     });
     $.__views.__alloyId4.add($.__views.__alloyId5);
     $.__views.departamento = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -408,11 +407,11 @@ function Controller() {
     });
     $.__views.__alloyId6.add($.__views.__alloyId7);
     $.__views.esquina = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -441,11 +440,11 @@ function Controller() {
     });
     $.__views.__alloyId8.add($.__views.__alloyId9);
     $.__views.ciudad = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -475,11 +474,11 @@ function Controller() {
     });
     $.__views.__alloyId10.add($.__views.__alloyId11);
     $.__views.comuna = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"
@@ -508,11 +507,11 @@ function Controller() {
     });
     $.__views.__alloyId12.add($.__views.__alloyId13);
     $.__views.telefono = Ti.UI.createTextField({
-        height: "80%",
         width: "60%",
         right: "8.8%",
         top: "10%",
         bottom: "10%",
+        height: "80%",
         color: "#888888",
         font: {
             fontWeight: "bold"

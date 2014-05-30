@@ -273,10 +273,10 @@ function Controller() {
     });
     $.__views.main.add($.__views.viewTelefono);
     $.__views.inputTelefono = Ti.UI.createTextField({
-        height: "100%",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
         left: "30%",
         width: "70",
+        height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         font: {

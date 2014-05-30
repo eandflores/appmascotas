@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 
 var marcas = args['marcas'];
+var productos = args['productos'];
 
 if(Titanium.Platform.name == "iPhone OS"){
 	var winCargando = Ti.UI.createWindow({
@@ -63,7 +64,9 @@ function registro(){
 				var response = JSON.parse(this.responseText);
 				var token = response['token'];
 				
-				getProductos(token,marcas);
+				var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
+				winCargando.close();
+				vista.open();
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");
@@ -77,37 +80,9 @@ function registro(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/login');
+	xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
 	xhr.send({"email" : email,"password" : password});
 }
-
-function getProductos(token,marcas){
-	
-	var xhrProductos = Ti.Network.createHTTPClient({
-		onload: function(e){
-			try{
-				var productos = JSON.parse(this.responseText);
-		
-				var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
-				winCargando.close();
-				vista.open();
-			}
-			catch(e){
-				alert(e);
-				winCargando.close();
-			}
-		},
-		onerror: function(e){
-			alert("Error de conexión con el servidor.");
-			winCargando.close();
-		}
-	});
-	
-	xhrProductos.open('GET','http://tiendapet.cl/api/productos/?desde=1&cantidad=-1');
-	xhrProductos.send();
-	
-}
-
 
 function atras(){
 	$.registro.close();

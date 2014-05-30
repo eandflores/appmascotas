@@ -8,28 +8,6 @@ function Controller() {
                 try {
                     var response = JSON.parse(this.responseText);
                     var token = response["token"];
-                    getProductos(token, marcas);
-                } catch (e) {
-                    alert("Error de conexión con el servidor.");
-                    winCargando.close();
-                }
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-                winCargando.close();
-            }
-        });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
-        xhr.send({
-            email: email,
-            password: password
-        });
-    }
-    function getProductos(token, marcas) {
-        var xhrProductos = Ti.Network.createHTTPClient({
-            onload: function(e) {
-                try {
-                    var productos = JSON.parse(this.responseText);
                     var vista = Alloy.createController("productos", {
                         token: token,
                         carro: [],
@@ -48,7 +26,7 @@ function Controller() {
                     winCargando.close();
                     vista.open();
                 } catch (e) {
-                    alert(e);
+                    alert("Error de conexión con el servidor.");
                     winCargando.close();
                 }
             },
@@ -57,8 +35,11 @@ function Controller() {
                 winCargando.close();
             }
         });
-        xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
-        xhrProductos.send();
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
+        xhr.send({
+            email: email,
+            password: password
+        });
     }
     function atras() {
         $.registro.close();
@@ -96,15 +77,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
-    $.__views.__alloyId33 = Ti.UI.createImageView({
+    $.__views.__alloyId36 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId33"
+        id: "__alloyId36"
     });
-    $.__views.marcas.add($.__views.__alloyId33);
-    atras ? $.__views.__alloyId33.addEventListener("click", atras) : __defers["$.__views.__alloyId33!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId36);
+    atras ? $.__views.__alloyId36.addEventListener("click", atras) : __defers["$.__views.__alloyId36!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "49.2%",
@@ -127,9 +108,9 @@ function Controller() {
     });
     $.__views.registro.add($.__views.inputs);
     $.__views.inputNombre = Ti.UI.createTextField({
-        height: "33.4%",
         left: "10%",
         width: "90%",
+        height: "33.4%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputNombre",
@@ -137,9 +118,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputNombre);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        height: "33.3%",
         left: "10%",
         width: "90%",
+        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -147,9 +128,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputContraseña = Ti.UI.createTextField({
-        height: "33.3%",
         left: "10%",
         width: "90%",
+        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputContraseña",
@@ -188,6 +169,7 @@ function Controller() {
     _.extend($, $.__views);
     var args = arguments[0] || {};
     var marcas = args["marcas"];
+    var productos = args["productos"];
     var winCargando;
     var labelCargando;
     var winCargando = Ti.UI.createWindow({
@@ -210,7 +192,7 @@ function Controller() {
         }
     });
     winCargando.add(labelCargando);
-    __defers["$.__views.__alloyId33!click!atras"] && $.__views.__alloyId33.addEventListener("click", atras);
+    __defers["$.__views.__alloyId36!click!atras"] && $.__views.__alloyId36.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);
 }

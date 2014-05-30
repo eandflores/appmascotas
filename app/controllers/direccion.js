@@ -21,82 +21,169 @@ var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
 
-if(direcciones.length > 0){
-	cargarDirecciones(direcciones);
-}
-else{
-	var xhr = Ti.Network.createHTTPClient({
-		onload: function(e){
-			direcciones = JSON.parse(this.responseText);
-			
-			cargarDirecciones(direcciones);
-	
-		},
-		onerror: function(e){
-			alert("Error de conexión con el servidor.");
-		}
+iniciarComponentes();
+iniciarMenu();
+cargarLoading();
+
+var marcasView = Ti.UI.createView({
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"10%",
+	layout:"horizontal"
+});
+
+var flecha = Ti.UI.createImageView({
+	width:"14%",
+	height:"85%",
+	backgroundImage:"/img/FlechaIzq.jpg"
+});
+
+flecha.addEventListener('click',function(e){
+	atras();
+});
+
+var direccionTitulo = Ti.UI.createImageView({
+	width: "72%",
+	height:"85%",
+	backgroundImage:"/img/direccion.jpg"
+});
+
+var casa = Ti.UI.createImageView({
+	left:"2%",
+	top:"25%",
+	bottom:"25%",
+	width: "10%",
+	height:"50%",
+	backgroundImage:"/img/casa.png"
+});
+
+direccionTitulo.add(casa);
+marcasView.add(flecha);
+marcasView.add(direccionTitulo);
+
+var margen = Ti.UI.createView({
+	width:"100%",
+	height:"3.1%",
+	backgroundImage:"/img/Margen.jpg"
+});
+
+var mainScroll = Ti.UI.createScrollView({
+	width:"100%",
+	height:"69.8%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true",
+});
+
+var footer = Ti.UI.createButton({
+	backgroundColor:"#cc5122",
+	color:"white",
+	width:"100%",
+	height:"7.6%",
+	font: {
+		fontWeight:"bold"
+   },
+   title:"AGREGAR DIRECCIÓN"
+});
+
+menuImg.addEventListener('click',function(e){
+	$.drawermenu.showhidemenu();
+});
+
+perrogato.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+perro.addEventListener("click",function(){
+	productosPerro();
+});
+
+gato.addEventListener("click",function(){
+	productosGato();
+});
+
+lupaImg.addEventListener("click",function(){
+	busquedaProducto();
+});
+
+footer.addEventListener("click",function(){
+	agregarDireccion();
+});
+
+function busquedaProducto(){
+	buscarProducto();
+	lupa.addEventListener("click",function(){
+		productosNombre(buscar.value);
 	});
-	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
-	xhr.send();
 }
 
-function cargarDirecciones(direcciones){
+main.add(wrapper);
+main.add(marcasView);
+main.add(margen);
+main.add(mainScroll);
+main.add(footer);
+
+$.drawermenu.init({
+    menuview:menu,
+    mainview:main,
+    duration:200,
+    parent: $.direccion
+});
+
+for(i=0;i<direcciones.length;i++){
+		
+	var Direccion = Ti.UI.createView({
+		width:"100%",
+		height:"73px",
+		layout:"horizontal"
+	});
 	
-	for(i=0;i<direcciones.length;i++){
-		
-		var Direccion = Ti.UI.createView({
-			width:"100%",
-			height:"73px",
-			layout:"horizontal"
-		});
-		
-		var EliminarDireccion = Ti.UI.createView({
-			backgroundImage:"/img/eliminarDireccion.jpg",
-			width:"14.8%",
-			id: direcciones[i]['id'],
-			height:"100%"
-		});
-		
-		EliminarDireccion.addEventListener("click",function(){
-			eliminarDireccion(this['id']);
-		});
-		
-		var SeleccionarDireccion = Ti.UI.createView({
-			backgroundImage:"/img/seleccionarDireccion.jpg",
-			width:"85.2%",
-			id: direcciones[i],
-			height:"100%",
-		});
-		
-		SeleccionarDireccion.addEventListener("click",function(){
-			selectDireccion(this['id']);
-		});
-		
-		var Margen = Ti.UI.createView({
-			width:"100%",
-			height:"2px",
-			backgroundColor:"#e8e8e8"
-		});
-		
-		var Label = Ti.UI.createLabel({
-			right:"20%",
-			width:"80%",
-			height:"100%",
-			color:"#5c5c5b",
-			font:{
-				fontFamily:"Noto Sans",
-				fontWeight:"bold"
-			},
-			text: direcciones[i]['direccion']
-		});
-		
-		SeleccionarDireccion.add(Label);
-		Direccion.add(EliminarDireccion);
-		Direccion.add(SeleccionarDireccion);
-		$.mainScroll.add(Direccion);
-		$.mainScroll.add(Margen);
-	}
+	var EliminarDireccion = Ti.UI.createView({
+		backgroundImage:"/img/eliminarDireccion.jpg",
+		width:"14.8%",
+		id: direcciones[i]['id'],
+		height:"100%"
+	});
 	
+	EliminarDireccion.addEventListener("click",function(){
+		eliminarDireccion(this['id']);
+	});
+	
+	var SeleccionarDireccion = Ti.UI.createView({
+		backgroundImage:"/img/seleccionarDireccion.jpg",
+		width:"85.2%",
+		id: direcciones[i],
+		height:"100%",
+	});
+	
+	SeleccionarDireccion.addEventListener("click",function(){
+		selectDireccion(this['id']);
+	});
+	
+	var Margen = Ti.UI.createView({
+		width:"100%",
+		height:"2px",
+		backgroundColor:"#e8e8e8"
+	});
+	
+	var Label = Ti.UI.createLabel({
+		right:"20%",
+		width:"80%",
+		height:"100%",
+		color:"#5c5c5b",
+		font:{
+			fontFamily:"Noto Sans",
+			fontWeight:"bold"
+		},
+		text: direcciones[i]['direccion']
+	});
+	
+	SeleccionarDireccion.add(Label);
+	Direccion.add(EliminarDireccion);
+	Direccion.add(SeleccionarDireccion);
+	mainScroll.add(Direccion);
+	mainScroll.add(Margen);
 }
 
 function selectDireccion(direccion_selected){
@@ -104,197 +191,82 @@ function selectDireccion(direccion_selected){
 }
 
 function eliminarDireccion(direccion_id){
-	/*
+	
+	winCargando.open();
+	
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
-			var response = JSON.parse(this.responseText);
-			Ti.API.info(response);
+			try{
+				Ti.API.info(this.responseText);
 			
-			direcciones = null;
-			
-			if(direccion != 0){
-				if(direccion_id == direccion['id']){
-					direccion = null;
+				if(direccion != null){
+					if(direccion_id == direccion['id']){
+						direccion = null;
+					}
 				}
+				
+				cargarDirecciones();
 			}
-			
-			Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+			}
 		},
 		onerror: function(e){
 			alert(e);
+			winCargando.close();
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/direccionesEliminar/?direccion='+direccion_id);
-	xhr.send(); 
-	*/
+	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones_borrar?user_token='+token);
+	xhr.send({"direccion" : direccion_id}); 
+	
+}
+
+function cargarDirecciones(){
+	var xhr = Ti.Network.createHTTPClient({
+		onload: function(e){
+			try{
+				direcciones = JSON.parse(this.responseText);
+			
+				var vista = Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
+				winCargando.close();
+				vista.open();
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+			}	
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+			winCargando.close();
+		}
+	});
+	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.send();
 }
 
 function productosPerroGato(){
-	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
-	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
-	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosNombre(nombre){
-	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function agregarDireccion(){
-	
 	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 }
 
 function atras(){
 	$.direccion.close();
-}
-
-function buscarProducto(){
-	if(Titanium.Platform.name == "iPhone OS"){
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        top: "3.5%",
-	        height:'9.1%',
-	    });
-	    
-	    var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"100%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			color: "white",
-			textAlign:'center'
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			winModal.close();
-		});
-	}
-	else{
-		$.wrapper.opacity = 0;
-		
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        height:'100%',
-	        opacity:0.85,
-	        navBarHidden: "true"
-	    });
-		
-		var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"9.5%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			textAlign:'center',
-			color:"white",
-			backgroundColor:"#cb5122"
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			backgroundColor:"#cb5122",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-		});
-		
-		winModal.addEventListener('android:back',function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			return true;
-		});
-	}
-	
-	viewModal.add(buscar);
-	inputsBuscar.add(lupa);
-	inputsBuscar.add(cerrar);
-	viewModal.add(inputsBuscar);
-	winModal.add(viewModal);
-	winModal.open();
 }

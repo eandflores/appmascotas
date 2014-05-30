@@ -1,4 +1,7 @@
 function Controller() {
+    function atras() {
+        $.recuperarContrasena.close();
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "recuperarContrasena";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -6,6 +9,7 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
+    var __defers = {};
     $.__views.recuperarContrasena = Ti.UI.createWindow({
         navBarHidden: "true",
         backgroundColor: "white",
@@ -30,6 +34,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.recuperarContrasena.add($.__views.marcas);
+    $.__views.__alloyId35 = Ti.UI.createImageView({
+        width: "14%",
+        height: "80%",
+        left: "0%",
+        backgroundImage: "/img/FlechaIzq.jpg",
+        id: "__alloyId35"
+    });
+    $.__views.marcas.add($.__views.__alloyId35);
+    atras ? $.__views.__alloyId35.addEventListener("click", atras) : __defers["$.__views.__alloyId35!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "53.8%",
@@ -52,9 +65,9 @@ function Controller() {
     });
     $.__views.recuperarContrasena.add($.__views.inputs);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        height: "100%",
         left: "10%",
         width: "90%",
+        height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -89,6 +102,7 @@ function Controller() {
     $.__views.footer.add($.__views.registro);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    __defers["$.__views.__alloyId35!click!atras"] && $.__views.__alloyId35.addEventListener("click", atras);
     _.extend($, exports);
 }
 

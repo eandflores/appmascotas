@@ -21,7 +21,322 @@ var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
 
-$.mainScroll.removeAllChildren();
+iniciarComponentes();
+iniciarMenu();
+cargarLoading();
+
+var marcasView = Ti.UI.createView({
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"10%",
+	layout:"horizontal"
+});
+
+var flecha = Ti.UI.createImageView({
+	width:"14%",
+	height:"85%",
+	backgroundImage:"/img/FlechaIzq.jpg"
+});
+
+flecha.addEventListener('click',function(e){
+	atras();
+});
+
+var pedidoTitulo = Ti.UI.createImageView({
+	width: "72%",
+	height:"85%",
+	backgroundImage:"/img/envioPedido.jpg"
+});
+
+marcasView.add(flecha);
+marcasView.add(pedidoTitulo);
+
+var envioGratis = Ti.UI.createView({
+	width:"100%",
+	height:"4%",
+	backgroundImage:"/img/envioGratis.jpg"
+});
+
+var mainScroll = Ti.UI.createScrollView({
+	width:"100%",
+	height:"29.9%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true"
+});
+
+var envioScroll = Ti.UI.createScrollView({
+	width:"100%",
+	height:"32.3%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true"
+});
+
+var labelPago1 = Ti.UI.createView({
+	backgroundImage:"/img/flechaPagos.jpg",
+	width:"100%",
+	height:"96px",
+	layout:"vertical"
+});
+
+var tituloLabel1 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#cc5122",		
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	text:"DIRECCIÓN"
+});
+
+var contenidoLabel1 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#5c5c5b",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	id:"direccion"
+});
+
+labelPago1.add(tituloLabel1);
+labelPago1.add(contenidoLabel1);
+
+var labelPago2 = Ti.UI.createView({
+	backgroundImage:"/img/flechaPagos.jpg",
+	width:"100%",
+	height:"96px",
+	layout:"vertical"
+});
+
+var tituloLabel2 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#cc5122",		
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	text:"CORREO"
+});
+
+var contenidoLabel2 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#5c5c5b",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	id:"correo"
+});
+
+labelPago2.add(tituloLabel2);
+labelPago2.add(contenidoLabel2);
+
+var labelPago3 = Ti.UI.createView({
+	backgroundImage:"/img/flechaPagos.jpg",
+	width:"100%",
+	height:"96px",
+	layout:"vertical"
+});
+
+var tituloLabel3 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#cc5122",		
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	text:"PAGO"
+});
+
+var contenidoLabel3 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#5c5c5b",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	id:"pago"
+});
+
+labelPago3.add(tituloLabel3);
+labelPago3.add(contenidoLabel3);
+
+var labelPago4 = Ti.UI.createView({
+	backgroundImage:"/img/flechaPagos.jpg",
+	width:"100%",
+	height:"96px",
+	layout:"vertical"
+});
+
+var tituloLabel4 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#cc5122",		
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	text:"TELÉFONO"
+});
+
+var contenidoLabel4 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#5c5c5b",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	id:"telefono"
+});
+
+labelPago4.add(tituloLabel4);
+labelPago4.add(contenidoLabel4);
+
+var labelPago5 = Ti.UI.createView({
+	backgroundImage:"/img/flechaPagos.jpg",
+	width:"100%",
+	height:"96px",
+	layout:"vertical"
+});
+
+var tituloLabel5 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#cc5122",		
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	text:"CUPÓN DE DESCUENTO"
+});
+
+var contenidoLabel5 = Ti.UI.createLabel({
+	left:"7%",
+	width:"80%",
+	height:"50%",
+	color:"#5c5c5b",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	},
+	id:"cupon"
+});
+
+labelPago5.add(tituloLabel5);
+labelPago5.add(contenidoLabel5);
+
+labelPago1.addEventListener('click',function(e){
+	setDireccion();
+});
+
+labelPago2.addEventListener('click',function(e){
+	setCorreo();
+});
+
+labelPago3.addEventListener('click',function(e){
+	setMedioPago();
+});
+
+labelPago4.addEventListener('click',function(e){
+	setTelefono();
+});
+
+labelPago5.addEventListener('click',function(e){
+	setCupon();
+});
+
+envioScroll.add(labelPago1);
+envioScroll.add(labelPago2);
+envioScroll.add(labelPago3);
+envioScroll.add(labelPago4);
+envioScroll.add(labelPago5);
+
+var nuevoProducto = Ti.UI.createView({
+	height:"7.6%",
+	width:"100%",
+	backgroundImage:"/img/agregarProducto.jpg"
+});
+
+var footer = Ti.UI.createButton({
+	backgroundColor:"#cc5122",
+	color:"white",
+	width:"100%",
+	height:"7.6%",
+	font: {
+		fontWeight:"bold"
+   },
+   title:"REALIZAR PEDIDO"
+});
+
+menuImg.addEventListener('click',function(e){
+	$.drawermenu.showhidemenu();
+});
+
+perrogato.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+perro.addEventListener("click",function(){
+	productosPerro();
+});
+
+gato.addEventListener("click",function(){
+	productosGato();
+});
+
+lupaImg.addEventListener("click",function(){
+	busquedaProducto();
+});
+
+nuevoProducto.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+footer.addEventListener("click",function(){
+	gracias();
+});
+
+function busquedaProducto(){
+	buscarProducto();
+	lupa.addEventListener("click",function(){
+		productosNombre(buscar.value);
+	});
+}
+
+main.add(wrapper);
+main.add(marcasView);
+main.add(envioGratis);
+main.add(mainScroll);
+main.add(envioScroll);
+main.add(nuevoProducto);
+main.add(footer);
+
+$.drawermenu.init({
+    menuview:menu,
+    mainview:main,
+    duration:200,
+    parent: $.realizarPedido
+});
 
 for(var i = 0; i < productos.length; i++){
 	
@@ -135,23 +450,30 @@ for(var i = 0; i < productos.length; i++){
 				Main.add(ImageViewProducto);
 				Main.add(ViewLabels);
 				
-				$.mainScroll.add(Main);	
-				$.mainScroll.add(Margen);
+				mainScroll.add(Main);	
+				mainScroll.add(Margen);
 			}
 		}
 	}
 }
 
 if(medio != null){
-	$.pago.text = medio['paym_name'];
+	contenidoLabel3.text = medio['paym_name'];
+}
+else{
+	contenidoLabel3.text = medios[0]['paym_name'];
+	medio = medios[0];
 }
 if(direccion != null){
-	$.direccion.text = direccion['direccion'];
+	contenidoLabel1.text = direccion['direccion'];
+}
+else{
+	contenidoLabel1.text = direcciones[direcciones.length-1]['direccion'];
+	direccion = direcciones[direcciones.length-1];
 }
 
-$.telefono.text = usuario['cust_phone'];
-$.correo.text = usuario['cust_email'];
-
+contenidoLabel4.text = usuario['cust_phone'];
+contenidoLabel2.text = usuario['cust_email'];
 
 function productosNombre(nombre){
 	
@@ -205,22 +527,21 @@ function gracias(){
 			onload: function(e){
 				try{
 					var response = JSON.parse(this.responseText);
-					Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: null, direccion: null}).getView().open();
+					
+					var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: null, direccion: null}).getView();
+					vista.open();
 				}
 				catch(e){
-					alert("Error de conexión con el servidor.");
+					alert(e);
 				}
 			},
 			onerror: function(e){
-				alert("Error de conexión con el servidor.");
+				alert(e);
 			}
 		});
-		Ti.API.info(token);
-		Ti.API.info(medio['id']);
-		Ti.API.info(direccion['id']);
-		Ti.API.info(carro);
+		
 		xhr.open('POST','http://tiendapet.cl/api/comprar?user_token='+token);
-		xhr.send({"pago" : medio['id'],"cart" : carro,"direccion" : direccion['id']}); 
+		xhr.send({"pago" : medio['id'],"cart" : JSON.stringify(carro),"direccion" : direccion['id']}); 
 	}
 	else{
 		alert("Debe seleccionar una dirección y medio de pago.");
@@ -229,144 +550,4 @@ function gracias(){
 
 function atras(){
 	$.realizarPedido.close();
-}
-
-function buscarProducto(){
-	if(Titanium.Platform.name == "iPhone OS"){
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        top: "3.5%",
-	        height:'9.1%',
-	    });
-	    
-	    var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"100%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			color: "white",
-			textAlign:'center'
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			winModal.close();
-		});
-	}
-	else{
-		$.wrapper.opacity = 0;
-		
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        height:'100%',
-	        opacity:0.85,
-	        navBarHidden: "true"
-	    });
-		
-		var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"9.5%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			textAlign:'center',
-			color:"white",
-			backgroundColor:"#cb5122"
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			backgroundColor:"#cb5122",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-		});
-		
-		winModal.addEventListener('android:back',function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			return true;
-		});
-	}
-	
-	viewModal.add(buscar);
-	inputsBuscar.add(lupa);
-	inputsBuscar.add(cerrar);
-	viewModal.add(inputsBuscar);
-	winModal.add(viewModal);
-	winModal.open();
 }

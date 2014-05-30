@@ -1,0 +1,3 @@
+function atras(){
+	$.recuperarContrasena.close();
+}

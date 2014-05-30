@@ -273,9 +273,9 @@ function Controller() {
     });
     $.__views.main.add($.__views.viewEmail);
     $.__views.inputEmail = Ti.UI.createTextField({
-        height: "100%",
         left: "30%",
         width: "70",
+        height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         font: {

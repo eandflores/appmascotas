@@ -239,7 +239,11 @@ function Controller() {
         ordenarProductos();
     }
     function productosView(producto) {
-        var vista = Alloy.createController("productoView", {
+        winCargando.open();
+        $.mainScroll.removeAllChildren();
+        $.marcasScroll.removeAllChildren();
+        $.paginasView.removeAllChildren();
+        Alloy.createController("productoView", {
             token: token,
             carro: carro,
             marcas: marcas,
@@ -250,8 +254,7 @@ function Controller() {
             medio: medio,
             direccion: direccion,
             producto: producto
-        }).getView();
-        vista.open();
+        }).getView().open();
     }
     function buscarProducto() {
         var winModal;
@@ -389,13 +392,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productos.add($.__views.marcas);
-    $.__views.__alloyId23 = Ti.UI.createImageView({
+    $.__views.__alloyId25 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId23"
+        id: "__alloyId25"
     });
-    $.__views.marcas.add($.__views.__alloyId23);
+    $.__views.marcas.add($.__views.__alloyId25);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -407,13 +410,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId24 = Ti.UI.createImageView({
+    $.__views.__alloyId26 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId24"
+        id: "__alloyId26"
     });
-    $.__views.marcas.add($.__views.__alloyId24);
+    $.__views.marcas.add($.__views.__alloyId26);
     $.__views.mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "75.5%",

@@ -23,7 +23,117 @@ var direccion = args['direccion'];
 
 var total_val = 0;
 
-$.mainScroll.removeAllChildren();
+iniciarComponentes();
+iniciarMenu();
+cargarLoading();
+
+var marcasView = Ti.UI.createView({
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"10%",
+	layout:"horizontal"
+});
+
+var flecha = Ti.UI.createImageView({
+	width:"14%",
+	height:"85%",
+	backgroundImage:"/img/FlechaIzq.jpg"
+});
+
+flecha.addEventListener('click',function(e){
+	atras();
+});
+
+var carroImage = Ti.UI.createImageView({
+	width: "72%",
+	height:"85%",
+	backgroundImage:"/img/carro.jpg"
+});
+
+marcasView.add(flecha);
+marcasView.add(carroImage);
+
+var mainScroll = Ti.UI.createScrollView({
+	width:"100%",
+	height:"61.9%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true"
+});
+
+var total = Ti.UI.createView({
+	height:"10.9%",
+	width:"100%",
+	backgroundImage:"/img/totalFondo.jpg"
+});
+
+var totalLabel = Ti.UI.createLabel({
+	height:"100%",
+	right:"5.6%",
+	color:"gray",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	}
+});
+
+total.add(totalLabel);
+
+var footer = Ti.UI.createButton({
+	backgroundColor:"#cc5122",
+	color:"white",
+	width:"100%",
+	height:"7.6%",
+	font: {
+		fontWeight:"bold"
+   },
+   title:"HACER PEDIDO"
+});
+
+menuImg.addEventListener('click',function(e){
+	$.drawermenu.showhidemenu();
+});
+
+perrogato.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+perro.addEventListener("click",function(){
+	productosPerro();
+});
+
+gato.addEventListener("click",function(){
+	productosGato();
+});
+
+lupaImg.addEventListener("click",function(){
+	busquedaProducto();
+});
+
+footer.addEventListener("click",function(){
+	realizarPedido();
+});
+
+function busquedaProducto(){
+	buscarProducto();
+	lupa.addEventListener("click",function(){
+		productosNombre(buscar.value);
+	});
+}
+
+main.add(wrapper);
+main.add(marcasView);
+main.add(mainScroll);
+main.add(total);
+main.add(footer);
+
+$.drawermenu.init({
+    menuview:menu,
+    mainview:main,
+    duration:200,
+    parent: $.carroCompra
+});
 
 for(var i = 0; i < productos.length; i++){
 	
@@ -151,62 +261,14 @@ for(var i = 0; i < productos.length; i++){
 				Main.add(ImageViewProducto);
 				Main.add(ViewLabels);
 				
-				$.mainScroll.add(Main);	
-				$.mainScroll.add(Margen);
+				mainScroll.add(Main);	
+				mainScroll.add(Margen);
 			}
 		}
 	}
 }
 
-$.totalLabel.text = "$"+total_val;
-
-if(Titanium.Platform.name == "iPhone OS"){
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        top: "3.5%",
-        height:'96.5%',
-        opacity:0.70
-        
-    });
-    
-    var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
-}
-else{
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.70,
-        navBarHidden: "true"
-    });
-    
-     var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
-}
-
-winCargando.add(labelCargando);
+totalLabel.text = "$"+total_val;
 
 function productosNombre(nombre){
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
@@ -228,177 +290,53 @@ function productosGato(){
 }
 
 function realizarPedido(){
-	if(usuario != null){
-		Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+
+	if((medios.length > 0) && (direcciones.length > 0)){
+		var vista = Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
+		vista.open();
 	}
 	else{
-		winCargando.open();
-	
-		var xhrProductos = Ti.Network.createHTTPClient({
+		var xhr = Ti.Network.createHTTPClient({
 			onload: function(e){
 				try{
-					var usuario = JSON.parse(this.responseText);
-			
-					var vista = Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
-					winCargando.close();
-					vista.open();
+					medios = JSON.parse(this.responseText);
+					
+					cargarDirecciones(medios);
 				}
 				catch(e){
 					alert("Error de conexión con el servidor.");
-					winCargando.close();
 				}
 			},
 			onerror: function(e){
 				alert("Error de conexión con el servidor.");
-				winCargando.close();
 			}
 		});
-		
-		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
-		xhrProductos.send();
+		xhr.open('GET','http://tiendapet.cl/api/pagos');
+		xhr.send();
 	}
+}
+
+function cargarDirecciones(medios){
+	var xhr = Ti.Network.createHTTPClient({
+		onload: function(e){
+			try{
+				direcciones = JSON.parse(this.responseText);
+			
+				var vista = Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
+				vista.open();
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+			}
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+		}
+	});
+	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.send();
 }
 
 function atras(){
 	$.carroCompra.close();
-}
-
-function buscarProducto(){
-	if(Titanium.Platform.name == "iPhone OS"){
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        top: "3.5%",
-	        height:'9.1%',
-	    });
-	    
-	    var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"100%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			color: "white",
-			textAlign:'center'
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			winModal.close();
-		});
-	}
-	else{
-		$.wrapper.opacity = 0;
-		
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        height:'100%',
-	        opacity:0.85,
-	        navBarHidden: "true"
-	    });
-		
-		var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"9.5%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			textAlign:'center',
-			color:"white",
-			backgroundColor:"#cb5122"
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			backgroundColor:"#cb5122",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-		});
-		
-		winModal.addEventListener('android:back',function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			return true;
-		});
-	}
-	
-	viewModal.add(buscar);
-	inputsBuscar.add(lupa);
-	inputsBuscar.add(cerrar);
-	viewModal.add(inputsBuscar);
-	winModal.add(viewModal);
-	winModal.open();
 }

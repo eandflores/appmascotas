@@ -85,21 +85,58 @@ function Controller() {
         }).getView().open();
     }
     function carroCompra() {
-        carro.push({
-            id: productoPrecio["id"],
-            qty: InputCantidad.value
-        });
-        Alloy.createController("carroCompra", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion
-        }).getView().open();
+        if (null != usuario) {
+            carro.push({
+                id: productoPrecio["id"],
+                qty: InputCantidad.value
+            });
+            Alloy.createController("realizarPedido", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion
+            }).getView().open();
+        } else {
+            winCargando.open();
+            var xhrProductos = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        var usuario = JSON.parse(this.responseText);
+                        carro.push({
+                            id: productoPrecio["id"],
+                            qty: InputCantidad.value
+                        });
+                        var vista = Alloy.createController("carroCompra", {
+                            token: token,
+                            carro: carro,
+                            marcas: marcas,
+                            productos: productos,
+                            medios: medios,
+                            direcciones: direcciones,
+                            usuario: usuario,
+                            medio: medio,
+                            direccion: direccion
+                        }).getView();
+                        winCargando.close();
+                        vista.open();
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                        winCargando.close();
+                    }
+                },
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
+            });
+            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrProductos.send();
+        }
     }
     function buscarProducto() {
         var winModal;
@@ -237,13 +274,13 @@ function Controller() {
         id: "marcas"
     });
     $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId21 = Ti.UI.createImageView({
+    $.__views.__alloyId23 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId21"
+        id: "__alloyId23"
     });
-    $.__views.marcas.add($.__views.__alloyId21);
+    $.__views.marcas.add($.__views.__alloyId23);
     $.__views.marcasScroll = Ti.UI.createScrollView({
         width: "72%",
         contentWidth: Ti.UI.SIZE,
@@ -255,13 +292,13 @@ function Controller() {
         id: "marcasScroll"
     });
     $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId22 = Ti.UI.createImageView({
+    $.__views.__alloyId24 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId22"
+        id: "__alloyId24"
     });
-    $.__views.marcas.add($.__views.__alloyId22);
+    $.__views.marcas.add($.__views.__alloyId24);
     $.__views.Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",
@@ -592,6 +629,28 @@ function Controller() {
     $.Main.add(DescripcionTitulo);
     $.Main.add(Borde4);
     $.Main.add(DescripcionContenido);
+    var winCargando;
+    var labelCargando;
+    var winCargando = Ti.UI.createWindow({
+        backgroundColor: "#000",
+        width: "100%",
+        top: "3.5%",
+        height: "96.5%",
+        opacity: .7
+    });
+    var labelCargando = Ti.UI.createLabel({
+        width: "100%",
+        height: "20%",
+        top: "40%",
+        bottom: "40%",
+        text: "CARGANDO...",
+        textAlign: "center",
+        color: "white",
+        font: {
+            fontWeight: "bold"
+        }
+    });
+    winCargando.add(labelCargando);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

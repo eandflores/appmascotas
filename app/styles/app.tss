@@ -1,7 +1,10 @@
+"Window" : {
+	navBarHidden: "true"
+},
+".container": {
+	backgroundColor:"white",
+},
 ".container[platform=ios]": {
 	bottom: "0%",
 	height: "96.5%"
-},
-"TextField": {
-	height: Ti.UI.SIZE
 }

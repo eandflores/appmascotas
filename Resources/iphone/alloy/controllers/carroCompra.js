@@ -68,35 +68,26 @@ function Controller() {
         }).getView().open();
     }
     function realizarPedido() {
-        if (null != usuario) Alloy.createController("realizarPedido", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion
-        }).getView().open(); else {
+        if (medios.length > 0 && direcciones.length > 0) {
+            var vista = Alloy.createController("realizarPedido", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion
+            }).getView();
+            vista.open();
+        } else {
             winCargando.open();
-            var xhrProductos = Ti.Network.createHTTPClient({
+            var xhr = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
-                        var usuario = JSON.parse(this.responseText);
-                        var vista = Alloy.createController("realizarPedido", {
-                            token: token,
-                            carro: carro,
-                            marcas: marcas,
-                            productos: productos,
-                            medios: medios,
-                            direcciones: direcciones,
-                            usuario: usuario,
-                            medio: medio,
-                            direccion: direccion
-                        }).getView();
-                        winCargando.close();
-                        vista.open();
+                        medios = JSON.parse(this.responseText);
+                        cargarDirecciones(medios);
                     } catch (e) {
                         alert("Error de conexión con el servidor.");
                         winCargando.close();
@@ -107,9 +98,40 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
-            xhrProductos.send();
+            xhr.open("GET", "http://tiendapet.cl/api/pagos");
+            xhr.send();
         }
+    }
+    function cargarDirecciones(medios) {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    direcciones = JSON.parse(this.responseText);
+                    var vista = Alloy.createController("realizarPedido", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+                winCargando.close();
+            }
+        });
+        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send();
     }
     function atras() {
         $.carroCompra.close();

@@ -21,53 +21,394 @@ var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
 
-function productosNombre(nombre){
-	
+iniciarComponentes();
+iniciarMenu();
+cargarLoading();
+
+var marcasView = Ti.UI.createView({
+	backgroundImage:"/img/fondoMarcas.jpg",
+	width:"100%",
+	height:"10%",
+	layout:"horizontal"
+});
+
+var flecha = Ti.UI.createImageView({
+	width:"14%",
+	height:"85%",
+	backgroundImage:"/img/FlechaIzq.jpg"
+});
+
+flecha.addEventListener('click',function(e){
+	atras();
+});
+
+var direccionTitulo = Ti.UI.createImageView({
+	width: "72%",
+	height:"85%",
+	backgroundImage:"/img/direccion.jpg"
+});
+
+var casa = Ti.UI.createImageView({
+	left:"2%",
+	top:"25%",
+	bottom:"25%",
+	width: "10%",
+	height:"50%",
+	backgroundImage:"/img/casa.png"
+});
+
+direccionTitulo.add(casa);
+marcasView.add(flecha);
+marcasView.add(direccionTitulo);
+
+var margen = Ti.UI.createView({
+	width:"100%",
+	height:"3.1%",
+	backgroundImage:"/img/Margen.jpg"
+});
+
+var mainView = Ti.UI.createView({
+	width:"100%",
+	height:"69.8%",
+	contentHeight: Ti.UI.SIZE,
+	layout:'vertical'
+});
+
+var input1 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal'
+});
+
+var labelDireccion1 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Calle"
+});
+
+var calle = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8"
+});
+
+var input2 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal',
+	backgroundImage:"/img/labelOscuro.jpg"
+});
+
+var labelDireccion2 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Nro."
+});
+
+var numero = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8",
+   keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+});
+
+var input3 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal'
+});
+
+var labelDireccion3 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Depto."
+});
+
+var departamento = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8",
+   keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+});
+
+var input4 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal',
+	backgroundImage:"/img/labelOscuro.jpg"
+});
+
+var labelDireccion4 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Esquina"
+});
+
+var esquina = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8"
+});
+
+var input5 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal'
+});
+
+var labelDireccion5 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Ciudad"
+});
+
+var ciudad = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8"
+});
+
+var input6 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal',
+	backgroundImage:"/img/labelOscuro.jpg"
+});
+
+var labelDireccion6 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Comuna"
+});
+
+var comuna = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8"
+});
+
+var input7 = Ti.UI.createView({
+	width:"100%",
+	height:"10%",
+	layout:'horizontal'
+});
+
+var labelDireccion7 = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+   },
+   text:"Teléfono"
+});
+
+var telefono = Ti.UI.createTextField({
+	width:"60%",
+	right:"8.8%",
+	top:"10%",
+	bottom:"10%",
+	height:"80%",
+	color:"#888888",
+	font: {
+		fontWeight:"bold"
+   },
+   backgroundColor:"#d8d8d8",
+   keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+});
+
+input1.add(labelDireccion1);
+input1.add(calle);
+input2.add(labelDireccion2);
+input2.add(numero);
+input3.add(labelDireccion3);
+input3.add(departamento);
+input4.add(labelDireccion4);
+input4.add(esquina);
+input5.add(labelDireccion5);
+input5.add(ciudad);
+input6.add(labelDireccion6);
+input6.add(comuna);
+input7.add(labelDireccion7);
+input7.add(telefono);
+
+mainView.add(input1);
+mainView.add(input2);
+mainView.add(input3);
+mainView.add(input4);
+mainView.add(input5);
+mainView.add(input6);
+mainView.add(input7);
+
+var footer = Ti.UI.createButton({
+	backgroundColor:"#cc5122",
+	color:"white",
+	width:"100%",
+	height:"7.6%",
+	font: {
+		fontWeight:"bold"
+   },
+   title:"AGREGAR"
+});
+
+
+menuImg.addEventListener('click',function(e){
+	$.drawermenu.showhidemenu();
+});
+
+perrogato.addEventListener("click",function(){
+	productosPerroGato();
+});
+
+perro.addEventListener("click",function(){
+	productosPerro();
+});
+
+gato.addEventListener("click",function(){
+	productosGato();
+});
+
+lupaImg.addEventListener("click",function(){
+	busquedaProducto();
+});
+
+footer.addEventListener("click",function(){
+	guardar();
+});
+
+function busquedaProducto(){
+	buscarProducto();
+	lupa.addEventListener("click",function(){
+		productosNombre(buscar.value);
+	});
+}
+
+main.add(wrapper);
+main.add(marcasView);
+main.add(margen);
+main.add(mainView);
+main.add(footer);
+
+$.drawermenu.init({
+    menuview:menu,
+    mainview:main,
+    duration:200,
+    parent: $.agregarDireccion
+});
+
+function productosNombre(nombre){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
-function productosPerroGato(){
-	
+function productosPerroGato(){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
-function productosPerro(){
-	
+function productosPerro(){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
-function productosGato(){
-	
+function productosGato(){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function guardar(){ 
 	var direccionString = "";
 	
-	if($.calle.value != ""){
-		direccionString += $.calle.value+" ";
+	if(calle.value != ""){
+		direccionString += calle.value+" ";
 	}
-	if($.numero.value != ""){
-		direccionString += $.numero.value+" ";
+	if(numero.value != ""){
+		direccionString += numero.value+" ";
 	}
-	if($.departamento.value != ""){
-		direccionString += $.departamento.value+" ";
+	if(departamento.value != ""){
+		direccionString += departamento.value+" ";
 	}
-	if($.esquina.value != ""){
-		direccionString += $.esquina.value+" ";
+	if(esquina.value != ""){
+		direccionString += esquina.value+" ";
 	}
-	if($.telefono.value != ""){
-		direccionString += $.telefono.value;
+	if(telefono.value != ""){
+		direccionString += telefono.value;
 	}
-	
-	var direccionPost = {"direccion" : direccionString,"comuna" : $.comuna.value,"ciudad" : $.ciudad.value};
 	
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
 			try{
 				var response = JSON.parse(this.responseText);
-			
-				direcciones.push(direccionPost);
+				Ti.API.info(response);
 				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 			}
 			catch(e){
@@ -79,150 +420,14 @@ function guardar(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones/?user_token='+token);
-	xhr.send(direccionPost); 
+	Ti.API.info(direccionString);
+	Ti.API.info(comuna.value);
+	Ti.API.info(ciudad.value);
+	
+	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.send({"direccion" : direccionString,"comuna" : comuna.value,"ciudad" : ciudad.value}); 
 }
 
 function atras(){
 	$.agregarDireccion.close();
-}
-
-function buscarProducto(){
-	if(Titanium.Platform.name == "iPhone OS"){
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        top: "3.5%",
-	        height:'9.1%',
-	    });
-	    
-	    var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"100%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			color: "white",
-			textAlign:'center'
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			winModal.close();
-		});
-	}
-	else{
-		$.wrapper.opacity = 0;
-		
-		var winModal = Ti.UI.createWindow({
-	        backgroundColor : '#000',
-	        width:'100%',
-	        height:'100%',
-	        opacity:0.85,
-	        navBarHidden: "true"
-	    });
-		
-		var viewModal = Ti.UI.createView({
-			width:"100%",
-			height:"9.5%",
-			layout:"horizontal",
-			backgroundImage: "/img/fondoBuscar.jpg",
-			top:"0%"
-		});
-		
-		var buscar = Ti.UI.createTextField({
-			width:"72%",
-			height:"100%",
-			hintText: "¿Que es lo que buscas?",
-			textAlign:'center',
-			color:"white",
-			backgroundColor:"#cb5122"
-		});
-		
-		var inputsBuscar = Ti.UI.createView({
-			width:"28%",
-			height:"100%",
-			backgroundColor:"#cb5122",
-			layout:"horizontal"
-		});
-		
-		var lupa = Ti.UI.createView({
-			width:"40%",
-			height:"70%",
-			left:"5%",
-			right:"5%",
-			top:"15%",
-			bottom:"15%",
-			backgroundImage:"/img/lupaBuscar.jpg"
-		});
-		
-		lupa.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			productosNombre(buscar.value);
-		});
-		
-		var cerrar = Ti.UI.createView({
-			left:"7.5%",
-			right:"7.5%",
-			top:"25%",
-			bottom:"25%",
-			width:"25%",
-			height:"50%",
-			backgroundImage:"/img/cerrar.jpg"
-		});
-		
-		cerrar.addEventListener("click",function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-		});
-		
-		winModal.addEventListener('android:back',function(){
-			$.wrapper.opacity = 1;
-			winModal.close();
-			return true;
-		});
-	}
-	
-	viewModal.add(buscar);
-	inputsBuscar.add(lupa);
-	inputsBuscar.add(cerrar);
-	viewModal.add(inputsBuscar);
-	winModal.add(viewModal);
-	winModal.open();
 }

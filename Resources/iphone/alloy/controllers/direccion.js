@@ -1,52 +1,4 @@
 function Controller() {
-    function cargarDirecciones(direcciones) {
-        for (i = 0; direcciones.length > i; i++) {
-            var Direccion = Ti.UI.createView({
-                width: "100%",
-                height: "73px",
-                layout: "horizontal"
-            });
-            var EliminarDireccion = Ti.UI.createView({
-                backgroundImage: "/img/eliminarDireccion.jpg",
-                width: "14.8%",
-                id: direcciones[i]["id"],
-                height: "100%"
-            });
-            EliminarDireccion.addEventListener("click", function() {
-                eliminarDireccion(this["id"]);
-            });
-            var SeleccionarDireccion = Ti.UI.createView({
-                backgroundImage: "/img/seleccionarDireccion.jpg",
-                width: "85.2%",
-                id: direcciones[i],
-                height: "100%"
-            });
-            SeleccionarDireccion.addEventListener("click", function() {
-                selectDireccion(this["id"]);
-            });
-            var Margen = Ti.UI.createView({
-                width: "100%",
-                height: "2px",
-                backgroundColor: "#e8e8e8"
-            });
-            var Label = Ti.UI.createLabel({
-                right: "20%",
-                width: "80%",
-                height: "100%",
-                color: "#5c5c5b",
-                font: {
-                    fontFamily: "Noto Sans",
-                    fontWeight: "bold"
-                },
-                text: direcciones[i]["direccion"]
-            });
-            SeleccionarDireccion.add(Label);
-            Direccion.add(EliminarDireccion);
-            Direccion.add(SeleccionarDireccion);
-            $.mainScroll.add(Direccion);
-            $.mainScroll.add(Margen);
-        }
-    }
     function selectDireccion(direccion_selected) {
         Alloy.createController("realizarPedido", {
             token: token,
@@ -60,7 +12,59 @@ function Controller() {
             direccion: direccion_selected
         }).getView().open();
     }
-    function eliminarDireccion() {}
+    function eliminarDireccion(direccion_id) {
+        winCargando.open();
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    Ti.API.info(this.responseText);
+                    null != direccion && direccion_id == direccion["id"] && (direccion = null);
+                    cargarDirecciones();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
+            },
+            onerror: function(e) {
+                alert(e);
+                winCargando.close();
+            }
+        });
+        Ti.API.info("http://tiendapet.cl/api/usuario/direcciones/" + direccion_id + "?user_token=" + token);
+        xhr.open("DELETE", "http://tiendapet.cl/api/usuario/direcciones/" + direccion_id + "?user_token=" + token);
+        xhr.send();
+    }
+    function cargarDirecciones() {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    direcciones = JSON.parse(this.responseText);
+                    var vista = Alloy.createController("direccion", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+                winCargando.close();
+            }
+        });
+        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send();
+    }
     function productosPerroGato() {
         Alloy.createController("productos", {
             token: token,
@@ -359,19 +363,74 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    if (direcciones.length > 0) cargarDirecciones(direcciones); else {
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
-                direcciones = JSON.parse(this.responseText);
-                cargarDirecciones(direcciones);
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-            }
+    for (i = 0; direcciones.length > i; i++) {
+        var Direccion = Ti.UI.createView({
+            width: "100%",
+            height: "73px",
+            layout: "horizontal"
         });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-        xhr.send();
+        var EliminarDireccion = Ti.UI.createView({
+            backgroundImage: "/img/eliminarDireccion.jpg",
+            width: "14.8%",
+            id: direcciones[i]["id"],
+            height: "100%"
+        });
+        EliminarDireccion.addEventListener("click", function() {
+            eliminarDireccion(this["id"]);
+        });
+        var SeleccionarDireccion = Ti.UI.createView({
+            backgroundImage: "/img/seleccionarDireccion.jpg",
+            width: "85.2%",
+            id: direcciones[i],
+            height: "100%"
+        });
+        SeleccionarDireccion.addEventListener("click", function() {
+            selectDireccion(this["id"]);
+        });
+        var Margen = Ti.UI.createView({
+            width: "100%",
+            height: "2px",
+            backgroundColor: "#e8e8e8"
+        });
+        var Label = Ti.UI.createLabel({
+            right: "20%",
+            width: "80%",
+            height: "100%",
+            color: "#5c5c5b",
+            font: {
+                fontFamily: "Noto Sans",
+                fontWeight: "bold"
+            },
+            text: direcciones[i]["direccion"]
+        });
+        SeleccionarDireccion.add(Label);
+        Direccion.add(EliminarDireccion);
+        Direccion.add(SeleccionarDireccion);
+        $.mainScroll.add(Direccion);
+        $.mainScroll.add(Margen);
     }
+    var winCargando;
+    var labelCargando;
+    var winCargando = Ti.UI.createWindow({
+        backgroundColor: "#000",
+        width: "100%",
+        top: "3.5%",
+        height: "96.5%",
+        opacity: .7
+    });
+    var labelCargando = Ti.UI.createLabel({
+        width: "100%",
+        height: "20%",
+        top: "40%",
+        bottom: "40%",
+        text: "CARGANDO...",
+        textAlign: "center",
+        color: "white",
+        font: {
+            fontWeight: "bold"
+        }
+    });
+    winCargando.add(labelCargando);
     __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
     __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
     __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);

@@ -1,21 +1,38 @@
 function Controller() {
     function registro() {
+        winCargando.open();
         var email = $.inputCorreo.value;
         var password = $.inputContraseña.value;
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
-                var response = JSON.parse(this.responseText);
-                var token = response["token"];
-                var vista = Alloy.createController("productos", {
-                    token: token,
-                    carro: [],
-                    categoria: "TODAS",
-                    marca: "TODAS"
-                }).getView();
-                vista.open();
+                try {
+                    var response = JSON.parse(this.responseText);
+                    var token = response["token"];
+                    var vista = Alloy.createController("productos", {
+                        token: token,
+                        carro: [],
+                        marcas: marcas,
+                        productos: productos,
+                        medios: [],
+                        direcciones: [],
+                        usuario: null,
+                        medio: null,
+                        direccion: null,
+                        categoria: "TODAS",
+                        marca: "TODAS",
+                        nombre: "TODOS",
+                        pagina: 1
+                    }).getView();
+                    winCargando.close();
+                    vista.open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                }
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
+                winCargando.close();
             }
         });
         xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
@@ -58,15 +75,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.registro.add($.__views.marcas);
-    $.__views.__alloyId33 = Ti.UI.createImageView({
+    $.__views.__alloyId4 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId33"
+        id: "__alloyId4"
     });
-    $.__views.marcas.add($.__views.__alloyId33);
-    atras ? $.__views.__alloyId33.addEventListener("click", atras) : __defers["$.__views.__alloyId33!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId4);
+    atras ? $.__views.__alloyId4.addEventListener("click", atras) : __defers["$.__views.__alloyId4!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "49.2%",
@@ -89,9 +106,9 @@ function Controller() {
     });
     $.__views.registro.add($.__views.inputs);
     $.__views.inputNombre = Ti.UI.createTextField({
-        height: "33.4%",
         left: "10%",
         width: "90%",
+        height: "33.4%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputNombre",
@@ -99,9 +116,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputNombre);
     $.__views.inputCorreo = Ti.UI.createTextField({
-        height: "33.3%",
         left: "10%",
         width: "90%",
+        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -109,9 +126,9 @@ function Controller() {
     });
     $.__views.inputs.add($.__views.inputCorreo);
     $.__views.inputContraseña = Ti.UI.createTextField({
-        height: "33.3%",
         left: "10%",
         width: "90%",
+        height: "33.3%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputContraseña",
@@ -148,7 +165,32 @@ function Controller() {
     registro ? $.__views.registrarse.addEventListener("click", registro) : __defers["$.__views.registrarse!click!registro"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    __defers["$.__views.__alloyId33!click!atras"] && $.__views.__alloyId33.addEventListener("click", atras);
+    var args = arguments[0] || {};
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var winCargando;
+    var labelCargando;
+    var winCargando = Ti.UI.createWindow({
+        backgroundColor: "#000",
+        width: "100%",
+        height: "100%",
+        opacity: .7,
+        navBarHidden: "true"
+    });
+    var labelCargando = Ti.UI.createLabel({
+        width: "100%",
+        height: "20%",
+        top: "40%",
+        bottom: "40%",
+        text: "CARGANDO...",
+        textAlign: "center",
+        color: "white",
+        font: {
+            fontWeight: "bold"
+        }
+    });
+    winCargando.add(labelCargando);
+    __defers["$.__views.__alloyId4!click!atras"] && $.__views.__alloyId4.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);
 }

@@ -1,22 +1,5 @@
 <Alloy>
 	<Window class="container">
-		<View id="wrapper">
-			<ImageView id="menuImg"></ImageView>
-			<ImageView id="perrogato" onClick="productosPerroGato"></ImageView>
-			<ImageView id="perro" onClick="productosPerro"></ImageView>
-			<ImageView id="gato" onClick="productosGato"></ImageView>
-			<ImageView id="lupaImg" onClick="buscarProducto"></ImageView>
-		</View>
-		<View id="marcas">
-			<ImageView id="flecha" backgroundImage="/img/FlechaIzq.jpg" onClick="atras"></ImageView>
-			<ImageView id="carro" backgroundImage="/img/carro.jpg"></ImageView>
-		</View>
-		<ScrollView id="mainScroll"></ScrollView>
-		<View id="total" backgroundImage="/img/totalFondo.jpg">
-			<Label id="totalLabel"></Label>>
-		</View>
-		<View id="footer">
-			<Button id="pedido" onClick="realizarPedido">HACER PEDIDO</Button>
-		</View>
+		<Require type="widget" src="com.alcoapps.drawermenu" id="drawermenu"/>
 	</Window>
 </Alloy>

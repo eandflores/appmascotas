@@ -1,75 +1,99 @@
 $.index.open();
 
-if(Titanium.Platform.name == "iPhone OS"){
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        top: "3.5%",
-        height:'96.5%',
-        opacity:0.70
-        
-    });
-    
-    var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
+var args = arguments[0] || {};
+
+var productos = args['productos'];
+
+cargarLoading();
+
+if(productos == null){
+	winCargando.open();
+	
+	var xhrProductos = Ti.Network.createHTTPClient({
+		onload: function(e){
+			try{
+				productos = JSON.parse(this.responseText);
+		
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
+			}
+			catch(e){
+				alert("Error de conexión con els ervidor.");
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
+			}
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+			winCargando.close();
+			winCargando.close();
+			winCargando.close();
 		}
 	});
-}
-else{
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.70,
-        navBarHidden: "true"
-    });
-    
-     var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
+	
+	xhrProductos.open('GET','http://tiendapet.cl/api/productos/?desde=1&cantidad=-1');
+	xhrProductos.send();
 }
 
-winCargando.add(labelCargando);
+$.inputCorreo.value = "prueba3";
+$.inputClave.value = "123";
+
+function recuperarContraseña(){
+	
+	Alloy.createController('recuperarContrasena').getView().open();
+}
 
 function login(){
 	
 	winCargando.open();
+	
+	var xhr = Ti.Network.createHTTPClient({
+		onload: function(e){
+			try{
+				var response = JSON.parse(this.responseText);
+				var token = response['token'];
+				
+				getMarcas(token);
+			}
+			catch(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
+			}
+
+		},
+		onerror: function(e){
+			alert("Error de conexión con el servidor.");
+			winCargando.close();
+			winCargando.close();
+			winCargando.close();
+		}
+	});
+	
+	xhr.open('POST','http://tiendapet.cl/api/usuario/login');
+	xhr.send({"email" : $.inputCorreo.value,"password" : $.inputClave.value});
+}
+
+function getMarcas(token){
 	
 	var xhrMarcas = Ti.Network.createHTTPClient({
 		onload: function(e){
 			try{
 				var marcas = JSON.parse(this.responseText);
 			
-				var vista = Alloy.createController('login',{marcas: marcas}).getView();
-				winCargando.close();
+				var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
 				vista.open();
 			}
 			catch(e){
-				alert("Error de conexión con el servidor.");
-				winCargando.close();
+				alert(e);
 			}
 			
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
-			winCargando.close();
 		}
 	});
 	
@@ -86,7 +110,7 @@ function registro(){
 			try{
 				var marcas = JSON.parse(this.responseText);
 			
-				var vista = Alloy.createController('registro',{marcas: marcas}).getView();
+				var vista = Alloy.createController('registro',{marcas: marcas,productos: productos}).getView();
 				winCargando.close();
 				vista.open();
 			}

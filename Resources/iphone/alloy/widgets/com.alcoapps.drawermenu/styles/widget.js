@@ -5,13 +5,6 @@ function WPATH(s) {
 }
 
 module.exports = [ {
-    isApi: true,
-    priority: 1000.0002,
-    key: "TextField",
-    style: {
-        height: Ti.UI.SIZE
-    }
-}, {
     isClass: true,
     priority: 10101.0001,
     key: "container",
