@@ -489,7 +489,6 @@ function productosView(producto){
 	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,producto: producto}).getView();
 	winCargando.open();
 	mainScroll.removeAllChildren();
-	marcasScroll.removeAllChildren();
 	paginasView.removeAllChildren();
 	winCargando.close();
 	winCargando.close();

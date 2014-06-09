@@ -185,7 +185,7 @@ $.drawermenu.init({
 });
 
 for(i = 0; i< medios.length;i++){
-	if(medios[i]['id'] == medio){
+	if(medios[i]['id'] == medio['id']){
 		pago.text = medios[i]['paym_name'];
 	}
 }

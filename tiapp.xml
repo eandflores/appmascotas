@@ -9,8 +9,8 @@
     <copyright>2014 by VQ Ltda</copyright>
     <icon>tiendapet.png</icon>
     <fullscreen>false</fullscreen>
-    <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <navbar-hidden>true</navbar-hidden>
+    <analytics>false</analytics>
     <guid>e0bce2de-9ef0-4a5e-b9e2-d4583f41ef5e</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>

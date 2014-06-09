@@ -259,7 +259,6 @@ function Controller() {
         }).getView();
         winCargando.open();
         mainScroll.removeAllChildren();
-        marcasScroll.removeAllChildren();
         paginasView.removeAllChildren();
         winCargando.close();
         winCargando.close();

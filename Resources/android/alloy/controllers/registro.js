@@ -4,34 +4,20 @@ function Controller() {
         var email = $.inputCorreo.value;
         var password = $.inputContraseña.value;
         var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
+            onload: function(e) {
                 try {
-                    var response = JSON.parse(this.responseText);
-                    var token = response["token"];
-                    var vista = Alloy.createController("productos", {
-                        token: token,
-                        carro: [],
-                        marcas: marcas,
-                        productos: productos,
-                        medios: [],
-                        direcciones: [],
-                        usuario: null,
-                        medio: null,
-                        direccion: null,
-                        categoria: "TODAS",
-                        marca: "TODAS",
-                        nombre: "TODOS",
-                        pagina: 1
-                    }).getView();
-                    winCargando.close();
-                    vista.open();
+                    Ti.API.info(JSON.parse(this.responseText));
                 } catch (e) {
-                    alert("Error de conexión con el servidor.");
+                    alert(e);
+                    winCargando.close();
+                    winCargando.close();
                     winCargando.close();
                 }
             },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
+            onerror: function(e) {
+                alert(e);
+                winCargando.close();
+                winCargando.close();
                 winCargando.close();
             }
         });
@@ -166,8 +152,8 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    var marcas = args["marcas"];
-    var productos = args["productos"];
+    args["marcas"];
+    args["productos"];
     var winCargando;
     var labelCargando;
     var winCargando = Ti.UI.createWindow({

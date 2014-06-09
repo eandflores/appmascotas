@@ -266,7 +266,7 @@ function Controller() {
         duration: 200,
         parent: $.gracias
     });
-    for (i = 0; medios.length > i; i++) medios[i]["id"] == medio && (pago.text = medios[i]["paym_name"]);
+    for (i = 0; medios.length > i; i++) medios[i]["id"] == medio["id"] && (pago.text = medios[i]["paym_name"]);
     _.extend($, exports);
 }
 

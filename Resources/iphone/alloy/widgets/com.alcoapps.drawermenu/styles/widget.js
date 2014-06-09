@@ -5,8 +5,22 @@ function WPATH(s) {
 }
 
 module.exports = [ {
+    isApi: true,
+    priority: 1000.0001,
+    key: "Window",
+    style: {
+        navBarHidden: "true"
+    }
+}, {
     isClass: true,
-    priority: 10101.0001,
+    priority: 10000.0002,
+    key: "container",
+    style: {
+        backgroundColor: "white"
+    }
+}, {
+    isClass: true,
+    priority: 10101.0003,
     key: "container",
     style: {
         bottom: "0%",
@@ -26,7 +40,6 @@ module.exports = [ {
     priority: 100000.0003,
     key: "mainview",
     style: {
-        backgroundColor: "red",
         height: Ti.UI.FILL,
         width: Ti.UI.FILL
     }

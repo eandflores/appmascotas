@@ -32,27 +32,13 @@ function Controller() {
         $.drawermenuview.add(opts.menuview);
         duration = opts.duration;
         parent = opts.parent;
-        console.log("initialized");
-        setSwipe();
-    };
-    var setSwipe = function() {
-        parent.addEventListener("swipe", function(e) {
-            if (false == menuOpen && "right" == e.direction) {
-                showhidemenu();
-                menuOpen = true;
-            }
-            if (true == menuOpen && "left" == e.direction) {
-                showhidemenu();
-                menuOpen = false;
-            }
-        });
     };
     var showhidemenu = function() {
         if (menuOpen) {
             moveTo = "0";
             menuOpen = false;
         } else {
-            moveTo = "250dp";
+            moveTo = "300dp";
             menuOpen = true;
         }
         var newWidth = Ti.Platform.displayCaps.platformWidth;

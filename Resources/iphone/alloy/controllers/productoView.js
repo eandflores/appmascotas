@@ -1,4 +1,10 @@
 function Controller() {
+    function busquedaProducto() {
+        buscarProducto();
+        lupa.addEventListener("click", function() {
+            productosNombre(buscar.value);
+        });
+    }
     function productosPerroGato() {
         Alloy.createController("productos", {
             token: token,
@@ -102,7 +108,6 @@ function Controller() {
                 direccion: direccion
             }).getView().open();
         } else {
-            winCargando.open();
             var xhrProductos = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
@@ -122,84 +127,18 @@ function Controller() {
                             medio: medio,
                             direccion: direccion
                         }).getView();
-                        winCargando.close();
                         vista.open();
                     } catch (e) {
                         alert("Error de conexión con el servidor.");
-                        winCargando.close();
                     }
                 },
-                onerror: function() {
-                    alert("Error de conexión con el servidor.");
-                    winCargando.close();
+                onerror: function(e) {
+                    alert(e);
                 }
             });
             xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
             xhrProductos.send();
         }
-    }
-    function buscarProducto() {
-        var winModal;
-        var viewModal;
-        var buscar;
-        var inputsBuscar;
-        var lupa;
-        var cerrar;
-        var winModal = Ti.UI.createWindow({
-            backgroundColor: "#000",
-            width: "100%",
-            top: "3.5%",
-            height: "9.1%"
-        });
-        var viewModal = Ti.UI.createView({
-            width: "100%",
-            height: "100%",
-            layout: "horizontal",
-            backgroundImage: "/img/fondoBuscar.jpg",
-            top: "0%"
-        });
-        var buscar = Ti.UI.createTextField({
-            width: "72%",
-            height: "100%",
-            hintText: "¿Que es lo que buscas?",
-            color: "white",
-            textAlign: "center"
-        });
-        var inputsBuscar = Ti.UI.createView({
-            width: "28%",
-            height: "100%",
-            layout: "horizontal"
-        });
-        var lupa = Ti.UI.createView({
-            width: "40%",
-            height: "70%",
-            left: "5%",
-            right: "5%",
-            top: "15%",
-            bottom: "15%",
-            backgroundImage: "/img/lupaBuscar.jpg"
-        });
-        lupa.addEventListener("click", function() {
-            productosNombre(buscar.value);
-        });
-        var cerrar = Ti.UI.createView({
-            left: "7.5%",
-            right: "7.5%",
-            top: "25%",
-            bottom: "25%",
-            width: "25%",
-            height: "50%",
-            backgroundImage: "/img/cerrar.jpg"
-        });
-        cerrar.addEventListener("click", function() {
-            winModal.close();
-        });
-        viewModal.add(buscar);
-        inputsBuscar.add(lupa);
-        inputsBuscar.add(cerrar);
-        viewModal.add(inputsBuscar);
-        winModal.add(viewModal);
-        winModal.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productoView";
@@ -208,124 +147,19 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    var __defers = {};
     $.__views.productoView = Ti.UI.createWindow({
         navBarHidden: "true",
         backgroundColor: "white",
-        layout: "vertical",
-        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "productoView"
     });
     $.__views.productoView && $.addTopLevelView($.__views.productoView);
-    $.__views.wrapper = Ti.UI.createView({
-        backgroundColor: "#cc5122",
-        width: "100%",
-        height: "9.5%",
-        layout: "horizontal",
-        id: "wrapper"
+    $.__views.drawermenu = Alloy.createWidget("com.alcoapps.drawermenu", "widget", {
+        id: "drawermenu",
+        __parentSymbol: $.__views.productoView
     });
-    $.__views.productoView.add($.__views.wrapper);
-    $.__views.menuImg = Ti.UI.createImageView({
-        width: "14%",
-        height: "100%",
-        backgroundImage: "/img/menu.jpg",
-        id: "menuImg"
-    });
-    $.__views.wrapper.add($.__views.menuImg);
-    $.__views.perrogato = Ti.UI.createImageView({
-        width: "28%",
-        height: "100%",
-        backgroundImage: "/img/perrogato.jpg",
-        id: "perrogato"
-    });
-    $.__views.wrapper.add($.__views.perrogato);
-    productosPerroGato ? $.__views.perrogato.addEventListener("click", productosPerroGato) : __defers["$.__views.perrogato!click!productosPerroGato"] = true;
-    $.__views.perro = Ti.UI.createImageView({
-        width: "22%",
-        height: "100%",
-        backgroundImage: "/img/perro.jpg",
-        id: "perro"
-    });
-    $.__views.wrapper.add($.__views.perro);
-    productosPerro ? $.__views.perro.addEventListener("click", productosPerro) : __defers["$.__views.perro!click!productosPerro"] = true;
-    $.__views.gato = Ti.UI.createImageView({
-        width: "22%",
-        height: "100%",
-        backgroundImage: "/img/gato.jpg",
-        id: "gato"
-    });
-    $.__views.wrapper.add($.__views.gato);
-    productosGato ? $.__views.gato.addEventListener("click", productosGato) : __defers["$.__views.gato!click!productosGato"] = true;
-    $.__views.lupaImg = Ti.UI.createImageView({
-        width: "14%",
-        height: "100%",
-        backgroundImage: "/img/lupa.jpg",
-        id: "lupaImg"
-    });
-    $.__views.wrapper.add($.__views.lupaImg);
-    buscarProducto ? $.__views.lupaImg.addEventListener("click", buscarProducto) : __defers["$.__views.lupaImg!click!buscarProducto"] = true;
-    $.__views.marcas = Ti.UI.createView({
-        backgroundImage: "/img/fondoMarcas.jpg",
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "marcas"
-    });
-    $.__views.productoView.add($.__views.marcas);
-    $.__views.__alloyId23 = Ti.UI.createImageView({
-        width: "14%",
-        height: "80%",
-        backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId23"
-    });
-    $.__views.marcas.add($.__views.__alloyId23);
-    $.__views.marcasScroll = Ti.UI.createScrollView({
-        width: "72%",
-        contentWidth: Ti.UI.SIZE,
-        scrollType: "horizontal",
-        layout: "horizontal",
-        height: "85%",
-        horizontalWrap: "false",
-        showHorizontalScrollIndicator: "true",
-        id: "marcasScroll"
-    });
-    $.__views.marcas.add($.__views.marcasScroll);
-    $.__views.__alloyId24 = Ti.UI.createImageView({
-        width: "14%",
-        height: "80%",
-        backgroundImage: "/img/FlechaDer.jpg",
-        id: "__alloyId24"
-    });
-    $.__views.marcas.add($.__views.__alloyId24);
-    $.__views.Main = Ti.UI.createView({
-        width: "100%",
-        height: "72.8%",
-        layout: "vertical",
-        id: "Main"
-    });
-    $.__views.productoView.add($.__views.Main);
-    $.__views.footer = Ti.UI.createView({
-        layout: "horizontal",
-        width: "100%",
-        height: "7.6%",
-        id: "footer"
-    });
-    $.__views.productoView.add($.__views.footer);
-    $.__views.carro = Ti.UI.createButton({
-        backgroundColor: "#cc5122",
-        color: "white",
-        width: "100%",
-        height: "100%",
-        font: {
-            fontWeight: "bold"
-        },
-        title: "AGREGAR AL CARRO",
-        id: "carro"
-    });
-    $.__views.footer.add($.__views.carro);
-    carroCompra ? $.__views.carro.addEventListener("click", carroCompra) : __defers["$.__views.carro!click!carroCompra"] = true;
+    $.__views.drawermenu.setParent($.__views.productoView);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -342,6 +176,71 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    iniciarComponentes();
+    iniciarMenu();
+    var Main = Ti.UI.createView({
+        width: "100%",
+        height: "72.8%",
+        layout: "vertical"
+    });
+    var footer = Ti.UI.createButton({
+        backgroundColor: "#cc5122",
+        color: "white",
+        width: "100%",
+        height: "7.6%",
+        font: {
+            fontWeight: "bold"
+        },
+        title: "AGREGAR AL CARRO"
+    });
+    menuImg.addEventListener("click", function() {
+        $.drawermenu.showhidemenu();
+    });
+    perrogato.addEventListener("click", function() {
+        productosPerroGato();
+    });
+    perro.addEventListener("click", function() {
+        productosPerro();
+    });
+    gato.addEventListener("click", function() {
+        productosGato();
+    });
+    lupaImg.addEventListener("click", function() {
+        busquedaProducto();
+    });
+    footer.addEventListener("click", function() {
+        carroCompra();
+    });
+    var marcasView = Ti.UI.createView({
+        id: "marcas",
+        backgroundImage: "/img/fondoMarcas.jpg",
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var flechaIzq = Ti.UI.createImageView({
+        width: "14%",
+        height: "80%",
+        backgroundImage: "/img/FlechaIzq.jpg"
+    });
+    var flechaDer = Ti.UI.createImageView({
+        width: "14%",
+        height: "80%",
+        backgroundImage: "/img/FlechaDer.jpg"
+    });
+    var marcasScroll = Ti.UI.createScrollView({
+        id: "marcasScroll",
+        width: "72%",
+        contentWidth: Ti.UI.SIZE,
+        scrollType: "horizontal",
+        layout: "horizontal",
+        height: "85%",
+        horizontalWrap: "false",
+        showHorizontalScrollIndicator: "true"
+    });
+    marcasView.add(flechaIzq);
+    marcasView.add(marcasScroll);
+    marcasView.add(flechaDer);
     for (var i = 0; marcas.length > i; i++) {
         var ImageViewMarca = Ti.UI.createImageView({
             image: marcas[i]["brand_logo"],
@@ -353,11 +252,21 @@ function Controller() {
         ImageViewMarca.addEventListener("click", function() {
             productosMarca(this["id"]);
         });
-        $.marcasScroll.add(ImageViewMarca);
+        marcasScroll.add(ImageViewMarca);
     }
-    var producto;
-    var indice;
-    var productoPrecio;
+    main.add(wrapper);
+    main.add(marcasView);
+    main.add(Main);
+    main.add(footer);
+    $.drawermenu.init({
+        menuview: menu,
+        mainview: main,
+        duration: 200,
+        parent: $.productoView
+    });
+    var producto = null;
+    var indice = null;
+    var productoPrecio = null;
     var productosPrecioProducto = new Array();
     for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) if (productos[i]["producto_precios"][j]["id"] == args["producto"]) {
         productoPrecio = productos[i]["producto_precios"][j];
@@ -620,42 +529,15 @@ function Controller() {
         height: "0.2%",
         backgroundColor: "#e8e8e8"
     });
-    $.Main.add(Producto);
-    $.Main.add(Borde1);
-    $.Main.add(Peso);
-    $.Main.add(Borde2);
-    $.Main.add(Cantidad);
-    $.Main.add(Borde3);
-    $.Main.add(DescripcionTitulo);
-    $.Main.add(Borde4);
-    $.Main.add(DescripcionContenido);
-    var winCargando;
-    var labelCargando;
-    var winCargando = Ti.UI.createWindow({
-        backgroundColor: "#000",
-        width: "100%",
-        top: "3.5%",
-        height: "96.5%",
-        opacity: .7
-    });
-    var labelCargando = Ti.UI.createLabel({
-        width: "100%",
-        height: "20%",
-        top: "40%",
-        bottom: "40%",
-        text: "CARGANDO...",
-        textAlign: "center",
-        color: "white",
-        font: {
-            fontWeight: "bold"
-        }
-    });
-    winCargando.add(labelCargando);
-    __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
-    __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
-    __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
-    __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
-    __defers["$.__views.carro!click!carroCompra"] && $.__views.carro.addEventListener("click", carroCompra);
+    Main.add(Producto);
+    Main.add(Borde1);
+    Main.add(Peso);
+    Main.add(Borde2);
+    Main.add(Cantidad);
+    Main.add(Borde3);
+    Main.add(DescripcionTitulo);
+    Main.add(Borde4);
+    Main.add(DescripcionContenido);
     _.extend($, exports);
 }
 

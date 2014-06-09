@@ -528,7 +528,7 @@ function gracias(){
 				try{
 					var response = JSON.parse(this.responseText);
 					
-					var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: null, direccion: null}).getView();
+					var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: null}).getView();
 					vista.open();
 				}
 				catch(e){

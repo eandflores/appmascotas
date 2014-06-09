@@ -34,15 +34,15 @@ function Controller() {
         id: "marcas"
     });
     $.__views.recuperarContrasena.add($.__views.marcas);
-    $.__views.__alloyId35 = Ti.UI.createImageView({
+    $.__views.__alloyId3 = Ti.UI.createImageView({
         width: "14%",
         height: "80%",
         left: "0%",
         backgroundImage: "/img/FlechaIzq.jpg",
-        id: "__alloyId35"
+        id: "__alloyId3"
     });
-    $.__views.marcas.add($.__views.__alloyId35);
-    atras ? $.__views.__alloyId35.addEventListener("click", atras) : __defers["$.__views.__alloyId35!click!atras"] = true;
+    $.__views.marcas.add($.__views.__alloyId3);
+    atras ? $.__views.__alloyId3.addEventListener("click", atras) : __defers["$.__views.__alloyId3!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
         height: "53.8%",
@@ -102,7 +102,7 @@ function Controller() {
     $.__views.footer.add($.__views.registro);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    __defers["$.__views.__alloyId35!click!atras"] && $.__views.__alloyId35.addEventListener("click", atras);
+    __defers["$.__views.__alloyId3!click!atras"] && $.__views.__alloyId3.addEventListener("click", atras);
     _.extend($, exports);
 }
 

@@ -62,26 +62,91 @@ function registro(){
 		onload: function(e){
 			try{
 				var response = JSON.parse(this.responseText);
-				var token = response['token'];
-				
-				var vista = Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView();
-				winCargando.close();
-				vista.open();
+				getMarcas(response['token']);
 			}
 			catch(e){
-				alert("Error de conexión con el servidor.");
+				alert(e);
+				winCargando.close();
+				winCargando.close();
 				winCargando.close();
 			}
 
 		},
 		onerror: function(e){
-			alert("Error de conexión con el servidor.");
+			alert(e);
+			winCargando.close();
+			winCargando.close();
 			winCargando.close();
 		}
 	});
 	
 	xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
 	xhr.send({"email" : email,"password" : password});
+}
+
+function getMarcas(token){
+	
+	if(marcas == null){
+		var xhrMarcas = Ti.Network.createHTTPClient({
+			onload: function(e){
+				try{
+					getProductos(token,JSON.parse(this.responseText));
+				}
+				catch(e){
+					alert("Error de conexión con el servidor.");
+					winCargando.close();
+					winCargando.close();
+					winCargando.close();
+				}
+				
+			},
+			onerror: function(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
+			}
+		});
+		
+		xhrMarcas.open('GET','http://tiendapet.cl/api/marcas');
+		xhrMarcas.send();
+	}
+	else{
+		getProductos(token,marcas);
+	}
+} 
+
+function getProductos(token,marcas){
+	
+	if(productos == null){
+		winCargando.open();
+		
+		var xhrProductos = Ti.Network.createHTTPClient({
+			onload: function(e){
+				try{
+					Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: JSON.parse(this.responseText),medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+				}
+				catch(e){
+					alert("Error de conexión con els ervidor.");
+					winCargando.close();
+					winCargando.close();
+					winCargando.close();
+				}
+			},
+			onerror: function(e){
+				alert("Error de conexión con el servidor.");
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
+			}
+		});
+		
+		xhrProductos.open('GET','http://tiendapet.cl/api/productos/?desde=1&cantidad=-1');
+		xhrProductos.send();
+	}
+	else{
+		Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	}
 }
 
 function atras(){

@@ -140,7 +140,7 @@ function Controller() {
                             medios: medios,
                             direcciones: direcciones,
                             usuario: usuario,
-                            medio: null,
+                            medio: medio,
                             direccion: null
                         }).getView();
                         vista.open();

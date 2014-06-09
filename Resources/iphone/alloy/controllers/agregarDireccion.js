@@ -1,4 +1,10 @@
 function Controller() {
+    function busquedaProducto() {
+        buscarProducto();
+        lupa.addEventListener("click", function() {
+            productosNombre(buscar.value);
+        });
+    }
     function productosNombre(nombre) {
         Alloy.createController("productos", {
             token: token,
@@ -69,11 +75,11 @@ function Controller() {
     }
     function guardar() {
         var direccionString = "";
-        "" != $.calle.value && (direccionString += $.calle.value + " ");
-        "" != $.numero.value && (direccionString += $.numero.value + " ");
-        "" != $.departamento.value && (direccionString += $.departamento.value + " ");
-        "" != $.esquina.value && (direccionString += $.esquina.value + " ");
-        "" != $.telefono.value && (direccionString += $.telefono.value);
+        "" != calle.value && (direccionString += calle.value + " ");
+        "" != numero.value && (direccionString += numero.value + " ");
+        "" != departamento.value && (direccionString += departamento.value + " ");
+        "" != esquina.value && (direccionString += esquina.value + " ");
+        "" != telefono.value && (direccionString += telefono.value);
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 try {
@@ -98,78 +104,18 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones/?user_token=" + token);
+        Ti.API.info(direccionString);
+        Ti.API.info(comuna.value);
+        Ti.API.info(ciudad.value);
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
         xhr.send({
             direccion: direccionString,
-            comuna: $.comuna.value,
-            ciudad: $.ciudad.value
+            comuna: comuna.value,
+            ciudad: ciudad.value
         });
     }
     function atras() {
         $.agregarDireccion.close();
-    }
-    function buscarProducto() {
-        var winModal;
-        var viewModal;
-        var buscar;
-        var inputsBuscar;
-        var lupa;
-        var cerrar;
-        var winModal = Ti.UI.createWindow({
-            backgroundColor: "#000",
-            width: "100%",
-            top: "3.5%",
-            height: "9.1%"
-        });
-        var viewModal = Ti.UI.createView({
-            width: "100%",
-            height: "100%",
-            layout: "horizontal",
-            backgroundImage: "/img/fondoBuscar.jpg",
-            top: "0%"
-        });
-        var buscar = Ti.UI.createTextField({
-            width: "72%",
-            height: "100%",
-            hintText: "¿Que es lo que buscas?",
-            color: "white",
-            textAlign: "center"
-        });
-        var inputsBuscar = Ti.UI.createView({
-            width: "28%",
-            height: "100%",
-            layout: "horizontal"
-        });
-        var lupa = Ti.UI.createView({
-            width: "40%",
-            height: "70%",
-            left: "5%",
-            right: "5%",
-            top: "15%",
-            bottom: "15%",
-            backgroundImage: "/img/lupaBuscar.jpg"
-        });
-        lupa.addEventListener("click", function() {
-            productosNombre(buscar.value);
-        });
-        var cerrar = Ti.UI.createView({
-            left: "7.5%",
-            right: "7.5%",
-            top: "25%",
-            bottom: "25%",
-            width: "25%",
-            height: "50%",
-            backgroundImage: "/img/cerrar.jpg"
-        });
-        cerrar.addEventListener("click", function() {
-            winModal.close();
-        });
-        viewModal.add(buscar);
-        inputsBuscar.add(lupa);
-        inputsBuscar.add(cerrar);
-        viewModal.add(inputsBuscar);
-        winModal.add(viewModal);
-        winModal.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "agregarDireccion";
@@ -178,369 +124,19 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    var __defers = {};
     $.__views.agregarDireccion = Ti.UI.createWindow({
         navBarHidden: "true",
         backgroundColor: "white",
-        layout: "vertical",
-        backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
         height: "96.5%",
         id: "agregarDireccion"
     });
     $.__views.agregarDireccion && $.addTopLevelView($.__views.agregarDireccion);
-    $.__views.wrapper = Ti.UI.createView({
-        backgroundColor: "#cc5122",
-        width: "100%",
-        height: "9.5%",
-        layout: "horizontal",
-        id: "wrapper"
+    $.__views.drawermenu = Alloy.createWidget("com.alcoapps.drawermenu", "widget", {
+        id: "drawermenu",
+        __parentSymbol: $.__views.agregarDireccion
     });
-    $.__views.agregarDireccion.add($.__views.wrapper);
-    $.__views.menuImg = Ti.UI.createImageView({
-        width: "14%",
-        height: "100%",
-        backgroundImage: "/img/menu.jpg",
-        id: "menuImg"
-    });
-    $.__views.wrapper.add($.__views.menuImg);
-    $.__views.perrogato = Ti.UI.createImageView({
-        width: "28%",
-        height: "100%",
-        backgroundImage: "/img/perrogato.jpg",
-        id: "perrogato"
-    });
-    $.__views.wrapper.add($.__views.perrogato);
-    productosPerroGato ? $.__views.perrogato.addEventListener("click", productosPerroGato) : __defers["$.__views.perrogato!click!productosPerroGato"] = true;
-    $.__views.perro = Ti.UI.createImageView({
-        width: "22%",
-        height: "100%",
-        backgroundImage: "/img/perro.jpg",
-        id: "perro"
-    });
-    $.__views.wrapper.add($.__views.perro);
-    productosPerro ? $.__views.perro.addEventListener("click", productosPerro) : __defers["$.__views.perro!click!productosPerro"] = true;
-    $.__views.gato = Ti.UI.createImageView({
-        width: "22%",
-        height: "100%",
-        backgroundImage: "/img/gato.jpg",
-        id: "gato"
-    });
-    $.__views.wrapper.add($.__views.gato);
-    productosGato ? $.__views.gato.addEventListener("click", productosGato) : __defers["$.__views.gato!click!productosGato"] = true;
-    $.__views.lupaImg = Ti.UI.createImageView({
-        width: "14%",
-        height: "100%",
-        backgroundImage: "/img/lupa.jpg",
-        id: "lupaImg"
-    });
-    $.__views.wrapper.add($.__views.lupaImg);
-    buscarProducto ? $.__views.lupaImg.addEventListener("click", buscarProducto) : __defers["$.__views.lupaImg!click!buscarProducto"] = true;
-    $.__views.marcas = Ti.UI.createView({
-        backgroundImage: "/img/fondoMarcas.jpg",
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "marcas"
-    });
-    $.__views.agregarDireccion.add($.__views.marcas);
-    $.__views.flecha = Ti.UI.createImageView({
-        width: "14%",
-        height: "85%",
-        id: "flecha",
-        backgroundImage: "/img/FlechaIzq.jpg"
-    });
-    $.__views.marcas.add($.__views.flecha);
-    atras ? $.__views.flecha.addEventListener("click", atras) : __defers["$.__views.flecha!click!atras"] = true;
-    $.__views.direccionTitulo = Ti.UI.createImageView({
-        width: "72%",
-        height: "85%",
-        id: "direccionTitulo",
-        backgroundImage: "/img/direccion.jpg"
-    });
-    $.__views.marcas.add($.__views.direccionTitulo);
-    $.__views.casa = Ti.UI.createImageView({
-        left: "2%",
-        top: "25%",
-        bottom: "25%",
-        width: "10%",
-        height: "50%",
-        id: "casa",
-        backgroundImage: "/img/casa.png"
-    });
-    $.__views.direccionTitulo.add($.__views.casa);
-    $.__views.margen = Ti.UI.createView({
-        width: "100%",
-        height: "3.1%",
-        id: "margen",
-        backgroundImage: "/img/Margen.jpg"
-    });
-    $.__views.agregarDireccion.add($.__views.margen);
-    $.__views.main = Ti.UI.createView({
-        width: "100%",
-        height: "69.8%",
-        contentHeight: Ti.UI.SIZE,
-        layout: "vertical",
-        id: "main"
-    });
-    $.__views.agregarDireccion.add($.__views.main);
-    $.__views.__alloyId0 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "__alloyId0"
-    });
-    $.__views.main.add($.__views.__alloyId0);
-    $.__views.__alloyId1 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Calle",
-        id: "__alloyId1"
-    });
-    $.__views.__alloyId0.add($.__views.__alloyId1);
-    $.__views.calle = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        id: "calle"
-    });
-    $.__views.__alloyId0.add($.__views.calle);
-    $.__views.__alloyId2 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        backgroundImage: "/img/labelOscuro.jpg",
-        id: "__alloyId2"
-    });
-    $.__views.main.add($.__views.__alloyId2);
-    $.__views.__alloyId3 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Nro.",
-        id: "__alloyId3"
-    });
-    $.__views.__alloyId2.add($.__views.__alloyId3);
-    $.__views.numero = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-        id: "numero"
-    });
-    $.__views.__alloyId2.add($.__views.numero);
-    $.__views.__alloyId4 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "__alloyId4"
-    });
-    $.__views.main.add($.__views.__alloyId4);
-    $.__views.__alloyId5 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Depto.",
-        id: "__alloyId5"
-    });
-    $.__views.__alloyId4.add($.__views.__alloyId5);
-    $.__views.departamento = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-        id: "departamento"
-    });
-    $.__views.__alloyId4.add($.__views.departamento);
-    $.__views.__alloyId6 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        backgroundImage: "/img/labelOscuro.jpg",
-        id: "__alloyId6"
-    });
-    $.__views.main.add($.__views.__alloyId6);
-    $.__views.__alloyId7 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Esquina",
-        id: "__alloyId7"
-    });
-    $.__views.__alloyId6.add($.__views.__alloyId7);
-    $.__views.esquina = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        id: "esquina"
-    });
-    $.__views.__alloyId6.add($.__views.esquina);
-    $.__views.__alloyId8 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "__alloyId8"
-    });
-    $.__views.main.add($.__views.__alloyId8);
-    $.__views.__alloyId9 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Ciudad",
-        id: "__alloyId9"
-    });
-    $.__views.__alloyId8.add($.__views.__alloyId9);
-    $.__views.ciudad = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        id: "ciudad"
-    });
-    $.__views.__alloyId8.add($.__views.ciudad);
-    $.__views.__alloyId10 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        backgroundImage: "/img/labelOscuro.jpg",
-        id: "__alloyId10"
-    });
-    $.__views.main.add($.__views.__alloyId10);
-    $.__views.__alloyId11 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Comuna",
-        id: "__alloyId11"
-    });
-    $.__views.__alloyId10.add($.__views.__alloyId11);
-    $.__views.comuna = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        id: "comuna"
-    });
-    $.__views.__alloyId10.add($.__views.comuna);
-    $.__views.__alloyId12 = Ti.UI.createView({
-        width: "100%",
-        height: "10%",
-        layout: "horizontal",
-        id: "__alloyId12"
-    });
-    $.__views.main.add($.__views.__alloyId12);
-    $.__views.__alloyId13 = Ti.UI.createLabel({
-        width: "20.2%",
-        left: "11%",
-        height: "100%",
-        color: "#7b7b7b",
-        font: {
-            fontWeight: "bold"
-        },
-        text: "Teléfono",
-        id: "__alloyId13"
-    });
-    $.__views.__alloyId12.add($.__views.__alloyId13);
-    $.__views.telefono = Ti.UI.createTextField({
-        width: "60%",
-        right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
-        color: "#888888",
-        font: {
-            fontWeight: "bold"
-        },
-        backgroundColor: "#d8d8d8",
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-        id: "telefono"
-    });
-    $.__views.__alloyId12.add($.__views.telefono);
-    $.__views.footer = Ti.UI.createView({
-        layout: "horizontal",
-        width: "100%",
-        height: "7.6%",
-        id: "footer"
-    });
-    $.__views.agregarDireccion.add($.__views.footer);
-    $.__views.agregar = Ti.UI.createButton({
-        backgroundColor: "#cc5122",
-        color: "white",
-        width: "100%",
-        height: "100%",
-        font: {
-            fontWeight: "bold"
-        },
-        title: "AGREGAR",
-        id: "agregar"
-    });
-    $.__views.footer.add($.__views.agregar);
-    guardar ? $.__views.agregar.addEventListener("click", guardar) : __defers["$.__views.agregar!click!guardar"] = true;
+    $.__views.drawermenu.setParent($.__views.agregarDireccion);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -557,12 +153,305 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
-    __defers["$.__views.perrogato!click!productosPerroGato"] && $.__views.perrogato.addEventListener("click", productosPerroGato);
-    __defers["$.__views.perro!click!productosPerro"] && $.__views.perro.addEventListener("click", productosPerro);
-    __defers["$.__views.gato!click!productosGato"] && $.__views.gato.addEventListener("click", productosGato);
-    __defers["$.__views.lupaImg!click!buscarProducto"] && $.__views.lupaImg.addEventListener("click", buscarProducto);
-    __defers["$.__views.flecha!click!atras"] && $.__views.flecha.addEventListener("click", atras);
-    __defers["$.__views.agregar!click!guardar"] && $.__views.agregar.addEventListener("click", guardar);
+    iniciarComponentes();
+    iniciarMenu();
+    cargarLoading();
+    var marcasView = Ti.UI.createView({
+        backgroundImage: "/img/fondoMarcas.jpg",
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var flecha = Ti.UI.createImageView({
+        width: "14%",
+        height: "85%",
+        backgroundImage: "/img/FlechaIzq.jpg"
+    });
+    flecha.addEventListener("click", function() {
+        atras();
+    });
+    var direccionTitulo = Ti.UI.createImageView({
+        width: "72%",
+        height: "85%",
+        backgroundImage: "/img/direccion.jpg"
+    });
+    var casa = Ti.UI.createImageView({
+        left: "2%",
+        top: "25%",
+        bottom: "25%",
+        width: "10%",
+        height: "50%",
+        backgroundImage: "/img/casa.png"
+    });
+    direccionTitulo.add(casa);
+    marcasView.add(flecha);
+    marcasView.add(direccionTitulo);
+    var margen = Ti.UI.createView({
+        width: "100%",
+        height: "3.1%",
+        backgroundImage: "/img/Margen.jpg"
+    });
+    var mainView = Ti.UI.createView({
+        width: "100%",
+        height: "69.8%",
+        contentHeight: Ti.UI.SIZE,
+        layout: "vertical"
+    });
+    var input1 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var labelDireccion1 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Calle"
+    });
+    var calle = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8"
+    });
+    var input2 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal",
+        backgroundImage: "/img/labelOscuro.jpg"
+    });
+    var labelDireccion2 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Nro."
+    });
+    var numero = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8",
+        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+    });
+    var input3 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var labelDireccion3 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Depto."
+    });
+    var departamento = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8",
+        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+    });
+    var input4 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal",
+        backgroundImage: "/img/labelOscuro.jpg"
+    });
+    var labelDireccion4 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Esquina"
+    });
+    var esquina = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8"
+    });
+    var input5 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var labelDireccion5 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Ciudad"
+    });
+    var ciudad = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8"
+    });
+    var input6 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal",
+        backgroundImage: "/img/labelOscuro.jpg"
+    });
+    var labelDireccion6 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Comuna"
+    });
+    var comuna = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8"
+    });
+    var input7 = Ti.UI.createView({
+        width: "100%",
+        height: "10%",
+        layout: "horizontal"
+    });
+    var labelDireccion7 = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Teléfono"
+    });
+    var telefono = Ti.UI.createTextField({
+        width: "60%",
+        right: "8.8%",
+        top: "10%",
+        bottom: "10%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontWeight: "bold"
+        },
+        backgroundColor: "#d8d8d8",
+        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+    });
+    input1.add(labelDireccion1);
+    input1.add(calle);
+    input2.add(labelDireccion2);
+    input2.add(numero);
+    input3.add(labelDireccion3);
+    input3.add(departamento);
+    input4.add(labelDireccion4);
+    input4.add(esquina);
+    input5.add(labelDireccion5);
+    input5.add(ciudad);
+    input6.add(labelDireccion6);
+    input6.add(comuna);
+    input7.add(labelDireccion7);
+    input7.add(telefono);
+    mainView.add(input1);
+    mainView.add(input2);
+    mainView.add(input3);
+    mainView.add(input4);
+    mainView.add(input5);
+    mainView.add(input6);
+    mainView.add(input7);
+    var footer = Ti.UI.createButton({
+        backgroundColor: "#cc5122",
+        color: "white",
+        width: "100%",
+        height: "7.6%",
+        font: {
+            fontWeight: "bold"
+        },
+        title: "AGREGAR"
+    });
+    menuImg.addEventListener("click", function() {
+        $.drawermenu.showhidemenu();
+    });
+    perrogato.addEventListener("click", function() {
+        productosPerroGato();
+    });
+    perro.addEventListener("click", function() {
+        productosPerro();
+    });
+    gato.addEventListener("click", function() {
+        productosGato();
+    });
+    lupaImg.addEventListener("click", function() {
+        busquedaProducto();
+    });
+    footer.addEventListener("click", function() {
+        guardar();
+    });
+    main.add(wrapper);
+    main.add(marcasView);
+    main.add(margen);
+    main.add(mainView);
+    main.add(footer);
+    $.drawermenu.init({
+        menuview: menu,
+        mainview: main,
+        duration: 200,
+        parent: $.agregarDireccion
+    });
     _.extend($, exports);
 }
 
