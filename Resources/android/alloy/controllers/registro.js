@@ -6,7 +6,9 @@ function Controller() {
         var xhr = Ti.Network.createHTTPClient({
             onload: function(e) {
                 try {
-                    Ti.API.info(JSON.parse(this.responseText));
+                    Ti.API.info(this.responseText);
+                    var response = JSON.parse(this.responseText);
+                    getMarcas(response["token"]);
                 } catch (e) {
                     alert(e);
                     winCargando.close();
@@ -21,11 +23,89 @@ function Controller() {
                 winCargando.close();
             }
         });
+        Ti.API.info(email + " " + password);
         xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
         xhr.send({
             email: email,
             password: password
         });
+    }
+    function getMarcas(token) {
+        if (null == marcas) {
+            var xhrMarcas = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        getProductos(token, JSON.parse(this.responseText));
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                        winCargando.close();
+                        winCargando.close();
+                        winCargando.close();
+                    }
+                },
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                    winCargando.close();
+                    winCargando.close();
+                }
+            });
+            xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+            xhrMarcas.send();
+        } else getProductos(token, marcas);
+    }
+    function getProductos(token, marcas) {
+        if (null == productos) {
+            winCargando.open();
+            var xhrProductos = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        Alloy.createController("productos", {
+                            token: token,
+                            carro: [],
+                            marcas: marcas,
+                            productos: JSON.parse(this.responseText),
+                            medios: [],
+                            direcciones: [],
+                            usuario: null,
+                            medio: null,
+                            direccion: null,
+                            categoria: "TODAS",
+                            marca: "TODAS",
+                            nombre: "TODOS",
+                            pagina: 1
+                        }).getView().open();
+                    } catch (e) {
+                        alert("Error de conexión con els ervidor.");
+                        winCargando.close();
+                        winCargando.close();
+                        winCargando.close();
+                    }
+                },
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                    winCargando.close();
+                    winCargando.close();
+                }
+            });
+            xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
+            xhrProductos.send();
+        } else Alloy.createController("productos", {
+            token: token,
+            carro: [],
+            marcas: marcas,
+            productos: productos,
+            medios: [],
+            direcciones: [],
+            usuario: null,
+            medio: null,
+            direccion: null,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
     }
     function atras() {
         $.registro.close();
@@ -152,8 +232,8 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    args["marcas"];
-    args["productos"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
     var winCargando;
     var labelCargando;
     var winCargando = Ti.UI.createWindow({

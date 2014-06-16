@@ -61,6 +61,7 @@ function registro(){
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
 			try{
+				Ti.API.info(this.responseText);
 				var response = JSON.parse(this.responseText);
 				getMarcas(response['token']);
 			}
@@ -79,7 +80,7 @@ function registro(){
 			winCargando.close();
 		}
 	});
-	
+	Ti.API.info(email+" "+password);
 	xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
 	xhr.send({"email" : email,"password" : password});
 }

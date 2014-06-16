@@ -262,13 +262,15 @@ function Controller() {
         text: "DIRECCIÓN"
     });
     var contenidoLabel1 = Ti.UI.createLabel({
+        minimumFontSize: 8,
         left: "7%",
         width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: 12
         },
         id: "direccion"
     });
@@ -292,11 +294,13 @@ function Controller() {
         text: "CORREO"
     });
     var contenidoLabel2 = Ti.UI.createLabel({
+        minimumFontSize: 8,
         left: "7%",
         width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
+            fontSize: 12,
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
@@ -322,11 +326,13 @@ function Controller() {
         text: "PAGO"
     });
     var contenidoLabel3 = Ti.UI.createLabel({
+        minimumFontSize: 8,
         left: "7%",
         width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
+            fontSize: 12,
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
@@ -352,11 +358,13 @@ function Controller() {
         text: "TELÉFONO"
     });
     var contenidoLabel4 = Ti.UI.createLabel({
+        minimumFontSize: 8,
         left: "7%",
         width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
+            fontSize: 12,
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
@@ -382,11 +390,13 @@ function Controller() {
         text: "CUPÓN DE DESCUENTO"
     });
     var contenidoLabel5 = Ti.UI.createLabel({
+        minimumFontSize: 8,
         left: "7%",
         width: "80%",
         height: "50%",
         color: "#5c5c5b",
         font: {
+            fontSize: 12,
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
@@ -475,12 +485,18 @@ function Controller() {
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var ImageViewProducto = Ti.UI.createImageView({
+        var ImageViewProducto = Ti.UI.createView({
+            width: "25%",
+            height: "100%",
+            backgroundColor: "white"
+        });
+        var ImageViewProducto_int = Ti.UI.createImageView({
             image: productos[i]["prod_pic"],
             defaultImage: "/img/Perro1.jpg",
-            width: "25%",
+            width: "auto",
             height: "100%"
         });
+        ImageViewProducto.add(ImageViewProducto_int);
         var ViewLabels = Ti.UI.createView({
             width: "75%",
             height: "100%",
@@ -560,7 +576,7 @@ function Controller() {
         contenidoLabel3.text = medios[0]["paym_name"];
         medio = medios[0];
     }
-    if (null != direccion) contenidoLabel1.text = direccion["direccion"]; else {
+    if (null != direccion) contenidoLabel1.text = direccion["direccion"]; else if (direcciones.size > 0) {
         contenidoLabel1.text = direcciones[direcciones.length - 1]["direccion"];
         direccion = direcciones[direcciones.length - 1];
     }

@@ -244,7 +244,7 @@ function Controller() {
     var marcas = args["marcas"];
     var productos = args["productos"];
     cargarLoading();
-    $.inputCorreo.value = "prueba3";
+    $.inputCorreo.value = "WWW";
     $.inputClave.value = "123";
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);

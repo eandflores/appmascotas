@@ -238,6 +238,16 @@ function Controller() {
         horizontalWrap: "false",
         showHorizontalScrollIndicator: "true"
     });
+    var posX = 0;
+    marcasScroll.addEventListener("scroll", function(e) {
+        posX = Math.round(e.x);
+    });
+    flechaIzq.addEventListener("click", function() {
+        250 > posX ? marcasScroll.scrollTo(0, 0) : marcasScroll.scrollTo(posX - 250, 0);
+    });
+    flechaDer.addEventListener("click", function() {
+        marcasScroll.scrollTo(posX + 250, 0);
+    });
     marcasView.add(flechaIzq);
     marcasView.add(marcasScroll);
     marcasView.add(flechaDer);
@@ -279,12 +289,18 @@ function Controller() {
         layout: "horizontal",
         height: "28.7%"
     });
-    var ImageViewProducto = Ti.UI.createImageView({
+    var ImageViewProducto = Ti.UI.createView({
+        width: "25%",
+        height: "100%",
+        backgroundColor: "white"
+    });
+    var ImageViewProducto_int = Ti.UI.createImageView({
         image: producto["prod_pic"],
         defaultImage: "/img/Perro1.jpg",
-        width: "25%",
+        width: "auto",
         height: "100%"
     });
+    ImageViewProducto.add(ImageViewProducto_int);
     var LabelGroup = Ti.UI.createView({
         width: "75%",
         height: "100%",

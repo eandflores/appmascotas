@@ -29,7 +29,11 @@ var showhidemenu=function(){
 		moveTo="0";
 		menuOpen=false;
 	}else{
-		moveTo="300dp";
+		if (OS_ANDROID)
+			moveTo="280dp";
+		else
+			moveTo="250dp";
+			
 		menuOpen=true;
 	}
 

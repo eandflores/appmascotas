@@ -90,7 +90,7 @@ function Controller() {
             paginasView.add(paginaLabel);
             paginasView.add(margenPagina);
         }
-        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i; i++) if (productos_act.length > i) for (var j = 0; productos_act[i]["producto_precios"].length > j; j++) {
+        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i; i++) if (productos_act.length > i) for (var j = 0; productos_act[i]["producto_precios"].length > j; j++) if (0 == j) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
@@ -102,12 +102,18 @@ function Controller() {
                 height: "2px",
                 backgroundColor: "#e8e8e8"
             });
-            var ImageViewProducto = Ti.UI.createImageView({
+            var ImageViewProducto = Ti.UI.createView({
+                width: "25%",
+                height: "100%",
+                backgroundColor: "white"
+            });
+            var ImageViewProducto_int = Ti.UI.createImageView({
                 image: productos_act[i]["prod_pic"],
                 defaultImage: "/img/Perro1.jpg",
-                width: "25%",
+                width: "auto",
                 height: "100%"
             });
+            ImageViewProducto.add(ImageViewProducto_int);
             var LabelGroup = Ti.UI.createView({
                 width: "68%",
                 height: "100%",
@@ -306,7 +312,7 @@ function Controller() {
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
-    var productosPaginacion = 15;
+    var productosPaginacion = 25;
     iniciarComponentes();
     cargarLoading();
     iniciarMenu(productos);
@@ -371,6 +377,16 @@ function Controller() {
         height: "85%",
         horizontalWrap: "false",
         showHorizontalScrollIndicator: "true"
+    });
+    var posX = 0;
+    marcasScroll.addEventListener("scroll", function(e) {
+        posX = Math.round(e.x);
+    });
+    flechaIzq.addEventListener("click", function() {
+        250 > posX ? marcasScroll.scrollTo(0, 0) : marcasScroll.scrollTo(posX - 250, 0);
+    });
+    flechaDer.addEventListener("click", function() {
+        marcasScroll.scrollTo(posX + 250, 0);
     });
     marcasView.add(flechaIzq);
     marcasView.add(marcasScroll);

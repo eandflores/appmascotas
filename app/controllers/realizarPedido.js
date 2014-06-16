@@ -95,13 +95,15 @@ var tituloLabel1 = Ti.UI.createLabel({
 });
 
 var contenidoLabel1 = Ti.UI.createLabel({
+	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
 	height:"50%",
 	color:"#5c5c5b",
 	font:{
 		fontFamily:"Noto Sans",
-		fontWeight:"bold"
+		fontWeight:"bold",
+		fontSize:12
 	},
 	id:"direccion"
 });
@@ -129,11 +131,13 @@ var tituloLabel2 = Ti.UI.createLabel({
 });
 
 var contenidoLabel2 = Ti.UI.createLabel({
+	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
 	height:"50%",
 	color:"#5c5c5b",
 	font:{
+		fontSize:12,
 		fontFamily:"Noto Sans",
 		fontWeight:"bold"
 	},
@@ -163,11 +167,13 @@ var tituloLabel3 = Ti.UI.createLabel({
 });
 
 var contenidoLabel3 = Ti.UI.createLabel({
+	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
 	height:"50%",
 	color:"#5c5c5b",
 	font:{
+		fontSize:12,
 		fontFamily:"Noto Sans",
 		fontWeight:"bold"
 	},
@@ -197,11 +203,13 @@ var tituloLabel4 = Ti.UI.createLabel({
 });
 
 var contenidoLabel4 = Ti.UI.createLabel({
+	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
 	height:"50%",
 	color:"#5c5c5b",
 	font:{
+		fontSize:12,
 		fontFamily:"Noto Sans",
 		fontWeight:"bold"
 	},
@@ -231,11 +239,13 @@ var tituloLabel5 = Ti.UI.createLabel({
 });
 
 var contenidoLabel5 = Ti.UI.createLabel({
+	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
 	height:"50%",
 	color:"#5c5c5b",
 	font:{
+		fontSize:12,
 		fontFamily:"Noto Sans",
 		fontWeight:"bold"
 	},
@@ -359,12 +369,20 @@ for(var i = 0; i < productos.length; i++){
 					backgroundColor:"#e8e8e8"
 				});
 				
-				var ImageViewProducto = Ti.UI.createImageView({
+				var ImageViewProducto = Ti.UI.createView({
+					width:"25%",
+					height:"100%",
+					backgroundColor:"white"
+				});
+				
+				var ImageViewProducto_int = Ti.UI.createImageView({
 					image : productos[i]['prod_pic'],
 					defaultImage: "/img/Perro1.jpg",
-					width:"25%",
+					width:"auto",
 					height:"100%"
 				});
+				
+				ImageViewProducto.add(ImageViewProducto_int);
 				
 				var ViewLabels = Ti.UI.createView({
 					width:"75%",
@@ -468,8 +486,10 @@ if(direccion != null){
 	contenidoLabel1.text = direccion['direccion'];
 }
 else{
-	contenidoLabel1.text = direcciones[direcciones.length-1]['direccion'];
-	direccion = direcciones[direcciones.length-1];
+	if(direcciones.size > 0){
+		contenidoLabel1.text = direcciones[direcciones.length-1]['direccion'];
+		direccion = direcciones[direcciones.length-1];
+	}
 }
 
 contenidoLabel4.text = usuario['cust_phone'];

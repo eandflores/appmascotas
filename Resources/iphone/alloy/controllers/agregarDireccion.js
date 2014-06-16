@@ -104,6 +104,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
+        Ti.API.info(token);
         Ti.API.info(direccionString);
         Ti.API.info(comuna.value);
         Ti.API.info(ciudad.value);

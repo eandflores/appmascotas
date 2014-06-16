@@ -38,7 +38,7 @@ function Controller() {
             moveTo = "0";
             menuOpen = false;
         } else {
-            moveTo = "300dp";
+            moveTo = "280dp";
             menuOpen = true;
         }
         var newWidth = Ti.Platform.displayCaps.platformWidth;

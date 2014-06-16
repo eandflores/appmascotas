@@ -420,6 +420,7 @@ function guardar(){
 		}
 	});
 	
+	Ti.API.info(token);
 	Ti.API.info(direccionString);
 	Ti.API.info(comuna.value);
 	Ti.API.info(ciudad.value);

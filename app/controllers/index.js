@@ -8,7 +8,7 @@ var productos = args['productos'];
 
 cargarLoading();
 
-$.inputCorreo.value = "prueba3";
+$.inputCorreo.value = "WWW";
 $.inputClave.value = "123";
 
 function login(){

@@ -158,12 +158,20 @@ for(var i = 0; i < productos.length; i++){
 					backgroundColor:"#e8e8e8"
 				});
 				
-				var ImageViewProducto = Ti.UI.createImageView({
-					image : productos[i]['prod_pic'],
-					defaultImage : "/img/Perro1.jpg",
+				var ImageViewProducto = Ti.UI.createView({
 					width:"25%",
+					height:"100%",
+					backgroundColor:"white"
+				});
+				
+				var ImageViewProducto_int = Ti.UI.createImageView({
+					image : productos[i]['prod_pic'],
+					defaultImage: "/img/Perro1.jpg",
+					width:"auto",
 					height:"100%"
 				});
+				
+				ImageViewProducto.add(ImageViewProducto_int);
 				
 				var ViewLabels = Ti.UI.createView({
 					width:"75%",

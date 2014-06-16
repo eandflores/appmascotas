@@ -236,6 +236,16 @@ function Controller() {
         horizontalWrap: "false",
         showHorizontalScrollIndicator: "true"
     });
+    var posX = 0;
+    marcasScroll.addEventListener("scroll", function(e) {
+        posX = Math.round(e.x);
+    });
+    flechaIzq.addEventListener("click", function() {
+        250 > posX ? marcasScroll.scrollTo(0, 0) : marcasScroll.scrollTo(posX - 250, 0);
+    });
+    flechaDer.addEventListener("click", function() {
+        marcasScroll.scrollTo(posX + 250, 0);
+    });
     marcasView.add(flechaIzq);
     marcasView.add(marcasScroll);
     marcasView.add(flechaDer);
