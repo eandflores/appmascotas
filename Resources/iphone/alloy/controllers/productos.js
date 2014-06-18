@@ -65,8 +65,20 @@ function Controller() {
         var paginas = 0;
         paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
         for (var i = 0; paginas > i; i++) {
-            var paginaLabel = Ti.UI.createLabel({
-                width: "48px",
+            if (i == pagina - 1) var paginaLabel = Ti.UI.createLabel({
+                width: "55px",
+                height: "100%",
+                text: i + 1,
+                backgroundColor: "#e8e8e8",
+                color: "#cc5122",
+                textAlign: "center",
+                font: {
+                    fontFamily: "Noto Sans",
+                    fontWeight: "bold"
+                },
+                id: i + 1
+            }); else var paginaLabel = Ti.UI.createLabel({
+                width: "55px",
                 height: "100%",
                 text: i + 1,
                 color: "white",
@@ -90,12 +102,12 @@ function Controller() {
             paginasView.add(paginaLabel);
             paginasView.add(margenPagina);
         }
-        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i; i++) if (productos_act.length > i) for (var j = 0; productos_act[i]["producto_precios"].length > j; j++) if (0 == j) {
+        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i && productos_act.length > i; i++) if (productos_act[i]["producto_precios"].length > 0) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
                 height: "232px",
-                id: productos_act[i]["producto_precios"][j]["id"]
+                id: productos_act[i]["producto_precios"][0]["id"]
             });
             var Margen = Ti.UI.createView({
                 width: "100%",
@@ -154,7 +166,7 @@ function Controller() {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos_act[i]["producto_precios"][j]["sku_description"] + " x $" + productos_act[i]["producto_precios"][j]["sku_price"]
+                text: productos_act[i]["producto_precios"][0]["sku_description"] + " x $" + productos_act[i]["producto_precios"][0]["sku_price"]
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
@@ -312,14 +324,14 @@ function Controller() {
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
-    var productosPaginacion = 25;
+    var productosPaginacion = 20;
     iniciarComponentes();
     cargarLoading();
     iniciarMenu(productos);
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",
         width: "100%",
-        height: "75.5%",
+        height: "74%",
         contentHeight: Ti.UI.SIZE,
         layout: "vertical",
         scrollType: "vertical",
@@ -328,7 +340,7 @@ function Controller() {
     var paginasView = Ti.UI.createScrollView({
         id: "paginasView",
         width: "100%",
-        height: "5%",
+        height: "6.5%",
         layout: "horizontal",
         backgroundColor: "#cc5122",
         contentWidth: Ti.UI.SIZE,

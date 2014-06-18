@@ -104,51 +104,21 @@ function cargarLoading(){
 	
 	if(Titanium.Platform.name == "iPhone OS"){
 		winCargando = Ti.UI.createWindow({
-	        backgroundColor : '#000',
+	        backgroundImage : '/img/splash-tiendapet.jpg',
 	        width:'100%',
 	        top: "3.5%",
-	        height:'96.5%',
-	        opacity:0.70
+	        height:'96.5%'
 	        
 	    });
-	    
-	    labelCargando = Ti.UI.createLabel({
-			width:"100%",
-			height:"20%",
-			top:"40%",
-			bottom:"40%",
-			text:"CARGANDO...",
-			textAlign: "center",
-			color:"white",
-			font: {
-				fontWeight:"bold"
-			}
-		});
 	}
 	else{
 		winCargando = Ti.UI.createWindow({
-	        backgroundColor : '#000',
+	        backgroundImage : '/img/splash-tiendapet.jpg',
 	        width:'100%',
 	        height:'100%',
-	        opacity:0.9,
 	        navBarHidden: "true"
 	    });
-	    
-	    labelCargando = Ti.UI.createLabel({
-			width:"100%",
-			height:"20%",
-			top:"40%",
-			bottom:"40%",
-			text:"CARGANDO...",
-			textAlign: "center",
-			color:"white",
-			font: {
-				fontWeight:"bold"
-			}
-		});
 	}
-	
-	winCargando.add(labelCargando);
 }
 
 //=========End Cargando============

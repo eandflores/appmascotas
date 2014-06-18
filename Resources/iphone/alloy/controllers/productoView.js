@@ -386,6 +386,9 @@ function Controller() {
             layout: "vertical",
             top: "36%"
         });
+        winModalPeso.addEventListener("click", function() {
+            winModalPeso.close();
+        });
         var FlechaArrPeso = Ti.UI.createImageView({
             width: "9.4%",
             height: "26.2%",
@@ -469,6 +472,9 @@ function Controller() {
             layout: "vertical",
             top: "45%"
         });
+        winModalCantidad.addEventListener("click", function() {
+            winModalCantidad.close();
+        });
         var FlechaArrCantidad = Ti.UI.createImageView({
             width: "9.4%",
             height: "26.2%",
@@ -483,9 +489,6 @@ function Controller() {
             width: "100%",
             height: "47.6%",
             backgroundColor: "white"
-        });
-        ModalCantidad.addEventListener("click", function() {
-            winModalCantidad.close();
         });
         var FlechaAbaCantidad = Ti.UI.createImageView({
             width: "9.4%",

@@ -287,12 +287,18 @@ function Controller() {
         layout: "horizontal",
         height: "28.7%"
     });
-    var ImageViewProducto = Ti.UI.createImageView({
+    var ImageViewProducto = Ti.UI.createView({
+        width: "25%",
+        height: "100%",
+        backgroundColor: "white"
+    });
+    var ImageViewProducto_int = Ti.UI.createImageView({
         image: producto["prod_pic"],
         defaultImage: "/img/Perro1.jpg",
-        width: "25%",
+        width: "auto",
         height: "100%"
     });
+    ImageViewProducto.add(ImageViewProducto_int);
     var LabelGroup = Ti.UI.createView({
         width: "75%",
         height: "100%",
@@ -378,6 +384,9 @@ function Controller() {
             layout: "vertical",
             top: "36%"
         });
+        winModalPeso.addEventListener("click", function() {
+            winModalPeso.close();
+        });
         var FlechaArrPeso = Ti.UI.createImageView({
             width: "9.4%",
             height: "26.2%",
@@ -461,6 +470,9 @@ function Controller() {
             layout: "vertical",
             top: "45%"
         });
+        winModalCantidad.addEventListener("click", function() {
+            winModalCantidad.close();
+        });
         var FlechaArrCantidad = Ti.UI.createImageView({
             width: "9.4%",
             height: "26.2%",
@@ -475,9 +487,6 @@ function Controller() {
             width: "100%",
             height: "47.6%",
             backgroundColor: "white"
-        });
-        ModalCantidad.addEventListener("click", function() {
-            winModalCantidad.close();
         });
         var FlechaAbaCantidad = Ti.UI.createImageView({
             width: "9.4%",

@@ -65,20 +65,8 @@ function Controller() {
         var paginas = 0;
         paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
         for (var i = 0; paginas > i; i++) {
-            if (i == pagina - 1) var paginaLabel = Ti.UI.createLabel({
-                width: "55px",
-                height: "100%",
-                text: i + 1,
-                backgroundColor: "#e8e8e8",
-                color: "#cc5122",
-                textAlign: "center",
-                font: {
-                    fontFamily: "Noto Sans",
-                    fontWeight: "bold"
-                },
-                id: i + 1
-            }); else var paginaLabel = Ti.UI.createLabel({
-                width: "55px",
+            var paginaLabel = Ti.UI.createLabel({
+                width: "48px",
                 height: "100%",
                 text: i + 1,
                 color: "white",
@@ -102,7 +90,7 @@ function Controller() {
             paginasView.add(paginaLabel);
             paginasView.add(margenPagina);
         }
-        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i && productos_act.length > i; i++) if (productos_act[i]["producto_precios"].length > 0) {
+        for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i; i++) if (productos_act.length > i && productos_act[i]["producto_precios"].length > 0) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
@@ -284,24 +272,12 @@ function Controller() {
         vista.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    this.__controllerPath = "productos";
+    this.__controllerPath = "Copy of productos";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
     arguments[0] ? arguments[0]["$model"] : null;
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.productos = Ti.UI.createWindow({
-        navBarHidden: "true",
-        exitOnClose: true,
-        backgroundColor: "white",
-        id: "productos"
-    });
-    $.__views.productos && $.addTopLevelView($.__views.productos);
-    $.__views.drawermenu = Alloy.createWidget("com.alcoapps.drawermenu", "widget", {
-        id: "drawermenu",
-        __parentSymbol: $.__views.productos
-    });
-    $.__views.drawermenu.setParent($.__views.productos);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -322,14 +298,14 @@ function Controller() {
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
-    var productosPaginacion = 20;
+    var productosPaginacion = 150;
     iniciarComponentes();
     cargarLoading();
     iniciarMenu(productos);
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",
         width: "100%",
-        height: "74%",
+        height: "75.5%",
         contentHeight: Ti.UI.SIZE,
         layout: "vertical",
         scrollType: "vertical",
@@ -338,7 +314,7 @@ function Controller() {
     var paginasView = Ti.UI.createScrollView({
         id: "paginasView",
         width: "100%",
-        height: "6.5%",
+        height: "5%",
         layout: "horizontal",
         backgroundColor: "#cc5122",
         contentWidth: Ti.UI.SIZE,

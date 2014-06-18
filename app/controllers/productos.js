@@ -26,7 +26,7 @@ var marca = args['marca'];
 var nombre = args['nombre'];
 var pagina = args['pagina'];
 
-var productosPaginacion = 25;
+var productosPaginacion = 20;
 
 iniciarComponentes();
 cargarLoading();
@@ -35,7 +35,7 @@ iniciarMenu(productos);
 var mainScroll = Ti.UI.createScrollView({
 	id:"mainScroll",
 	width:"100%",
-	height:"75.5%",
+	height:"74%",
 	contentHeight: Ti.UI.SIZE,
 	layout:'vertical',
 	scrollType: 'vertical',
@@ -45,7 +45,7 @@ var mainScroll = Ti.UI.createScrollView({
 var paginasView = Ti.UI.createScrollView({
 	id:"paginasView",
 	width:"100%",
-	height:"5%",
+	height:"6.5%",
 	layout:'horizontal',
 	backgroundColor:"#cc5122",
 	contentWidth: Ti.UI.SIZE,
@@ -269,18 +269,36 @@ function ordenarProductos(){
 	}
 	
 	for(var i = 0; i < paginas; i++){
-		var paginaLabel = Ti.UI.createLabel({
-			width:"48px",
-			height:"100%",
-			text: (i+1),
-			color:"white",
-			textAlign: "center",	
-			font:{
-				fontFamily:"Noto Sans",
-				fontWeight:"bold"
-			},
-			id: (i+1)
-		});
+		
+		if(i == (pagina-1)){
+			var paginaLabel = Ti.UI.createLabel({
+				width:"55px",
+				height:"100%",
+				text: (i+1),
+				backgroundColor:"#e8e8e8",
+				color:"#cc5122",
+				textAlign: "center",	
+				font:{
+					fontFamily:"Noto Sans",
+					fontWeight:"bold"
+				},
+				id: (i+1)
+			});
+		}
+		else{
+			var paginaLabel = Ti.UI.createLabel({
+				width:"55px",
+				height:"100%",
+				text: (i+1),
+				color:"white",
+				textAlign: "center",	
+				font:{
+					fontFamily:"Noto Sans",
+					fontWeight:"bold"
+				},
+				id: (i+1)
+			});
+		}
 		
 		paginaLabel.addEventListener("click",function(){
 			productosPagina(this['id']);
@@ -298,109 +316,105 @@ function ordenarProductos(){
 		paginasView.add(margenPagina);
 	}
 	
-	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion); i++){
+	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion) && i < productos_act.length; i++){
 		
-		if(i < productos_act.length){
+		if(productos_act[i]['producto_precios'].length > 0){
+				
+			var Main = Ti.UI.createView({
+					width:"100%",
+				layout:'horizontal',
+				height:"232px",
+				id: productos_act[i]['producto_precios'][0]['id']
+			});
 			
-			for(var j = 0; j < productos_act[i]['producto_precios'].length; j++){
-				if(j == 0){
-					var Main = Ti.UI.createView({
-							width:"100%",
-						layout:'horizontal',
-						height:"232px",
-						id: productos_act[i]['producto_precios'][j]['id']
-					});
-					
-					var Margen = Ti.UI.createView({
-						width:"100%",
-						height:"2px",
-						backgroundColor:"#e8e8e8"
-					});
-					
-					var ImageViewProducto = Ti.UI.createView({
-						width:"25%",
-						height:"100%",
-						backgroundColor:"white"
-					});
-					
-					var ImageViewProducto_int = Ti.UI.createImageView({
-						image : productos_act[i]['prod_pic'],
-						defaultImage: "/img/Perro1.jpg",
-						width:"auto",
-						height:"100%"
-					});
-					
-					ImageViewProducto.add(ImageViewProducto_int);
-					
-					var LabelGroup = Ti.UI.createView({
-						width:"68%",
-						height:"100%",
-						layout:"vertical",
-						top:"0%"
-					});
-					
-					var LabelNombre = Ti.UI.createLabel({
-						color:"#cc5122",
-						width:"100%",
-						height:"20%",
-						top:"20%",
-						left:"8%",
-						font:{
-							fontFamily:"Noto Sans",
-							fontWeight:"bold"
-						},
-						text : productos_act[i]['brand']
-					});
-					
-					var LabelDescripcion = Ti.UI.createLabel({
-						color:"gray",
-						width:"100%",
-						height:"20%",
-						top:"0%",
-						left:"8%",
-						font:{
-							fontFamily:"Noto Sans",
-							fontWeight:"bold"
-						},
-						text : productos_act[i]['prod_name']
-					});
-					
-					var LabelPrecio = Ti.UI.createLabel({
-						width:"100%",
-						height:"20%",
-						color:"#5c5c5b",
-						top:"0%",
-						left:"8%",
-						font:{
-							fontFamily:"Noto Sans",
-							fontWeight:"bold"
-						},
-						text : productos_act[i]['producto_precios'][j]['sku_description']+
-							" x $"+productos_act[i]['producto_precios'][j]['sku_price']
-					});
-					
-					var ImageViewFlecha = Ti.UI.createImageView({
-						width:"7%",
-						height:"100%",
-						backgroundImage : "/img/Flecha.jpg"
-					});
-					
-					LabelGroup.add(LabelNombre);
-					LabelGroup.add(LabelDescripcion);
-					LabelGroup.add(LabelPrecio);
-					
-					Main.add(ImageViewProducto);
-					Main.add(LabelGroup);
-					Main.add(ImageViewFlecha);
-					
-					Main.addEventListener("click",function(){
-						productosView(this['id']);
-					});
+			var Margen = Ti.UI.createView({
+				width:"100%",
+				height:"2px",
+				backgroundColor:"#e8e8e8"
+			});
 			
-					mainScroll.add(Main);	
-					mainScroll.add(Margen);	
-				}
-			}
+			var ImageViewProducto = Ti.UI.createView({
+				width:"25%",
+				height:"100%",
+				backgroundColor:"white"
+			});
+			
+			var ImageViewProducto_int = Ti.UI.createImageView({
+				image : productos_act[i]['prod_pic'],
+				defaultImage: "/img/Perro1.jpg",
+				width:"auto",
+				height:"100%"
+			});
+			
+			ImageViewProducto.add(ImageViewProducto_int);
+			
+			var LabelGroup = Ti.UI.createView({
+				width:"68%",
+				height:"100%",
+				layout:"vertical",
+				top:"0%"
+			});
+			
+			var LabelNombre = Ti.UI.createLabel({
+				color:"#cc5122",
+				width:"100%",
+				height:"20%",
+				top:"20%",
+				left:"8%",
+				font:{
+					fontFamily:"Noto Sans",
+					fontWeight:"bold"
+				},
+				text : productos_act[i]['brand']
+			});
+			
+			var LabelDescripcion = Ti.UI.createLabel({
+				color:"gray",
+				width:"100%",
+				height:"20%",
+				top:"0%",
+				left:"8%",
+				font:{
+					fontFamily:"Noto Sans",
+					fontWeight:"bold"
+				},
+				text : productos_act[i]['prod_name']
+			});
+			
+			var LabelPrecio = Ti.UI.createLabel({
+				width:"100%",
+				height:"20%",
+				color:"#5c5c5b",
+				top:"0%",
+				left:"8%",
+				font:{
+					fontFamily:"Noto Sans",
+					fontWeight:"bold"
+				},
+				text : productos_act[i]['producto_precios'][0]['sku_description']+
+					" x $"+productos_act[i]['producto_precios'][0]['sku_price']
+			});
+			
+			var ImageViewFlecha = Ti.UI.createImageView({
+				width:"7%",
+				height:"100%",
+				backgroundImage : "/img/Flecha.jpg"
+			});
+			
+			LabelGroup.add(LabelNombre);
+			LabelGroup.add(LabelDescripcion);
+			LabelGroup.add(LabelPrecio);
+			
+			Main.add(ImageViewProducto);
+			Main.add(LabelGroup);
+			Main.add(ImageViewFlecha);
+			
+			Main.addEventListener("click",function(){
+				productosView(this['id']);
+			});
+	
+			mainScroll.add(Main);	
+			mainScroll.add(Margen);	
 		}
 	}
 	

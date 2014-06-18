@@ -317,6 +317,10 @@ Peso.addEventListener("click",function(){
 		});
 	}
 	
+	winModalPeso.addEventListener("click",function(){
+		winModalPeso.close();
+	});
+	
  	var FlechaArrPeso = Ti.UI.createImageView({
 		width:"9.4%",
 		height:"26.2%",
@@ -430,6 +434,10 @@ Cantidad.addEventListener("click",function(){
 		});
 	}
 	
+	winModalCantidad.addEventListener("click",function(){
+		winModalCantidad.close();
+	});
+	
  	var FlechaArrCantidad = Ti.UI.createImageView({
 		width:"9.4%",
 		height:"26.2%",
@@ -447,11 +455,11 @@ Cantidad.addEventListener("click",function(){
         height : '47.6%',
         backgroundColor:"white"
     });
-    
+    /*
     ModalCantidad.addEventListener("click",function(){
 		winModalCantidad.close();
 	});
-    
+    */
     var FlechaAbaCantidad = Ti.UI.createImageView({
 		width:"9.4%",
 		height:"26.2%",

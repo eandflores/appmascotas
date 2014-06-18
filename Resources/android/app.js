@@ -63,25 +63,11 @@ function iniciarMenu(productos) {
 
 function cargarLoading() {
     winCargando = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundImage: "/img/splash-tiendapet.jpg",
         width: "100%",
         height: "100%",
-        opacity: .9,
         navBarHidden: "true"
     });
-    labelCargando = Ti.UI.createLabel({
-        width: "100%",
-        height: "20%",
-        top: "40%",
-        bottom: "40%",
-        text: "CARGANDO...",
-        textAlign: "center",
-        color: "white",
-        font: {
-            fontWeight: "bold"
-        }
-    });
-    winCargando.add(labelCargando);
 }
 
 function buscarProducto() {

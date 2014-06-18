@@ -56,7 +56,7 @@ function Controller() {
         if (null == productos) {
             winCargando.open();
             var xhrProductos = Ti.Network.createHTTPClient({
-                onload: function() {
+                onload: function(e) {
                     try {
                         Alloy.createController("productos", {
                             token: token,
@@ -74,14 +74,14 @@ function Controller() {
                             pagina: 1
                         }).getView().open();
                     } catch (e) {
-                        alert("Error de conexión con els ervidor.");
+                        alert(e);
                         winCargando.close();
                         winCargando.close();
                         winCargando.close();
                     }
                 },
-                onerror: function() {
-                    alert("Error de conexión con el servidor.");
+                onerror: function(e) {
+                    alert(e);
                     winCargando.close();
                     winCargando.close();
                     winCargando.close();
