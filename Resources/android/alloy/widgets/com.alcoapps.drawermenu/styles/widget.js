@@ -21,7 +21,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0005,
+    priority: 100000.0002,
     key: "menuview",
     style: {
         backgroundColor: "#cacaca",
@@ -30,7 +30,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0006,
+    priority: 100000.0003,
     key: "mainview",
     style: {
         height: Ti.UI.FILL,
@@ -38,7 +38,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0007,
+    priority: 100000.0004,
     key: "mainviewheader",
     style: {
         top: "0",
@@ -48,7 +48,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0008,
+    priority: 100000.0005,
     key: "menubutton",
     style: {
         left: "0",

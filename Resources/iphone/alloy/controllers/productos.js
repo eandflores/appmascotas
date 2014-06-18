@@ -142,7 +142,7 @@ function Controller() {
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold",
-                    fontSize: 14
+                    fontSize: 13
                 },
                 text: productos_act[i]["brand"]
             });
@@ -156,7 +156,7 @@ function Controller() {
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold",
-                    fontSize: 14
+                    fontSize: 13
                 },
                 text: productos_act[i]["prod_name"]
             });
@@ -170,7 +170,7 @@ function Controller() {
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold",
-                    fontSize: 14
+                    fontSize: 13
                 },
                 text: productos_act[i]["producto_precios"][0]["sku_description"] + " x $" + productos_act[i]["producto_precios"][0]["sku_price"]
             });

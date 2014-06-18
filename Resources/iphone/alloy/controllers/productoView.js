@@ -94,7 +94,7 @@ function Controller() {
         if (null != usuario) {
             carro.push({
                 id: productoPrecio["id"],
-                qty: InputCantidad.value
+                qty: InputCantidad.text
             });
             Alloy.createController("realizarPedido", {
                 token: token,
@@ -114,7 +114,7 @@ function Controller() {
                         var usuario = JSON.parse(this.responseText);
                         carro.push({
                             id: productoPrecio["id"],
-                            qty: InputCantidad.value
+                            qty: InputCantidad.text
                         });
                         var vista = Alloy.createController("carroCompra", {
                             token: token,
@@ -376,15 +376,14 @@ function Controller() {
         left: "65.6%",
         layout: "vertical"
     });
-    var InputPeso = Ti.UI.createTextField({
+    var InputPeso = Ti.UI.createLabel({
         width: "100%",
         height: "64%",
         top: "18%",
         backgroundColor: "#d8d8d8",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         color: "#888888",
-        value: productoPrecio["sku_description"],
-        editable: false
+        text: productoPrecio["sku_description"]
     });
     Peso.addEventListener("click", function() {
         var winModalPeso;
@@ -405,12 +404,28 @@ function Controller() {
         winModalPeso.addEventListener("click", function() {
             winModalPeso.close();
         });
-        var FlechaArrPeso = Ti.UI.createImageView({
-            width: "9.4%",
-            height: "26.2%",
-            left: "71.6%",
-            backgroundImage: "/img/FlechaArr.png"
-        });
+        if (productosPrecioProducto.length - 1 > indice) {
+            var FlechaArrPeso = Ti.UI.createImageView({
+                width: "9.4%",
+                height: "26.2%",
+                left: "71.6%",
+                backgroundImage: "/img/FlechaArr.png"
+            });
+            FlechaArrPeso.addEventListener("click", function() {
+                indice += 1;
+                productoPrecio = productosPrecioProducto[indice];
+                InputPeso.text = productoPrecio["sku_description"];
+                LabelPrecio.setText(productoPrecio["sku_price"]);
+            });
+            viewModalPeso.add(FlechaArrPeso);
+        } else {
+            var MargenPesoAux = Ti.UI.createView({
+                width: "9.4%",
+                height: "26.2%",
+                left: "71.6%"
+            });
+            viewModalPeso.add(MargenPesoAux);
+        }
         var ModalPeso = Ti.UI.createView({
             backgroundColor: "white",
             width: "100%",
@@ -420,31 +435,22 @@ function Controller() {
         ModalPeso.addEventListener("click", function() {
             winModalPeso.close();
         });
-        var FlechaAbaPeso = Ti.UI.createImageView({
-            width: "9.4%",
-            height: "26.2%",
-            left: "71.6%",
-            backgroundImage: "/img/FlechaAba.png"
-        });
-        FlechaArrPeso.addEventListener("click", function() {
-            if (productosPrecioProducto.length - 1 > indice) {
-                indice += 1;
-                productoPrecio = productosPrecioProducto[indice];
-                InputPeso.value = productoPrecio["sku_description"];
-                LabelPrecio.setText(productoPrecio["sku_price"]);
-            }
-        });
-        FlechaAbaPeso.addEventListener("click", function() {
-            if (indice > 0) {
+        viewModalPeso.add(ModalPeso);
+        if (indice > 0) {
+            var FlechaAbaPeso = Ti.UI.createImageView({
+                width: "9.4%",
+                height: "26.2%",
+                left: "71.6%",
+                backgroundImage: "/img/FlechaAba.png"
+            });
+            FlechaAbaPeso.addEventListener("click", function() {
                 indice -= 1;
                 productoPrecio = productosPrecioProducto[indice];
-                InputPeso.value = productoPrecio["sku_description"];
+                InputPeso.text = productoPrecio["sku_description"];
                 LabelPrecio.setText(productoPrecio["sku_price"]);
-            }
-        });
-        viewModalPeso.add(FlechaArrPeso);
-        viewModalPeso.add(ModalPeso);
-        viewModalPeso.add(FlechaAbaPeso);
+            });
+            viewModalPeso.add(FlechaAbaPeso);
+        }
         winModalPeso.add(viewModalPeso);
         winModalPeso.open();
     });
@@ -462,15 +468,14 @@ function Controller() {
         left: "65.6%",
         layout: "vertical"
     });
-    var InputCantidad = Ti.UI.createTextField({
+    var InputCantidad = Ti.UI.createLabel({
         width: "100%",
         height: "64%",
         top: "18%",
         backgroundColor: "#d8d8d8",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         color: "#888888",
-        value: 1,
-        editable: false
+        text: 1
     });
     Cantidad.addEventListener("click", function() {
         var winModalCantidad;
@@ -498,7 +503,7 @@ function Controller() {
             backgroundImage: "/img/FlechaArr.png"
         });
         FlechaArrCantidad.addEventListener("click", function() {
-            InputCantidad.value = parseInt(InputCantidad.value) + 1;
+            InputCantidad.text = parseInt(InputCantidad.text) + 1;
         });
         var ModalCantidad = Ti.UI.createView({
             backgroundColor: "white",
@@ -506,18 +511,20 @@ function Controller() {
             height: "47.6%",
             backgroundColor: "white"
         });
-        var FlechaAbaCantidad = Ti.UI.createImageView({
-            width: "9.4%",
-            height: "26.2%",
-            left: "71.6%",
-            backgroundImage: "/img/FlechaAba.png"
-        });
-        FlechaAbaCantidad.addEventListener("click", function() {
-            parseInt(InputCantidad.value) > 1 && (InputCantidad.value = parseInt(InputCantidad.value) - 1);
-        });
         viewModalCantidad.add(FlechaArrCantidad);
         viewModalCantidad.add(ModalCantidad);
-        viewModalCantidad.add(FlechaAbaCantidad);
+        if (parseInt(InputCantidad.text) > 1) {
+            var FlechaAbaCantidad = Ti.UI.createImageView({
+                width: "9.4%",
+                height: "26.2%",
+                left: "71.6%",
+                backgroundImage: "/img/FlechaAba.png"
+            });
+            FlechaAbaCantidad.addEventListener("click", function() {
+                InputCantidad.text = parseInt(InputCantidad.text) - 1;
+            });
+            viewModalCantidad.add(FlechaAbaCantidad);
+        }
         winModalCantidad.add(viewModalCantidad);
         winModalCantidad.open();
     });

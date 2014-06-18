@@ -275,15 +275,14 @@ var ViewPeso = Ti.UI.createView({
 	layout:"vertical",
 });
 
-var InputPeso = Ti.UI.createTextField({
+var InputPeso = Ti.UI.createLabel({
 	width:"100%",
 	height:"64%", 
 	top:"18%",
 	backgroundColor:"#d8d8d8",
 	textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
 	color:"#888888",
-	value:productoPrecio['sku_description'],
-	editable:false
+	text:productoPrecio['sku_description']
 });
 
 Peso.addEventListener("click",function(){
@@ -326,13 +325,32 @@ Peso.addEventListener("click",function(){
 		winModalPeso.close();
 	});
 	
- 	var FlechaArrPeso = Ti.UI.createImageView({
-		width:"9.4%",
-		height:"26.2%",
-		left:"71.6%",
-		backgroundImage:"/img/FlechaArr.png"
-	});
-	
+	if(indice < (productosPrecioProducto.length - 1)){
+	 	var FlechaArrPeso = Ti.UI.createImageView({
+			width:"9.4%",
+			height:"26.2%",
+			left:"71.6%",
+			backgroundImage:"/img/FlechaArr.png"
+		});
+		
+		FlechaArrPeso.addEventListener("click",function(){
+			indice = indice + 1;
+			productoPrecio = productosPrecioProducto[indice];
+			InputPeso.text = productoPrecio['sku_description'];
+			LabelPrecio.setText(productoPrecio['sku_price']);
+		});
+		
+		viewModalPeso.add(FlechaArrPeso);
+	}
+	else{
+		var MargenPesoAux = Ti.UI.createView({
+			width:"9.4%",
+			height:"26.2%",
+			left:"71.6%"
+		});
+		
+		viewModalPeso.add(MargenPesoAux);
+	}
     var ModalPeso= Ti.UI.createView({
         backgroundColor:"white",
         width : '100%',
@@ -344,34 +362,26 @@ Peso.addEventListener("click",function(){
 		winModalPeso.close();
 	});
     
-    var FlechaAbaPeso = Ti.UI.createImageView({
-		width:"9.4%",
-		height:"26.2%",
-		left:"71.6%",
-		backgroundImage:"/img/FlechaAba.png"
-	});
+    viewModalPeso.add(ModalPeso);
+    
+    if(indice > 0){
+	    var FlechaAbaPeso = Ti.UI.createImageView({
+			width:"9.4%",
+			height:"26.2%",
+			left:"71.6%",
+			backgroundImage:"/img/FlechaAba.png"
+		});
 	
-	FlechaArrPeso.addEventListener("click",function(){
-		if(indice < (productosPrecioProducto.length - 1)){
-			indice = indice + 1;
-			productoPrecio = productosPrecioProducto[indice];
-			InputPeso.value = productoPrecio['sku_description'];
-			LabelPrecio.setText(productoPrecio['sku_price']);
-		}
-	});
-	
-	FlechaAbaPeso.addEventListener("click",function(){
-		if(indice > 0){
+		FlechaAbaPeso.addEventListener("click",function(){
 			indice = indice - 1;
 			productoPrecio = productosPrecioProducto[indice];
-			InputPeso.value = productoPrecio['sku_description'];
-			LabelPrecio.setText(productoPrecio['sku_price']);
-		}
-	});
+			InputPeso.text = productoPrecio['sku_description'];
+			LabelPrecio.setText(productoPrecio['sku_price']);	
+		});
+		
+		viewModalPeso.add(FlechaAbaPeso);
+	}
     
-    viewModalPeso.add(FlechaArrPeso);
-    viewModalPeso.add(ModalPeso);
-    viewModalPeso.add(FlechaAbaPeso);
     winModalPeso.add(viewModalPeso);
     winModalPeso.open();
 });
@@ -393,15 +403,14 @@ var ViewCantidad = Ti.UI.createView({
 	layout:"vertical",
 });
 
-var InputCantidad = Ti.UI.createTextField({
+var InputCantidad = Ti.UI.createLabel({
 	width:"100%",
 	height:"64%", 
 	top:"18%",
 	backgroundColor:"#d8d8d8",
 	textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
 	color:"#888888",
-	value:1,
-	editable:false
+	text:1
 });
 
 Cantidad.addEventListener("click",function(){
@@ -451,7 +460,7 @@ Cantidad.addEventListener("click",function(){
 	});
 	
 	FlechaArrCantidad.addEventListener("click",function(){
-		InputCantidad.value = parseInt(InputCantidad.value) + 1;
+		InputCantidad.text = parseInt(InputCantidad.text) + 1;
 	});
 	
     var ModalCantidad= Ti.UI.createView({
@@ -465,22 +474,25 @@ Cantidad.addEventListener("click",function(){
 		winModalCantidad.close();
 	});
     */
-    var FlechaAbaCantidad = Ti.UI.createImageView({
-		width:"9.4%",
-		height:"26.2%",
-		left:"71.6%",
-		backgroundImage:"/img/FlechaAba.png"
-	});
-	
-	FlechaAbaCantidad.addEventListener("click",function(){
-		if(parseInt(InputCantidad.value) > 1){
-			InputCantidad.value = parseInt(InputCantidad.value) - 1;
-		}
-	});
+   
+   viewModalCantidad.add(FlechaArrCantidad);
+   viewModalCantidad.add(ModalCantidad);
     
-    viewModalCantidad.add(FlechaArrCantidad);
-    viewModalCantidad.add(ModalCantidad);
-    viewModalCantidad.add(FlechaAbaCantidad);
+   if(parseInt(InputCantidad.text) > 1){
+		var FlechaAbaCantidad = Ti.UI.createImageView({
+			width:"9.4%",
+			height:"26.2%",
+			left:"71.6%",
+			backgroundImage:"/img/FlechaAba.png"
+		});
+	
+		FlechaAbaCantidad.addEventListener("click",function(){
+			InputCantidad.text = parseInt(InputCantidad.text) - 1;
+		});
+		
+		viewModalCantidad.add(FlechaAbaCantidad);
+	}
+    
     winModalCantidad.add(viewModalCantidad);
     winModalCantidad.open();
 });
@@ -575,7 +587,7 @@ function productosNombre(nombre){
 function carroCompra(){
 	
 	if(usuario != null){
-		carro.push({'id' : productoPrecio['id'], 'qty' : InputCantidad.value});
+		carro.push({'id' : productoPrecio['id'], 'qty' : InputCantidad.text});
 		Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 	}
 	else{
@@ -585,7 +597,7 @@ function carroCompra(){
 				try{
 					var usuario = JSON.parse(this.responseText);
 			
-					carro.push({'id' : productoPrecio['id'], 'qty' : InputCantidad.value});
+					carro.push({'id' : productoPrecio['id'], 'qty' : InputCantidad.text});
 					var vista = Alloy.createController('carroCompra',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
 					vista.open();
 				}
