@@ -111,8 +111,9 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.gracias = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "gracias"
     });
     $.__views.gracias && $.addTopLevelView($.__views.gracias);

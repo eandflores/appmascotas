@@ -164,8 +164,9 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.direccion = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "direccion"
     });
     $.__views.direccion && $.addTopLevelView($.__views.direccion);

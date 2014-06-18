@@ -56,7 +56,7 @@ function Controller() {
         if (null == productos) {
             winCargando.open();
             var xhrProductos = Ti.Network.createHTTPClient({
-                onload: function(e) {
+                onload: function() {
                     try {
                         Alloy.createController("productos", {
                             token: token,
@@ -74,14 +74,14 @@ function Controller() {
                             pagina: 1
                         }).getView().open();
                     } catch (e) {
-                        alert(e);
+                        alert("Error de conexión con els ervidor.");
                         winCargando.close();
                         winCargando.close();
                         winCargando.close();
                     }
                 },
-                onerror: function(e) {
-                    alert(e);
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
                     winCargando.close();
                     winCargando.close();
                     winCargando.close();
@@ -120,11 +120,12 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.index = Ti.UI.createWindow({
-        navBarHidden: "true",
         exitOnClose: true,
+        navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "index"
     });
     $.__views.index && $.addTopLevelView($.__views.index);

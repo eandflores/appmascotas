@@ -114,8 +114,9 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.telefono = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "telefono"
     });
     $.__views.telefono && $.addTopLevelView($.__views.telefono);
@@ -181,6 +182,7 @@ function Controller() {
         backgroundImage: "/img/labelTelefono.jpg"
     });
     var inputTelefono = Ti.UI.createTextField({
+        minimumFontSize: 8,
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
         left: "30%",
         width: "70",
@@ -188,7 +190,9 @@ function Controller() {
         backgroundColor: "#f5f5f5",
         color: "#585858",
         font: {
-            fontSize: "12sp"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         }
     });
     viewTelefono.add(inputTelefono);

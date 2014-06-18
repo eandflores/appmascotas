@@ -144,8 +144,9 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.carroCompra = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "carroCompra"
     });
     $.__views.carroCompra && $.addTopLevelView($.__views.carroCompra);

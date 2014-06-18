@@ -133,6 +133,7 @@ function Controller() {
                 top: "0%"
             });
             var LabelNombre = Ti.UI.createLabel({
+                minimumFontSize: 8,
                 color: "#cc5122",
                 width: "100%",
                 height: "20%",
@@ -140,11 +141,13 @@ function Controller() {
                 left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    fontSize: 14
                 },
                 text: productos_act[i]["brand"]
             });
             var LabelDescripcion = Ti.UI.createLabel({
+                minimumFontSize: 8,
                 color: "gray",
                 width: "100%",
                 height: "20%",
@@ -152,11 +155,13 @@ function Controller() {
                 left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    fontSize: 14
                 },
                 text: productos_act[i]["prod_name"]
             });
             var LabelPrecio = Ti.UI.createLabel({
+                minimumFontSize: 8,
                 width: "100%",
                 height: "20%",
                 color: "#5c5c5b",
@@ -164,7 +169,8 @@ function Controller() {
                 left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    fontSize: 14
                 },
                 text: productos_act[i]["producto_precios"][0]["sku_description"] + " x $" + productos_act[i]["producto_precios"][0]["sku_price"]
             });
@@ -278,9 +284,6 @@ function Controller() {
         winCargando.open();
         mainScroll.removeAllChildren();
         paginasView.removeAllChildren();
-        winCargando.close();
-        winCargando.close();
-        winCargando.close();
         vista.open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -291,9 +294,10 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.productos = Ti.UI.createWindow({
-        navBarHidden: "true",
         exitOnClose: true,
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "productos"
     });
     $.__views.productos && $.addTopLevelView($.__views.productos);
@@ -326,6 +330,7 @@ function Controller() {
     iniciarComponentes();
     cargarLoading();
     iniciarMenu(productos);
+    winCargando.close();
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",
         width: "100%",

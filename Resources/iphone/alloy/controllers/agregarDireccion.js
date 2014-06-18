@@ -126,7 +126,6 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.agregarDireccion = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
         bottom: "0%",
         height: "96.5%",
@@ -214,6 +213,7 @@ function Controller() {
         text: "Calle"
     });
     var calle = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -221,7 +221,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8"
     });
@@ -242,6 +244,7 @@ function Controller() {
         text: "Nro."
     });
     var numero = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -249,7 +252,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
@@ -270,6 +275,7 @@ function Controller() {
         text: "Depto."
     });
     var departamento = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -277,7 +283,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
@@ -299,6 +307,7 @@ function Controller() {
         text: "Esquina"
     });
     var esquina = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -306,7 +315,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8"
     });
@@ -326,6 +337,7 @@ function Controller() {
         text: "Ciudad"
     });
     var ciudad = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -333,7 +345,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8"
     });
@@ -354,6 +368,7 @@ function Controller() {
         text: "Comuna"
     });
     var comuna = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -361,7 +376,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8"
     });
@@ -381,6 +398,7 @@ function Controller() {
         text: "Teléfono"
     });
     var telefono = Ti.UI.createTextField({
+        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
         top: "10%",
@@ -388,7 +406,9 @@ function Controller() {
         height: "80%",
         color: "#888888",
         font: {
-            fontWeight: "bold"
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD

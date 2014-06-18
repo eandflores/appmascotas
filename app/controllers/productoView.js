@@ -23,6 +23,11 @@ var direccion = args['direccion'];
 
 var cant_productos = 0;
 
+$.productoView.addEventListener('android:back',function(){
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	return false;
+});
+
 iniciarComponentes();
 iniciarMenu();
 

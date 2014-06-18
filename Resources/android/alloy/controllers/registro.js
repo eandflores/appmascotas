@@ -123,6 +123,7 @@ function Controller() {
         backgroundColor: "white",
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "registro"
     });
     $.__views.registro && $.addTopLevelView($.__views.registro);

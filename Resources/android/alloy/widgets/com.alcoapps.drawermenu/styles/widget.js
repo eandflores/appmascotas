@@ -5,22 +5,23 @@ function WPATH(s) {
 }
 
 module.exports = [ {
-    isApi: true,
-    priority: 1000.0001,
-    key: "Window",
-    style: {
-        navBarHidden: "true"
-    }
-}, {
     isClass: true,
-    priority: 10000.0002,
+    priority: 10000.0001,
     key: "container",
     style: {
         backgroundColor: "white"
     }
 }, {
+    isClass: true,
+    priority: 10101.0003,
+    key: "container",
+    style: {
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN
+    }
+}, {
     isId: true,
-    priority: 100000.0002,
+    priority: 100000.0005,
     key: "menuview",
     style: {
         backgroundColor: "#cacaca",
@@ -29,7 +30,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0003,
+    priority: 100000.0006,
     key: "mainview",
     style: {
         height: Ti.UI.FILL,
@@ -37,7 +38,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0004,
+    priority: 100000.0007,
     key: "mainviewheader",
     style: {
         top: "0",
@@ -47,7 +48,7 @@ module.exports = [ {
     }
 }, {
     isId: true,
-    priority: 100000.0005,
+    priority: 100000.0008,
     key: "menubutton",
     style: {
         left: "0",

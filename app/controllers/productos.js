@@ -31,6 +31,7 @@ var productosPaginacion = 20;
 iniciarComponentes();
 cargarLoading();
 iniciarMenu(productos);
+winCargando.close();
 
 var mainScroll = Ti.UI.createScrollView({
 	id:"mainScroll",
@@ -356,6 +357,7 @@ function ordenarProductos(){
 			});
 			
 			var LabelNombre = Ti.UI.createLabel({
+				minimumFontSize: 8,
 				color:"#cc5122",
 				width:"100%",
 				height:"20%",
@@ -363,12 +365,14 @@ function ordenarProductos(){
 				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
-					fontWeight:"bold"
+					fontWeight:"bold",
+					fontSize:14
 				},
 				text : productos_act[i]['brand']
 			});
 			
 			var LabelDescripcion = Ti.UI.createLabel({
+				minimumFontSize: 8,
 				color:"gray",
 				width:"100%",
 				height:"20%",
@@ -376,12 +380,14 @@ function ordenarProductos(){
 				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
-					fontWeight:"bold"
+					fontWeight:"bold",
+					fontSize:14
 				},
 				text : productos_act[i]['prod_name']
 			});
 			
 			var LabelPrecio = Ti.UI.createLabel({
+				minimumFontSize: 8,
 				width:"100%",
 				height:"20%",
 				color:"#5c5c5b",
@@ -389,7 +395,8 @@ function ordenarProductos(){
 				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
-					fontWeight:"bold"
+					fontWeight:"bold",
+					fontSize:14
 				},
 				text : productos_act[i]['producto_precios'][0]['sku_description']+
 					" x $"+productos_act[i]['producto_precios'][0]['sku_price']
@@ -532,8 +539,5 @@ function productosView(producto){
 	winCargando.open();
 	mainScroll.removeAllChildren();
 	paginasView.removeAllChildren();
-	winCargando.close();
-	winCargando.close();
-	winCargando.close();
 	vista.open();
 }

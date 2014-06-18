@@ -97,7 +97,6 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.fin = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
         bottom: "0%",
         height: "96.5%",

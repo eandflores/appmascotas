@@ -171,8 +171,9 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.realizarPedido = Ti.UI.createWindow({
-        navBarHidden: "true",
         backgroundColor: "white",
+        navBarHidden: "true",
+        windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN,
         id: "realizarPedido"
     });
     $.__views.realizarPedido && $.addTopLevelView($.__views.realizarPedido);

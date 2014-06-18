@@ -120,8 +120,8 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.index = Ti.UI.createWindow({
-        navBarHidden: "true",
         exitOnClose: true,
+        navBarHidden: "true",
         backgroundColor: "white",
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
