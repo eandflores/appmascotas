@@ -45,14 +45,16 @@ var mainScroll = Ti.UI.createScrollView({
 
 var paginasView = Ti.UI.createScrollView({
 	id:"paginasView",
-	width:"100%",
+	//width:"100%",
+	width: Ti.UI.FILL,
 	height:"6.5%",
-	layout:'horizontal',
+	//layout:'horizontal',
 	backgroundColor:"#cc5122",
 	contentWidth: Ti.UI.SIZE,
 	scrollType: 'horizontal',
 	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
 	showHorizontalScrollIndicator:"true",
+	
 });
 
 menuImg.addEventListener('click',function(e){
@@ -268,6 +270,10 @@ function ordenarProductos(){
 	else{
 		paginas = parseInt(productos_act.length/productosPaginacion);
 	}
+	var pagerContainer = Ti.UI.createView({
+		layout: 'horizontal',
+		width: Ti.UI.SIZE
+	});
 	
 	for(var i = 0; i < paginas; i++){
 		
@@ -276,8 +282,8 @@ function ordenarProductos(){
 				width:"55px",
 				height:"100%",
 				text: (i+1),
-				backgroundColor:"#e8e8e8",
-				color:"#cc5122",
+				//backgroundColor:"#e8e8e8",
+				color:"#620001",
 				textAlign: "center",	
 				font:{
 					fontFamily:"Noto Sans",
@@ -312,10 +318,20 @@ function ordenarProductos(){
 			bottom:"15%%",
 			backgroundColor:"#e67c53",
 		});
-			
-		paginasView.add(paginaLabel);
-		paginasView.add(margenPagina);
+		if(i==0) // Primera linea
+			pagerContainer.add(Ti.UI.createView({
+				width:"2px",
+				height:"70%",
+				top:"15%",
+				bottom:"15%%",
+				backgroundColor:"#e67c53",
+			}));	
+		pagerContainer.add(paginaLabel);
+		pagerContainer.add(margenPagina);
 	}
+	
+	
+	paginasView.add(pagerContainer);
 	
 	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion) && i < productos_act.length; i++){
 		

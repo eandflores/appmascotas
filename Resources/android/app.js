@@ -52,7 +52,9 @@ function iniciarComponentes() {
 function iniciarMenu(productos) {
     menu = Alloy.createController("menu").getView();
     menu.addEventListener("click", function(e) {
-        if (8 == e.rowData.rowId) {
+        Ti.API.info("CLICK: " + e.rowData.rowId);
+        switch (e.rowData.rowId) {
+          case 7:
             var vista = Alloy.createController("index", {
                 productos: productos
             }).getView();

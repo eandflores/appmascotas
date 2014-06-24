@@ -86,12 +86,30 @@ var menu = null;
 
 function iniciarMenu(productos){
 	menu = Alloy.createController('menu').getView();
-
+	
+	// 2 = Direcciones
+	// 7 = Mi perfil
 	menu.addEventListener('click',function(e){
-		if(e.rowData.rowId == 8){	
-			var vista = Alloy.createController('index',{productos: productos}).getView();
-			vista.open();
-		}		
+		Ti.API.info("CLICK: " + e.rowData.rowId);
+		switch(e.rowData.rowId)
+		{
+			/*case 2:
+				Alloy.createController('direccion',{
+					token: Alloy.Globals.token,
+					carro: Alloy.Globals.carro,
+					marcas: Alloy.Globals.marcas,
+					productos: Alloy.Globals.productos,
+					medios: Alloy.Globals.medios,
+					direcciones: Alloy.Globals.direcciones,
+					usuario: Alloy.Globals.usuario,
+					medio: Alloy.Globals.medio, 
+					direccion: Alloy.Globals.direccion}).getView().open();
+			break;*/
+			case 7:
+				var vista = Alloy.createController('index',{productos: productos}).getView();
+				vista.open();
+			break;
+		}
 	});
 }
 //=========End Menu=============
@@ -106,8 +124,8 @@ function cargarLoading(){
 		winCargando = Ti.UI.createWindow({
 	        backgroundImage : '/img/splash-tiendapet.jpg',
 	        width:'100%',
-	        top: "3.5%",
-	        height:'96.5%'
+	        //top: "3.5%",
+	        height:'100%'
 	        
 	    });
 	}

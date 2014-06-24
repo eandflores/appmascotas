@@ -25,54 +25,62 @@ function Controller() {
     _.extend($, $.__views);
     arguments[0] || {};
     var rows = [];
-    var row1 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 1,
-        backgroundImage: "/img/MisPedidos.jpg"
-    });
-    var row2 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 2,
-        backgroundImage: "/img/MisDirecciones.jpg"
-    });
-    var row3 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 3,
-        backgroundImage: "/img/MisNotificaciones.jpg"
-    });
-    var row4 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 4
-    });
-    var row5 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 5,
-        backgroundImage: "/img/CentroAyuda.jpg"
-    });
-    var row6 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 6,
-        backgroundImage: "/img/AyudaTelefonica.jpg"
-    });
-    var row7 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 7,
-        backgroundImage: "/img/MiPerfil.jpg"
-    });
-    var row8 = Ti.UI.createTableViewRow({
-        height: 65,
-        rowId: 8,
-        backgroundImage: "/img/CerrarSesion.jpg"
-    });
-    rows.push(row1);
-    rows.push(row2);
-    rows.push(row3);
-    rows.push(row4);
-    rows.push(row5);
-    rows.push(row6);
-    rows.push(row7);
-    rows.push(row8);
+    var data = [ {
+        img: "mis-pedidos",
+        text: "Mis Pedidos"
+    }, {
+        img: "mis-direcciones",
+        text: "Mis Direcciones"
+    }, {
+        img: "notificaciones",
+        text: "Notificaciones"
+    }, {
+        text: "spacer"
+    }, {
+        img: "centro-de-ayuda",
+        text: "Centro de ayuda"
+    }, {
+        img: "ayuda-telefonica",
+        text: "Ayuda telefónica"
+    }, {
+        img: "mi-perfil",
+        text: "Mi perfil"
+    } ];
+    var row_h = 40;
+    var row = null;
+    for (i in data) {
+        row = Ti.UI.createTableViewRow({
+            height: row_h,
+            layout: "horizontal",
+            rowId: parseInt(i) + 1
+        });
+        if ("spacer" != data[i].text) {
+            row.add(Ti.UI.createImageView({
+                image: "/img/menu/" + data[i].img + ".png",
+                height: row_h - 10,
+                left: 25,
+                top: 5
+            }));
+            row.add(Ti.UI.createLabel({
+                left: 10,
+                height: row_h,
+                text: data[i].text,
+                color: "#525252",
+                font: {
+                    fontFamily: "Noto Sans",
+                    fontWeight: "bold",
+                    fontSize: 15
+                }
+            }));
+        } else {
+            row.height = 220;
+            row.selectionStyle = "none";
+        }
+        rows.push(row);
+    }
+    $.menu.separatorColor = "#ccc";
     $.menu.data = rows;
+    $.menu.left = -15;
     _.extend($, exports);
 }
 
