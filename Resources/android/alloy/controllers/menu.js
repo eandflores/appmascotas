@@ -45,6 +45,9 @@ function Controller() {
     }, {
         img: "mi-perfil",
         text: "Mi perfil"
+    }, {
+        img: "cerrar-sesion",
+        text: "Cerrar sesión"
     } ];
     var row_h = 40;
     var row = null;

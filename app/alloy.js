@@ -105,7 +105,7 @@ function iniciarMenu(productos){
 					medio: Alloy.Globals.medio, 
 					direccion: Alloy.Globals.direccion}).getView().open();
 			break;*/
-			case 7:
+			case 8:
 				var vista = Alloy.createController('index',{productos: productos}).getView();
 				vista.open();
 			break;

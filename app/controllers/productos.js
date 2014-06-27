@@ -26,6 +26,7 @@ var marca = args['marca'];
 var nombre = args['nombre'];
 var pagina = args['pagina'];
 
+var paginas = 0; 
 var productosPaginacion = 20;
 
 iniciarComponentes();
@@ -43,19 +44,47 @@ var mainScroll = Ti.UI.createScrollView({
 	showVerticalScrollIndicator:"true",
 });
 
+var pagerContainer = Ti.UI.createView({
+	width:"100%",
+	height:"6.5%",
+	layout:'horizontal',
+	backgroundColor:"#e95017"
+});
+
+var pagerFlechaIzq = Ti.UI.createView({
+	width:"15%",
+	height:"100%",
+	backgroundImage:"/img/pagerIzq.jpg"
+});
+
+pagerFlechaIzq.addEventListener("click",function(){
+	productosPagina(pagina-1);
+});
+
+var pagerFlechaDer = Ti.UI.createView({
+	width:"15%",
+	height:"100%",
+	backgroundImage:"/img/pagerDer.jpg"
+});
+
+pagerFlechaDer.addEventListener("click",function(){
+	productosPagina(pagina+1);
+});
+
 var paginasView = Ti.UI.createScrollView({
 	id:"paginasView",
-	//width:"100%",
-	width: Ti.UI.FILL,
-	height:"6.5%",
-	//layout:'horizontal',
-	backgroundColor:"#cc5122",
+	width:"70%",
+	height:"100%",
+	layout:'horizontal',
 	contentWidth: Ti.UI.SIZE,
 	scrollType: 'horizontal',
 	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
-	showHorizontalScrollIndicator:"true",
-	
+	showHorizontalScrollIndicator:"true"
 });
+
+pagerContainer.add(pagerFlechaIzq);
+pagerContainer.add(paginasView);
+pagerContainer.add(pagerFlechaDer);
 
 menuImg.addEventListener('click',function(e){
 	$.drawermenu.showhidemenu();
@@ -112,7 +141,6 @@ var marcasScroll = Ti.UI.createScrollView({
 	layout: 'horizontal',
 	height:"85%",
 	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
-	showHorizontalScrollIndicator:"true",
 });
 
 var posX = 0;
@@ -141,7 +169,7 @@ marcasView.add(flechaDer);
 main.add(wrapper);
 main.add(marcasView);
 main.add(mainScroll);
-main.add(paginasView);
+main.add(pagerContainer);
 
 $.drawermenu.init({
     menuview:menu,
@@ -262,7 +290,7 @@ function ordenarProductos(){
 		}
 	}
 	
-	var paginas = 0; 
+	paginas = 0; 
 	
 	if((productos_act.length % productosPaginacion) != 0){
 		paginas = parseInt(productos_act.length/productosPaginacion) + 1;
@@ -270,10 +298,6 @@ function ordenarProductos(){
 	else{
 		paginas = parseInt(productos_act.length/productosPaginacion);
 	}
-	var pagerContainer = Ti.UI.createView({
-		layout: 'horizontal',
-		width: Ti.UI.SIZE
-	});
 	
 	for(var i = 0; i < paginas; i++){
 		
@@ -318,20 +342,19 @@ function ordenarProductos(){
 			bottom:"15%%",
 			backgroundColor:"#e67c53",
 		});
+		
 		if(i==0) // Primera linea
-			pagerContainer.add(Ti.UI.createView({
+			paginasView.add(Ti.UI.createView({
 				width:"2px",
 				height:"70%",
 				top:"15%",
 				bottom:"15%%",
 				backgroundColor:"#e67c53",
-			}));	
-		pagerContainer.add(paginaLabel);
-		pagerContainer.add(margenPagina);
+			}));
+				
+		paginasView.add(paginaLabel);
+		paginasView.add(margenPagina);
 	}
-	
-	
-	paginasView.add(pagerContainer);
 	
 	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion) && i < productos_act.length; i++){
 		
@@ -536,17 +559,19 @@ function productosNombre(nombreParam){
 
 function productosPagina(paginaParam){
 	
-	winCargando.open();
-	mainScroll.removeAllChildren();
-	marcasScroll.removeAllChildren();
-	paginasView.removeAllChildren();
-	
-	categoria = categoria;
-	marca = marca;
-	nombre = nombre;
-	pagina = paginaParam;
-	
-	ordenarProductos();
+	if((paginaParam > 0) && (paginaParam <= paginas)){
+		winCargando.open();
+		mainScroll.removeAllChildren();
+		marcasScroll.removeAllChildren();
+		paginasView.removeAllChildren();
+		
+		categoria = categoria;
+		marca = marca;
+		nombre = nombre;
+		pagina = paginaParam;
+		
+		ordenarProductos();
+	}
 }
 
 function productosView(producto){

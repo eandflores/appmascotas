@@ -54,7 +54,7 @@ function iniciarMenu(productos) {
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
         switch (e.rowData.rowId) {
-          case 7:
+          case 8:
             var vista = Alloy.createController("index", {
                 productos: productos
             }).getView();

@@ -62,12 +62,8 @@ function Controller() {
             cant_productos += 1;
             productos_act.push(productos[i]);
         }
-        var paginas = 0;
+        paginas = 0;
         paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
-        var pagerContainer = Ti.UI.createView({
-            layout: "horizontal",
-            width: Ti.UI.SIZE
-        });
         for (var i = 0; paginas > i; i++) {
             if (i == pagina - 1) var paginaLabel = Ti.UI.createLabel({
                 width: "55px",
@@ -102,17 +98,16 @@ function Controller() {
                 bottom: "15%%",
                 backgroundColor: "#e67c53"
             });
-            0 == i && pagerContainer.add(Ti.UI.createView({
+            0 == i && paginasView.add(Ti.UI.createView({
                 width: "2px",
                 height: "70%",
                 top: "15%",
                 bottom: "15%%",
                 backgroundColor: "#e67c53"
             }));
-            pagerContainer.add(paginaLabel);
-            pagerContainer.add(margenPagina);
+            paginasView.add(paginaLabel);
+            paginasView.add(margenPagina);
         }
-        paginasView.add(pagerContainer);
         for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i && productos_act.length > i; i++) if (productos_act[i]["producto_precios"].length > 0) {
             var Main = Ti.UI.createView({
                 width: "100%",
@@ -269,15 +264,17 @@ function Controller() {
         ordenarProductos();
     }
     function productosPagina(paginaParam) {
-        winCargando.open();
-        mainScroll.removeAllChildren();
-        marcasScroll.removeAllChildren();
-        paginasView.removeAllChildren();
-        categoria = categoria;
-        marca = marca;
-        nombre = nombre;
-        pagina = paginaParam;
-        ordenarProductos();
+        if (paginaParam > 0 && paginas >= paginaParam) {
+            winCargando.open();
+            mainScroll.removeAllChildren();
+            marcasScroll.removeAllChildren();
+            paginasView.removeAllChildren();
+            categoria = categoria;
+            marca = marca;
+            nombre = nombre;
+            pagina = paginaParam;
+            ordenarProductos();
+        }
     }
     function productosView(producto) {
         var vista = Alloy.createController("productoView", {
@@ -337,6 +334,7 @@ function Controller() {
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
+    var paginas = 0;
     var productosPaginacion = 20;
     iniciarComponentes();
     cargarLoading();
@@ -351,16 +349,41 @@ function Controller() {
         scrollType: "vertical",
         showVerticalScrollIndicator: "true"
     });
+    var pagerContainer = Ti.UI.createView({
+        width: "100%",
+        height: "6.5%",
+        layout: "horizontal",
+        backgroundColor: "#e95017"
+    });
+    var pagerFlechaIzq = Ti.UI.createView({
+        width: "15%",
+        height: "100%",
+        backgroundImage: "/img/pagerIzq.jpg"
+    });
+    pagerFlechaIzq.addEventListener("click", function() {
+        productosPagina(pagina - 1);
+    });
+    var pagerFlechaDer = Ti.UI.createView({
+        width: "15%",
+        height: "100%",
+        backgroundImage: "/img/pagerDer.jpg"
+    });
+    pagerFlechaDer.addEventListener("click", function() {
+        productosPagina(pagina + 1);
+    });
     var paginasView = Ti.UI.createScrollView({
         id: "paginasView",
-        width: Ti.UI.FILL,
-        height: "6.5%",
-        backgroundColor: "#cc5122",
+        width: "70%",
+        height: "100%",
+        layout: "horizontal",
         contentWidth: Ti.UI.SIZE,
         scrollType: "horizontal",
         horizontalWrap: "false",
         showHorizontalScrollIndicator: "true"
     });
+    pagerContainer.add(pagerFlechaIzq);
+    pagerContainer.add(paginasView);
+    pagerContainer.add(pagerFlechaDer);
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
     });
@@ -400,8 +423,7 @@ function Controller() {
         scrollType: "horizontal",
         layout: "horizontal",
         height: "85%",
-        horizontalWrap: "false",
-        showHorizontalScrollIndicator: "true"
+        horizontalWrap: "false"
     });
     var posX = 0;
     marcasScroll.addEventListener("scroll", function(e) {
@@ -419,7 +441,7 @@ function Controller() {
     main.add(wrapper);
     main.add(marcasView);
     main.add(mainScroll);
-    main.add(paginasView);
+    main.add(pagerContainer);
     $.drawermenu.init({
         menuview: menu,
         mainview: main,
