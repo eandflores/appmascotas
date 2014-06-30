@@ -54,6 +54,9 @@ function iniciarMenu(productos) {
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
         switch (e.rowData.rowId) {
+          case 6:
+            Ti.Platform.openURL("tel:0222021974");
+
           case 8:
             var vista = Alloy.createController("index", {
                 productos: productos

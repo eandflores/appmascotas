@@ -423,8 +423,7 @@ function Controller() {
         scrollType: "horizontal",
         layout: "horizontal",
         height: "85%",
-        horizontalWrap: "false",
-        showHorizontalScrollIndicator: "true"
+        horizontalWrap: "false"
     });
     var posX = 0;
     marcasScroll.addEventListener("scroll", function(e) {
