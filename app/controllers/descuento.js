@@ -1,5 +1,7 @@
 var args = arguments[0] || {};
 
+var args = arguments[0] || {};
+
 var categorias = [];
 
 // Los productos deben estar encasillados entre una de estas 2 categorias
@@ -8,8 +10,6 @@ categorias[2] = "Gato";
 
 //Categoria usada cuando se desea buscar productos de todas las categorias
 categorias[3] = "TODAS";
-
-var args = arguments[0] || {};
 	
 var carro = args['carro'];
 var token = args['token'];
@@ -44,14 +44,14 @@ flecha.addEventListener('click',function(e){
 	atras();
 });
 
-var telefonoTitulo = Ti.UI.createImageView({
+var descuentoTitulo = Ti.UI.createImageView({
 	width: "72%",
 	height:"85%",
-	backgroundImage:"/img/telefono.jpg"
+	backgroundImage:"/img/cuponDescuento.jpg"
 });
 
 marcasView.add(flecha);
-marcasView.add(telefonoTitulo);
+marcasView.add(descuentoTitulo);
 
 var margen = Ti.UI.createView({
 	width:"100%",
@@ -65,15 +65,14 @@ var mainView = Ti.UI.createView({
 	layout:'vertical'
 });
 
-var viewTelefono = Ti.UI.createView({
+var viewDescuento = Ti.UI.createView({
 	width:"100%",
 	height:"7%",
-	backgroundImage:"/img/labelTelefono.jpg"
+	backgroundImage:"/img/labelDescuento.jpg"
 });
 
-var inputTelefono = Ti.UI.createTextField({
+var inputDescuento = Ti.UI.createTextField({
 	minimumFontSize: 8,
-	keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
 	left:"30%",
 	width:"60%",
 	height:"80%",
@@ -86,8 +85,8 @@ var inputTelefono = Ti.UI.createTextField({
 	backgroundColor:"#d8d8d8"
 });
 
-viewTelefono.add(inputTelefono);
-mainView.add(viewTelefono);
+viewDescuento.add(inputDescuento);
+mainView.add(viewDescuento);
 
 var footer = Ti.UI.createButton({
 	backgroundColor:"#cc5122",
@@ -141,36 +140,41 @@ $.drawermenu.init({
     menuview:menu,
     mainview:main,
     duration:200,
-    parent: $.telefono
+    parent: $.descuento
 });
 
-inputTelefono.value = usuario['cust_phone'];
+//inputDescuento.value = usuario['cust_email'];
+inputDescuento.value = 'b8c7tetxs';
 
 function productosNombre(nombre){
+	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
-function productosPerroGato(){	
+function productosPerroGato(){
+	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
-function productosPerro(){	
+function productosPerro(){
+	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
-function productosGato(){	
+function productosGato(){
+	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function guardar(){
-	
+	/*
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
 			try{
 				var response = JSON.parse(this.responseText);
 			
-				usuario['cust_phone'] = inputTelefono.value;
-				Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+				usuario['cust_email'] = inputEmail.value;
+				Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();	
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");
@@ -182,10 +186,10 @@ function guardar(){
 	});
 	
 	xhr.open('POST','http://tiendapet.cl/api/usuario/?user_token='+token);
-	xhr.send({'telefono' : inputTelefono.value}); 
-	
+	xhr.send({'email' : inputEmail.value}); 
+	*/
 }
 
 function atras(){
-	$.telefono.close();
+	$.descuento.close();
 }

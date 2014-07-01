@@ -5,6 +5,23 @@ function Controller() {
             productosNombre(buscar.value);
         });
     }
+    function productosNombre(nombre) {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: nombre,
+            pagina: 1
+        }).getView().open();
+    }
     function productosPerroGato() {
         Alloy.createController("productos", {
             token: token,
@@ -56,68 +73,38 @@ function Controller() {
             pagina: 1
         }).getView().open();
     }
-    function productosNombre(nombre) {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion,
-            categoria: "TODAS",
-            marca: "TODAS",
-            nombre: nombre,
-            pagina: 1
-        }).getView().open();
-    }
-    function selectMedio(medio_selected) {
-        Alloy.createController("realizarPedido", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio_selected,
-            direccion: direccion
-        }).getView().open();
-    }
+    function guardar() {}
     function atras() {
-        $.medioPago.close();
+        $.descuento.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    this.__controllerPath = "medioPago";
+    this.__controllerPath = "descuento";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
     arguments[0] ? arguments[0]["$model"] : null;
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.medioPago = Ti.UI.createWindow({
+    $.__views.descuento = Ti.UI.createWindow({
         backgroundColor: "white",
         bottom: "0%",
         statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
-        id: "medioPago"
+        id: "descuento"
     });
-    $.__views.medioPago && $.addTopLevelView($.__views.medioPago);
+    $.__views.descuento && $.addTopLevelView($.__views.descuento);
     $.__views.drawermenu = Alloy.createWidget("com.alcoapps.drawermenu", "widget", {
         id: "drawermenu",
-        __parentSymbol: $.__views.medioPago
+        __parentSymbol: $.__views.descuento
     });
-    $.__views.drawermenu.setParent($.__views.medioPago);
+    $.__views.drawermenu.setParent($.__views.descuento);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    $.medioPago;
+    var args = arguments[0] || {};
     var args = arguments[0] || {};
     var categorias = [];
     categorias[1] = "Perro";
     categorias[2] = "Gato";
     categorias[3] = "TODAS";
-    var args = arguments[0] || {};
     var carro = args["carro"];
     var token = args["token"];
     var marcas = args["marcas"];
@@ -144,25 +131,52 @@ function Controller() {
     flecha.addEventListener("click", function() {
         atras();
     });
-    var mediosView = Ti.UI.createImageView({
+    var descuentoTitulo = Ti.UI.createImageView({
         width: "72%",
         height: "85%",
-        backgroundImage: "/img/medioPago.jpg"
+        backgroundImage: "/img/cuponDescuento.jpg"
     });
     marcasView.add(flecha);
-    marcasView.add(mediosView);
+    marcasView.add(descuentoTitulo);
     var margen = Ti.UI.createView({
         width: "100%",
         height: "3.1%",
         backgroundImage: "/img/Margen.jpg"
     });
-    var mainScroll = Ti.UI.createView({
+    var mainView = Ti.UI.createView({
         width: "100%",
-        height: "77.4%",
-        contentHeight: Ti.UI.SIZE,
-        layout: "vertical",
-        scrollType: "vertical",
-        showVerticalScrollIndicator: "true"
+        height: "69.8%",
+        layout: "vertical"
+    });
+    var viewDescuento = Ti.UI.createView({
+        width: "100%",
+        height: "7%",
+        backgroundImage: "/img/labelDescuento.jpg"
+    });
+    var inputDescuento = Ti.UI.createTextField({
+        minimumFontSize: 8,
+        left: "30%",
+        width: "60%",
+        height: "80%",
+        color: "#888888",
+        font: {
+            fontFamily: "Noto Sans",
+            fontWeight: "bold",
+            fontSize: 12
+        },
+        backgroundColor: "#d8d8d8"
+    });
+    viewDescuento.add(inputDescuento);
+    mainView.add(viewDescuento);
+    var footer = Ti.UI.createButton({
+        backgroundColor: "#cc5122",
+        color: "white",
+        width: "100%",
+        height: "7.6%",
+        font: {
+            fontWeight: "bold"
+        },
+        title: "GUARDAR"
     });
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
@@ -179,46 +193,21 @@ function Controller() {
     lupaImg.addEventListener("click", function() {
         busquedaProducto();
     });
+    footer.addEventListener("click", function() {
+        guardar();
+    });
     main.add(wrapper);
     main.add(marcasView);
     main.add(margen);
-    main.add(mainScroll);
+    main.add(mainView);
+    main.add(footer);
     $.drawermenu.init({
         menuview: menu,
         mainview: main,
         duration: 200,
-        parent: $.medioPago
+        parent: $.descuento
     });
-    for (i = 0; medios.length > i; i++) {
-        var MedioPago = Ti.UI.createView({
-            backgroundImage: "/img/flechaPagos.jpg",
-            width: "100%",
-            id: medios[i],
-            height: "98px"
-        });
-        MedioPago.addEventListener("click", function() {
-            selectMedio(this["id"]);
-        });
-        var Margen = Ti.UI.createView({
-            width: "100%",
-            height: "2px",
-            backgroundColor: "#e8e8e8"
-        });
-        var Label = Ti.UI.createLabel({
-            left: "7%",
-            width: "86%",
-            height: "100%",
-            color: "#5c5c5b",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            },
-            text: medios[i]["paym_name"]
-        });
-        MedioPago.add(Label);
-        mainScroll.add(MedioPago);
-        mainScroll.add(Margen);
-    }
+    inputDescuento.value = "b8c7tetxs";
     _.extend($, exports);
 }
 

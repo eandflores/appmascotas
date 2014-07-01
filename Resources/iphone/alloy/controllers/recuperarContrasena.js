@@ -16,6 +16,7 @@ function Controller() {
         layout: "vertical",
         backgroundImage: "/img/Fondo.jpg",
         bottom: "0%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
         id: "recuperarContrasena"
     });

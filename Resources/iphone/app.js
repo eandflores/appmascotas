@@ -55,7 +55,7 @@ function iniciarMenu(productos) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
         switch (e.rowData.rowId) {
           case 6:
-            Ti.Platform.openURL("tel:0222021974");
+            Ti.Platform.openURL("tel://01156412422518");
 
           case 8:
             var vista = Alloy.createController("index", {
@@ -69,8 +69,10 @@ function iniciarMenu(productos) {
 function cargarLoading() {
     winCargando = Ti.UI.createWindow({
         backgroundImage: "/img/splash-tiendapet.jpg",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         width: "100%",
-        height: "100%"
+        bottom: "0%",
+        height: "96.5%"
     });
 }
 
@@ -79,7 +81,8 @@ function buscarProducto() {
         backgroundColor: "#000",
         width: "100%",
         top: "3.5%",
-        height: "9.1%"
+        height: "9.1%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
     });
     viewModal = Ti.UI.createView({
         width: "100%",

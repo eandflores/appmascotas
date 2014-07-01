@@ -125,7 +125,19 @@ function Controller() {
             direccion: direccion
         }).getView().open();
     }
-    function setCupon() {}
+    function setCupon() {
+        Alloy.createController("descuento", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
+    }
     function gracias() {
         if (null != medio && null != direccion) {
             var xhr = Ti.Network.createHTTPClient({

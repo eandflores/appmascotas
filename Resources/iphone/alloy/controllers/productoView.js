@@ -55,23 +55,6 @@ function Controller() {
             pagina: 1
         }).getView().open();
     }
-    function productosMarca(marca) {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion,
-            categoria: categorias[3],
-            marca: marca,
-            nombre: "TODOS",
-            pagina: 1
-        }).getView().open();
-    }
     function productosNombre(nombre) {
         Alloy.createController("productos", {
             token: token,
@@ -140,6 +123,22 @@ function Controller() {
             xhrProductos.send();
         }
     }
+    function atras() {
+        Alloy.createController("productos", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            medio: medio,
+            direccion: direccion,
+            categoria: categorias[3],
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open();
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productoView";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -150,6 +149,7 @@ function Controller() {
     $.__views.productoView = Ti.UI.createWindow({
         backgroundColor: "white",
         bottom: "0%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
         id: "productoView"
     });
@@ -228,58 +228,26 @@ function Controller() {
         carroCompra();
     });
     var marcasView = Ti.UI.createView({
-        id: "marcas",
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
         height: "10%",
         layout: "horizontal"
     });
-    var flechaIzq = Ti.UI.createImageView({
+    var flecha = Ti.UI.createImageView({
         width: "14%",
-        height: "80%",
+        height: "85%",
         backgroundImage: "/img/FlechaIzq.jpg"
     });
-    var flechaDer = Ti.UI.createImageView({
-        width: "14%",
-        height: "80%",
-        backgroundImage: "/img/FlechaDer.jpg"
+    flecha.addEventListener("click", function() {
+        atras();
     });
-    var marcasScroll = Ti.UI.createScrollView({
-        id: "marcasScroll",
+    var pedidoTitulo = Ti.UI.createImageView({
         width: "72%",
-        contentWidth: Ti.UI.SIZE,
-        scrollType: "horizontal",
-        layout: "horizontal",
         height: "85%",
-        horizontalWrap: "false",
-        showHorizontalScrollIndicator: "true"
+        backgroundImage: "/img/detalleProducto.jpg"
     });
-    var posX = 0;
-    marcasScroll.addEventListener("scroll", function(e) {
-        posX = Math.round(e.x);
-    });
-    flechaIzq.addEventListener("click", function() {
-        250 > posX ? marcasScroll.scrollTo(0, 0) : marcasScroll.scrollTo(posX - 250, 0);
-    });
-    flechaDer.addEventListener("click", function() {
-        marcasScroll.scrollTo(posX + 250, 0);
-    });
-    marcasView.add(flechaIzq);
-    marcasView.add(marcasScroll);
-    marcasView.add(flechaDer);
-    for (var i = 0; marcas.length > i; i++) {
-        var ImageViewMarca = Ti.UI.createImageView({
-            image: marcas[i]["brand_logo"],
-            defaultImage: "/img/Doguitos.jpg",
-            width: "250px",
-            id: marcas[i]["id"],
-            height: "100%"
-        });
-        ImageViewMarca.addEventListener("click", function() {
-            productosMarca(this["id"]);
-        });
-        marcasScroll.add(ImageViewMarca);
-    }
+    marcasView.add(flecha);
+    marcasView.add(pedidoTitulo);
     main.add(wrapper);
     main.add(marcasView);
     main.add(Main);

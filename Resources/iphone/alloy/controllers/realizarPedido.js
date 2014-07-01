@@ -125,7 +125,19 @@ function Controller() {
             direccion: direccion
         }).getView().open();
     }
-    function setCupon() {}
+    function setCupon() {
+        Alloy.createController("descuento", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
+    }
     function gracias() {
         if (null != medio && null != direccion) {
             var xhr = Ti.Network.createHTTPClient({
@@ -173,6 +185,7 @@ function Controller() {
     $.__views.realizarPedido = Ti.UI.createWindow({
         backgroundColor: "white",
         bottom: "0%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
         id: "realizarPedido"
     });

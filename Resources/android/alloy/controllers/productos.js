@@ -64,6 +64,15 @@ function Controller() {
         }
         paginas = 0;
         paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
+        var pagerFlechaIzq = Ti.UI.createView({
+            width: "100px",
+            height: "100%",
+            backgroundImage: "/img/pagerIzq.jpg"
+        });
+        pagerFlechaIzq.addEventListener("click", function() {
+            productosPagina(pagina - 1);
+        });
+        paginasView.add(pagerFlechaIzq);
         for (var i = 0; paginas > i; i++) {
             if (i == pagina - 1) var paginaLabel = Ti.UI.createLabel({
                 width: "55px",
@@ -108,12 +117,21 @@ function Controller() {
             paginasView.add(paginaLabel);
             paginasView.add(margenPagina);
         }
+        var pagerFlechaDer = Ti.UI.createView({
+            width: "100px",
+            height: "100%",
+            backgroundImage: "/img/pagerDer.jpg"
+        });
+        pagerFlechaDer.addEventListener("click", function() {
+            productosPagina(pagina + 1);
+        });
+        paginasView.add(pagerFlechaDer);
         for (var i = productosPaginacion * (pagina - 1); pagina * productosPaginacion > i && productos_act.length > i; i++) if (productos_act[i]["producto_precios"].length > 0) {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
                 height: "232px",
-                id: productos_act[i]["producto_precios"][0]["id"]
+                id: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["id"]
             });
             var Margen = Ti.UI.createView({
                 width: "100%",
@@ -350,30 +368,13 @@ function Controller() {
         showVerticalScrollIndicator: "true"
     });
     var pagerContainer = Ti.UI.createView({
-        width: "100%",
+        width: Ti.UI.FILL,
         height: "6.5%",
-        layout: "horizontal",
         backgroundColor: "#e95017"
-    });
-    var pagerFlechaIzq = Ti.UI.createView({
-        width: "15%",
-        height: "100%",
-        backgroundImage: "/img/pagerIzq.jpg"
-    });
-    pagerFlechaIzq.addEventListener("click", function() {
-        productosPagina(pagina - 1);
-    });
-    var pagerFlechaDer = Ti.UI.createView({
-        width: "15%",
-        height: "100%",
-        backgroundImage: "/img/pagerDer.jpg"
-    });
-    pagerFlechaDer.addEventListener("click", function() {
-        productosPagina(pagina + 1);
     });
     var paginasView = Ti.UI.createScrollView({
         id: "paginasView",
-        width: "70%",
+        width: Ti.UI.SIZE,
         height: "100%",
         layout: "horizontal",
         contentWidth: Ti.UI.SIZE,
@@ -381,9 +382,7 @@ function Controller() {
         horizontalWrap: "false",
         showHorizontalScrollIndicator: "true"
     });
-    pagerContainer.add(pagerFlechaIzq);
     pagerContainer.add(paginasView);
-    pagerContainer.add(pagerFlechaDer);
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
     });

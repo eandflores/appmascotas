@@ -116,6 +116,7 @@ function Controller() {
     $.__views.email = Ti.UI.createWindow({
         backgroundColor: "white",
         bottom: "0%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
         id: "email"
     });
@@ -183,17 +184,16 @@ function Controller() {
     });
     var inputEmail = Ti.UI.createTextField({
         minimumFontSize: 8,
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
         left: "30%",
-        width: "70",
-        height: "100%",
-        backgroundColor: "#f5f5f5",
-        color: "#585858",
+        width: "60%",
+        height: "80%",
+        color: "#888888",
         font: {
             fontFamily: "Noto Sans",
             fontWeight: "bold",
             fontSize: 12
-        }
+        },
+        backgroundColor: "#d8d8d8"
     });
     viewEmail.add(inputEmail);
     mainView.add(viewEmail);

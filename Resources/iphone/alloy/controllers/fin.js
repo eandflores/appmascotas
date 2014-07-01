@@ -99,6 +99,7 @@ function Controller() {
     $.__views.fin = Ti.UI.createWindow({
         backgroundColor: "white",
         bottom: "0%",
+        statusBarStyle: Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
         height: "96.5%",
         id: "fin"
     });

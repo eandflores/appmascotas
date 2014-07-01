@@ -80,74 +80,30 @@ function busquedaProducto(){
 }
 
 var marcasView = Ti.UI.createView({
-	id:"marcas",
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
 	height:"10%",
 	layout:"horizontal"
 });
 
-var flechaIzq = Ti.UI.createImageView({
+var flecha = Ti.UI.createImageView({
 	width:"14%",
-	height:"80%",
+	height:"85%",
 	backgroundImage:"/img/FlechaIzq.jpg"
 });
 
-var flechaDer = Ti.UI.createImageView({
-	width:"14%",
-	height:"80%",
-	backgroundImage:"/img/FlechaDer.jpg"
+flecha.addEventListener('click',function(e){
+	atras();
 });
 
-var marcasScroll = Ti.UI.createScrollView({
-	id:"marcasScroll",
+var pedidoTitulo = Ti.UI.createImageView({
 	width: "72%",
-	contentWidth: Ti.UI.SIZE,
-	scrollType: 'horizontal',
-	layout: 'horizontal',
 	height:"85%",
-	horizontalWrap: "false", //Propiedad se de debe sacar para que funcione scroll vertical
-	showHorizontalScrollIndicator:"true",
+	backgroundImage:"/img/detalleProducto.jpg"
 });
 
-var posX = 0;
- 
-marcasScroll.addEventListener('scroll',function(e){
-    posX = Math.round(e.x);
-});
-
-flechaIzq.addEventListener("click",function(){
-	if(posX < 250){
-		marcasScroll.scrollTo(0,0);
-	}
-	else{
-		marcasScroll.scrollTo(posX-250,0);
-	}
-});
-
-flechaDer.addEventListener("click",function(){
-	marcasScroll.scrollTo(posX+250,0);
-});
-
-marcasView.add(flechaIzq);
-marcasView.add(marcasScroll);
-marcasView.add(flechaDer);
-	
-for(var i = 0; i < marcas.length; i++){
-	var ImageViewMarca = Ti.UI.createImageView({
-		image : marcas[i]['brand_logo'],
-		defaultImage: "/img/Doguitos.jpg",
-		width:"250px",
-		id: marcas[i]['id'],
-		height:"100%"
-	});
-	
-	ImageViewMarca.addEventListener("click",function(){
-		productosMarca(this['id']);
-	});
-	
-	marcasScroll.add(ImageViewMarca);
-}
+marcasView.add(flecha);
+marcasView.add(pedidoTitulo);
 
 main.add(wrapper);
 main.add(marcasView);
@@ -613,4 +569,8 @@ function carroCompra(){
 		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
 		xhrProductos.send();
 	}	
+}
+
+function atras(){
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }

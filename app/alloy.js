@@ -125,9 +125,10 @@ function cargarLoading(){
 	if(Titanium.Platform.name == "iPhone OS"){
 		winCargando = Ti.UI.createWindow({
 	        backgroundImage : '/img/splash-tiendapet.jpg',
+	        statusBarStyle:Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT,
 	        width:'100%',
-	        //top: "3.5%",
-	        height:'100%'
+	        bottom: "0%",
+	        height:'96.5%'
 	        
 	    });
 	}
@@ -158,6 +159,7 @@ function buscarProducto(){
 	        width:'100%',
 	        top: "3.5%",
 	        height:'9.1%',
+	        statusBarStyle:Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 	    });
 	    
 	    viewModal = Ti.UI.createView({

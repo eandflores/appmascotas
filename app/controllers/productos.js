@@ -45,35 +45,14 @@ var mainScroll = Ti.UI.createScrollView({
 });
 
 var pagerContainer = Ti.UI.createView({
-	width:"100%",
+	width:Ti.UI.FILL,
 	height:"6.5%",
-	layout:'horizontal',
 	backgroundColor:"#e95017"
-});
-
-var pagerFlechaIzq = Ti.UI.createView({
-	width:"15%",
-	height:"100%",
-	backgroundImage:"/img/pagerIzq.jpg"
-});
-
-pagerFlechaIzq.addEventListener("click",function(){
-	productosPagina(pagina-1);
-});
-
-var pagerFlechaDer = Ti.UI.createView({
-	width:"15%",
-	height:"100%",
-	backgroundImage:"/img/pagerDer.jpg"
-});
-
-pagerFlechaDer.addEventListener("click",function(){
-	productosPagina(pagina+1);
 });
 
 var paginasView = Ti.UI.createScrollView({
 	id:"paginasView",
-	width:"70%",
+	width:Ti.UI.SIZE,
 	height:"100%",
 	layout:'horizontal',
 	contentWidth: Ti.UI.SIZE,
@@ -82,9 +61,7 @@ var paginasView = Ti.UI.createScrollView({
 	showHorizontalScrollIndicator:"true"
 });
 
-pagerContainer.add(pagerFlechaIzq);
 pagerContainer.add(paginasView);
-pagerContainer.add(pagerFlechaDer);
 
 menuImg.addEventListener('click',function(e){
 	$.drawermenu.showhidemenu();
@@ -299,6 +276,18 @@ function ordenarProductos(){
 		paginas = parseInt(productos_act.length/productosPaginacion);
 	}
 	
+	var pagerFlechaIzq = Ti.UI.createView({
+		width:"100px",
+		height:"100%",
+		backgroundImage:"/img/pagerIzq.jpg"
+	});
+	
+	pagerFlechaIzq.addEventListener("click",function(){
+		productosPagina(pagina-1);
+	});
+	
+	paginasView.add(pagerFlechaIzq);
+	
 	for(var i = 0; i < paginas; i++){
 		
 		if(i == (pagina-1)){
@@ -356,15 +345,27 @@ function ordenarProductos(){
 		paginasView.add(margenPagina);
 	}
 	
+	var pagerFlechaDer = Ti.UI.createView({
+		width:"100px",
+		height:"100%",
+		backgroundImage:"/img/pagerDer.jpg"
+	});
+	
+	pagerFlechaDer.addEventListener("click",function(){
+		productosPagina(pagina+1);
+	});
+	
+	paginasView.add(pagerFlechaDer);
+	
 	for(var i = (productosPaginacion*(pagina-1));i < (pagina*productosPaginacion) && i < productos_act.length; i++){
 		
 		if(productos_act[i]['producto_precios'].length > 0){
 				
 			var Main = Ti.UI.createView({
-					width:"100%",
+				width:"100%",
 				layout:'horizontal',
 				height:"232px",
-				id: productos_act[i]['producto_precios'][0]['id']
+				id: productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['id']
 			});
 			
 			var Margen = Ti.UI.createView({
