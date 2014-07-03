@@ -486,7 +486,7 @@ if(direccion != null){
 	contenidoLabel1.text = direccion['direccion'];
 }
 else{
-	if(direcciones.size > 0){
+	if(direcciones.length > 0){
 		contenidoLabel1.text = direcciones[direcciones.length-1]['direccion'];
 		direccion = direcciones[direcciones.length-1];
 	}

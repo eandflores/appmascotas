@@ -17,7 +17,7 @@ function Controller() {
             ImageViewMarca.addEventListener("click", function() {
                 productosMarca(this["id"]);
             });
-            marcasScroll.add(ImageViewMarca);
+            "TODAS" == categoria ? marcasScroll.add(ImageViewMarca) : (categoria == marcas[i]["tipo"] || "Ambos" == marcas[i]["tipo"]) && marcasScroll.add(ImageViewMarca);
         }
         perrogato.backgroundImage = "/img/perrogato.jpg";
         perro.backgroundImage = "/img/perro.jpg";
@@ -259,7 +259,7 @@ function Controller() {
         mainScroll.removeAllChildren();
         marcasScroll.removeAllChildren();
         paginasView.removeAllChildren();
-        categoria = categorias[3];
+        categoria = categoria;
         nombre = "TODOS";
         pagina = 1;
         if (marca == marcaParam) {
@@ -356,7 +356,7 @@ function Controller() {
     var productosPaginacion = 20;
     iniciarComponentes();
     cargarLoading();
-    iniciarMenu(productos);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion);
     winCargando.close();
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",

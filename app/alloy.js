@@ -84,32 +84,36 @@ function iniciarComponentes(){
 
 var menu = null;
 
-function iniciarMenu(productos){
+function iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion){
 	menu = Alloy.createController('menu').getView();
 	
 	// 2 = Direcciones
 	// 7 = Mi perfil
 	menu.addEventListener('click',function(e){
 		Ti.API.info("CLICK: " + e.rowData.rowId);
+		Ti.API.info(token);
+		Ti.API.info(carro);
+		Ti.API.info(marcas);
+		Ti.API.info(direcciones);
 		switch(e.rowData.rowId)
 		{
-			/*case 2:
-				Alloy.createController('direccion',{
-					token: Alloy.Globals.token,
-					carro: Alloy.Globals.carro,
-					marcas: Alloy.Globals.marcas,
-					productos: Alloy.Globals.productos,
-					medios: Alloy.Globals.medios,
-					direcciones: Alloy.Globals.direcciones,
-					usuario: Alloy.Globals.usuario,
-					medio: Alloy.Globals.medio, 
-					direccion: Alloy.Globals.direccion}).getView().open();
-			break;*/
-			case 6:
-				Ti.Platform.openURL('tel://01156412422518');
-			case 8: {
-				var vista = Alloy.createController('index',{productos: productos}).getView();
-				vista.open();
+			case 2: {
+				//Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+				break;
+			}
+			case 6: {
+				Ti.Platform.openURL('tel://0222021974');
+				break;
+			}
+			/*
+			case 7: {
+				Alloy.createController('perfil',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+				break;
+			}
+			*/
+			case 7: {
+				Alloy.createController('index',{token: null,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: [],usuario: null,medio: null, direccion: null}).getView().open();
+				break;
 			}
 		}
 	});

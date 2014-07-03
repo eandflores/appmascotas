@@ -31,7 +31,7 @@ var productosPaginacion = 20;
 
 iniciarComponentes();
 cargarLoading();
-iniciarMenu(productos);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion);
 winCargando.close();
 
 var mainScroll = Ti.UI.createScrollView({
@@ -172,15 +172,14 @@ function ordenarProductos(){
 			productosMarca(this['id']);
 		});
 		
-		/*
-		if(Ti.App.categoria_actual == "TODAS"){
+		if(categoria == "TODAS"){
 			marcasScroll.add(ImageViewMarca);	
 		}
-		else if(Ti.App.categoria_actual == Ti.App.marcas[i]["categoria"]){
+		else if(categoria == marcas[i]["tipo"] || marcas[i]["tipo"] == "Ambos"){
 			marcasScroll.add(ImageViewMarca);	
 		}
-		*/
-		marcasScroll.add(ImageViewMarca);
+		
+		//marcasScroll.add(ImageViewMarca);
 	}
 	
 	perrogato.backgroundImage = "/img/perrogato.jpg";
@@ -529,7 +528,7 @@ function productosMarca(marcaParam){
 	marcasScroll.removeAllChildren();
 	paginasView.removeAllChildren();
 	
-	categoria = categorias[3];
+	categoria = categoria;
 	nombre = "TODOS";
 	pagina = 1;
 		

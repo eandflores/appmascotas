@@ -9,7 +9,7 @@ var data = [
 	{text: 'spacer'},
 	{img: 'centro-de-ayuda', text: 'Centro de ayuda'},
 	{img: 'ayuda-telefonica', text: 'Ayuda telefónica'},
-	{img: 'mi-perfil', text: 'Mi perfil'},
+	/*{img: 'mi-perfil', text: 'Mi perfil'},*/
 	{img: 'cerrar-sesion', text: 'Cerrar sesión'},
 ];
 

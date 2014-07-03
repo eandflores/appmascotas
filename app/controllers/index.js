@@ -8,8 +8,8 @@ var productos = args['productos'];
 
 cargarLoading();
 
-$.inputCorreo.value = "WWW";
-$.inputClave.value = "123";
+$.inputCorreo.value = "gabriel@octano.cl";
+$.inputClave.value = "12345";
 
 function login(){
 	

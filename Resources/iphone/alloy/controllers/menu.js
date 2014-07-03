@@ -43,9 +43,6 @@ function Controller() {
         img: "ayuda-telefonica",
         text: "Ayuda telefónica"
     }, {
-        img: "mi-perfil",
-        text: "Mi perfil"
-    }, {
         img: "cerrar-sesion",
         text: "Cerrar sesión"
     } ];

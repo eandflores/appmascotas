@@ -135,7 +135,7 @@ for(i=0;i<direcciones.length;i++){
 		
 	var Direccion = Ti.UI.createView({
 		width:"100%",
-		height:"73px",
+		height:"110px",
 		layout:"horizontal"
 	});
 	

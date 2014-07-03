@@ -587,7 +587,7 @@ function Controller() {
         contenidoLabel3.text = medios[0]["paym_name"];
         medio = medios[0];
     }
-    if (null != direccion) contenidoLabel1.text = direccion["direccion"]; else if (direcciones.size > 0) {
+    if (null != direccion) contenidoLabel1.text = direccion["direccion"]; else if (direcciones.length > 0) {
         contenidoLabel1.text = direcciones[direcciones.length - 1]["direccion"];
         direccion = direcciones[direcciones.length - 1];
     }

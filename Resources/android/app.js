@@ -49,19 +49,34 @@ function iniciarComponentes() {
     wrapper.add(lupaImg);
 }
 
-function iniciarMenu(productos) {
+function iniciarMenu(token, carro, marcas, productos, medios, direcciones) {
     menu = Alloy.createController("menu").getView();
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
+        Ti.API.info(token);
+        Ti.API.info(carro);
+        Ti.API.info(marcas);
+        Ti.API.info(direcciones);
         switch (e.rowData.rowId) {
-          case 6:
-            Ti.Platform.openURL("tel://01156412422518");
+          case 2:
+            break;
 
-          case 8:
-            var vista = Alloy.createController("index", {
-                productos: productos
-            }).getView();
-            vista.open();
+          case 6:
+            Ti.Platform.openURL("tel://0222021974");
+            break;
+
+          case 7:
+            Alloy.createController("index", {
+                token: null,
+                carro: [],
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: [],
+                usuario: null,
+                medio: null,
+                direccion: null
+            }).getView().open();
         }
     });
 }
