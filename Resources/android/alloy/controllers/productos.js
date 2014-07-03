@@ -305,7 +305,11 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
-            producto: producto
+            producto: producto,
+            categoria: categoria,
+            marca: marca,
+            nombre: nombre,
+            pagina: pagina
         }).getView();
         winCargando.open();
         mainScroll.removeAllChildren();

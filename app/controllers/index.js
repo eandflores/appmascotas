@@ -2,9 +2,17 @@ $.index.open();
 
 var args = arguments[0] || {};
 
-var token = args['token'];
+var token = null;
+var carro = [];
+
 var marcas = args['marcas'];
 var productos = args['productos'];
+var medios = args['medios'];
+var direcciones = [];
+
+var usuario = null;
+var medio = null;
+var direccion = null;
 
 cargarLoading();
 
@@ -86,7 +94,7 @@ function getProductos(token,marcas){
 		var xhrProductos = Ti.Network.createHTTPClient({
 			onload: function(e){
 				try{
-					Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: JSON.parse(this.responseText),medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+					getUsuario(token,marcas,JSON.parse(this.responseText));
 				}
 				catch(e){
 					alert("Error de conexión con els ervidor.");
@@ -107,8 +115,34 @@ function getProductos(token,marcas){
 		xhrProductos.send();
 	}
 	else{
-		Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		getUsuario(token,marcas,productos);	
 	}
+}
+
+function getUsuario(token,marcas,productos){
+	
+	if(usuario != null){
+		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	}
+	else{
+		var xhrProductos = Ti.Network.createHTTPClient({
+			
+			onload: function(e){
+				try{
+					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+				}
+				catch(e){
+					alert("Error de conexión con el servidor.");
+				}
+			},
+			onerror: function(e){
+				alert(e);
+			}
+		});
+		
+		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
+		xhrProductos.send();
+	}	
 }
 
 function registro(){

@@ -133,10 +133,10 @@ function Controller() {
             direcciones: direcciones,
             medio: medio,
             direccion: direccion,
-            categoria: categorias[3],
-            marca: "TODAS",
-            nombre: "TODOS",
-            pagina: 1
+            categoria: categoria,
+            marca: marca,
+            nombre: nombre,
+            pagina: pagina
         }).getView().open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -174,6 +174,10 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var categoria = args["categoria"];
+    var marca = args["marca"];
+    var nombre = args["nombre"];
+    var pagina = args["pagina"];
     $.productoView.addEventListener("android:back", function() {
         Alloy.createController("productos", {
             token: token,
@@ -184,10 +188,10 @@ function Controller() {
             direcciones: direcciones,
             medio: medio,
             direccion: direccion,
-            categoria: categorias[3],
-            marca: "TODAS",
-            nombre: "TODOS",
-            pagina: 1
+            categoria: categoria,
+            marca: marca,
+            nombre: nombre,
+            pagina: pagina
         }).getView().open();
         return false;
     });
