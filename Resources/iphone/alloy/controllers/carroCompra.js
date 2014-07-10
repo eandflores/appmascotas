@@ -74,20 +74,7 @@ function Controller() {
         }).getView().open();
     }
     function realizarPedido() {
-        if (medios.length > 0 && direcciones.length > 0) {
-            var vista = Alloy.createController("realizarPedido", {
-                token: token,
-                carro: carro,
-                marcas: marcas,
-                productos: productos,
-                medios: medios,
-                direcciones: direcciones,
-                usuario: usuario,
-                medio: medio,
-                direccion: direccion
-            }).getView();
-            vista.open();
-        } else {
+        if (medios.length > 0) cargarDirecciones(medios); else {
             var xhr = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
@@ -106,32 +93,43 @@ function Controller() {
         }
     }
     function cargarDirecciones(medios) {
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
-                try {
-                    direcciones = JSON.parse(this.responseText);
-                    var vista = Alloy.createController("realizarPedido", {
-                        token: token,
-                        carro: carro,
-                        marcas: marcas,
-                        productos: productos,
-                        medios: medios,
-                        direcciones: direcciones,
-                        usuario: usuario,
-                        medio: medio,
-                        direccion: direccion
-                    }).getView();
-                    vista.open();
-                } catch (e) {
+        if (direcciones.length > 0) Alloy.createController("realizarPedido", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open(); else {
+            var xhr = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        direcciones = JSON.parse(this.responseText);
+                        Alloy.createController("realizarPedido", {
+                            token: token,
+                            carro: carro,
+                            marcas: marcas,
+                            productos: productos,
+                            medios: medios,
+                            direcciones: direcciones,
+                            usuario: usuario,
+                            medio: medio,
+                            direccion: direccion
+                        }).getView().open();
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                    }
+                },
+                onerror: function() {
                     alert("Error de conexión con el servidor.");
                 }
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor.");
-            }
-        });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-        xhr.send();
+            });
+            xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+            xhr.send();
+        }
     }
     function atras() {
         $.carroCompra.close();
@@ -174,7 +172,7 @@ function Controller() {
     var direccion = args["direccion"];
     var total_val = 0;
     iniciarComponentes();
-    iniciarMenu();
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "carroCompra", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",

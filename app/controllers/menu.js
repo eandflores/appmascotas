@@ -7,9 +7,7 @@ var data = [
 	{img: 'mis-direcciones', text: 'Mis Direcciones'},
 	{img: 'notificaciones', text: 'Notificaciones'},
 	{text: 'spacer'},
-	{img: 'centro-de-ayuda', text: 'Centro de ayuda'},
 	{img: 'ayuda-telefonica', text: 'Ayuda telefónica'},
-	/*{img: 'mi-perfil', text: 'Mi perfil'},*/
 	{img: 'cerrar-sesion', text: 'Cerrar sesión'},
 ];
 

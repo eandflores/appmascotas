@@ -21,8 +21,12 @@ var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
 
+var padre = args['padre'];
+var producto = args['producto'];
+
 iniciarComponentes();
-iniciarMenu();
+//iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({
@@ -264,7 +268,7 @@ function productosNombre(nombre){
 }
 
 function agregarDireccion(){
-	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,padre: padre,producto: producto}).getView().open();
 }
 
 function atras(){

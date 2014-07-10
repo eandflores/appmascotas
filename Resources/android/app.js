@@ -49,23 +49,74 @@ function iniciarComponentes() {
     wrapper.add(lupaImg);
 }
 
-function iniciarMenu(token, carro, marcas, productos, medios, direcciones) {
+function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
     menu = Alloy.createController("menu").getView();
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
-        Ti.API.info(token);
-        Ti.API.info(carro);
-        Ti.API.info(marcas);
-        Ti.API.info(direcciones);
         switch (e.rowData.rowId) {
           case 2:
+            if (direcciones.length > 0) Alloy.createController("direccion", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion,
+                padre: padre,
+                producto: producto
+            }).getView().open(); else {
+                var xhr = Ti.Network.createHTTPClient({
+                    onload: function() {
+                        try {
+                            direcciones = JSON.parse(this.responseText);
+                            Alloy.createController("direccion", {
+                                token: token,
+                                carro: carro,
+                                marcas: marcas,
+                                productos: productos,
+                                medios: medios,
+                                direcciones: direcciones,
+                                usuario: usuario,
+                                medio: medio,
+                                direccion: direccion,
+                                padre: padre,
+                                producto: producto
+                            }).getView().open();
+                        } catch (e) {
+                            alert("Error de conexión con el servidor.");
+                        }
+                    },
+                    onerror: function() {
+                        alert("Error de conexión con el servidor.");
+                    }
+                });
+                xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+                xhr.send();
+            }
             break;
 
-          case 6:
+          case 3:
+            Alloy.createController("notificaciones", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion
+            }).getView().open();
+            break;
+
+          case 5:
             Ti.Platform.openURL("tel://0222021974");
             break;
 
-          case 7:
+          case 6:
             Alloy.createController("index", {
                 token: null,
                 carro: [],

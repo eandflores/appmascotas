@@ -74,54 +74,21 @@ function Controller() {
         }).getView().open();
     }
     function carroCompra() {
-        if (null != usuario) {
-            carro.push({
-                id: productoPrecio["id"],
-                qty: InputCantidad.text
-            });
-            Alloy.createController("realizarPedido", {
-                token: token,
-                carro: carro,
-                marcas: marcas,
-                productos: productos,
-                medios: medios,
-                direcciones: direcciones,
-                usuario: usuario,
-                medio: medio,
-                direccion: direccion
-            }).getView().open();
-        } else {
-            var xhrProductos = Ti.Network.createHTTPClient({
-                onload: function() {
-                    try {
-                        var usuario = JSON.parse(this.responseText);
-                        carro.push({
-                            id: productoPrecio["id"],
-                            qty: InputCantidad.text
-                        });
-                        var vista = Alloy.createController("carroCompra", {
-                            token: token,
-                            carro: carro,
-                            marcas: marcas,
-                            productos: productos,
-                            medios: medios,
-                            direcciones: direcciones,
-                            usuario: usuario,
-                            medio: medio,
-                            direccion: direccion
-                        }).getView();
-                        vista.open();
-                    } catch (e) {
-                        alert("Error de conexión con el servidor.");
-                    }
-                },
-                onerror: function(e) {
-                    alert(e);
-                }
-            });
-            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
-            xhrProductos.send();
-        }
+        carro.push({
+            id: productoPrecio["id"],
+            qty: InputCantidad.text
+        });
+        Alloy.createController("carroCompra", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
     }
     function atras() {
         Alloy.createController("productos", {
@@ -196,7 +163,7 @@ function Controller() {
         return false;
     });
     iniciarComponentes();
-    iniciarMenu();
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "productoView", args["producto"]);
     var Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",

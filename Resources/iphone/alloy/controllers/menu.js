@@ -37,9 +37,6 @@ function Controller() {
     }, {
         text: "spacer"
     }, {
-        img: "centro-de-ayuda",
-        text: "Centro de ayuda"
-    }, {
         img: "ayuda-telefonica",
         text: "Ayuda telefónica"
     }, {

@@ -83,7 +83,9 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            padre: "realizarPedido",
+            producto: null
         }).getView().open();
     }
     function setCorreo() {
@@ -153,7 +155,7 @@ function Controller() {
                             direcciones: direcciones,
                             usuario: usuario,
                             medio: medio,
-                            direccion: null
+                            direccion: direccion
                         }).getView();
                         vista.open();
                     } catch (e) {
@@ -212,7 +214,7 @@ function Controller() {
     var medio = args["medio"];
     var direccion = args["direccion"];
     iniciarComponentes();
-    iniciarMenu();
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "realizarPedido", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",

@@ -21,8 +21,12 @@ var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
 
+var producto = args['producto'];
+var padre = args['padreAux'];
+
 iniciarComponentes();
-iniciarMenu();
+//iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({
@@ -430,7 +434,15 @@ function guardar(){
 			try{
 				var response = JSON.parse(this.responseText);
 				Ti.API.info(response);
-				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+				Ti.API.info(padre);
+				
+				if(padre == 'productos')
+					Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+				else if(padre == 'productoView')
+					Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,producto: producto,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+				else
+					Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+			
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");

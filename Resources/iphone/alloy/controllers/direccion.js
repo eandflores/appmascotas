@@ -150,7 +150,9 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            padre: padre,
+            producto: producto
         }).getView().open();
     }
     function atras() {
@@ -192,8 +194,10 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var padre = args["padre"];
+    var producto = args["producto"];
     iniciarComponentes();
-    iniciarMenu();
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",

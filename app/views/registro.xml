@@ -9,8 +9,10 @@
 		</View>
 		<View id="inputs">
 				<TextField id="inputNombre" hintText="NOMBRE"></TextField>
+				<TextField id="inputTelefono" hintText="TELÉFONO"></TextField>
 				<TextField id="inputCorreo" hintText="CORREO"></TextField>
 				<TextField id="inputContraseña" hintText="CONTRASEÑA" passwordMask="true"></TextField>
+				<TextField id="inputContraseña2" hintText="CONFIRMAR CONTRASEÑA" passwordMask="true"></TextField>
 		</View>
 		<View id="margenB"></View>
 		<View id="footer">

@@ -127,7 +127,7 @@ function Controller() {
     var direccion = args["direccion"];
     iniciarComponentes();
     cargarLoading();
-    iniciarMenu(productos);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "fin");
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
     });

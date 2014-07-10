@@ -196,7 +196,7 @@ function Controller() {
                     fontWeight: "bold",
                     fontSize: 13
                 },
-                text: productos_act[i]["producto_precios"][0]["sku_description"] + " x $" + productos_act[i]["producto_precios"][0]["sku_price"]
+                text: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_description"] + " x $" + productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_price"]
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
@@ -360,7 +360,7 @@ function Controller() {
     var productosPaginacion = 20;
     iniciarComponentes();
     cargarLoading();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "productos", null);
     winCargando.close();
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",

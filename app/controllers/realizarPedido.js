@@ -22,7 +22,8 @@ var medio = args['medio'];
 var direccion = args['direccion'];
 
 iniciarComponentes();
-iniciarMenu();
+//iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'realizarPedido',null);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({
@@ -512,7 +513,7 @@ function productosGato(){
 }
 
 function setDireccion(){
-	Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+	Alloy.createController('direccion',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,padre: 'realizarPedido',producto: null}).getView().open();
 }
 
 function setCorreo(){
@@ -540,7 +541,7 @@ function gracias(){
 				try{
 					var response = JSON.parse(this.responseText);
 					
-					var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: null}).getView();
+					var vista = Alloy.createController('gracias',{token: token,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
 					vista.open();
 				}
 				catch(e){

@@ -24,7 +24,7 @@ var medio = args['medio'];
 var direccion = args['direccion'];
 
 iniciarComponentes();
-iniciarMenu();
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'email');
 cargarLoading();
 
 var marcasView = Ti.UI.createView({

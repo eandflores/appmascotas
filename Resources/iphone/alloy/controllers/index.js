@@ -1,35 +1,37 @@
 function Controller() {
     function login() {
-        winCargando.open();
-        if (null == token) {
-            var xhr = Ti.Network.createHTTPClient({
-                onload: function() {
-                    try {
-                        var response = JSON.parse(this.responseText);
-                        getMarcas(response["token"]);
-                    } catch (e) {
+        if ("" != $.inputCorreo.value && "" != $.inputClave.value) if (Titanium.Network.online) {
+            winCargando.open();
+            if (null == token) {
+                var xhr = Ti.Network.createHTTPClient({
+                    onload: function() {
+                        try {
+                            var response = JSON.parse(this.responseText);
+                            getMarcas(response["token"]);
+                        } catch (e) {
+                            alert("Error de conexión con el servidor.");
+                            winCargando.close();
+                            winCargando.close();
+                            winCargando.close();
+                        }
+                    },
+                    onerror: function() {
                         alert("Error de conexión con el servidor.");
                         winCargando.close();
                         winCargando.close();
                         winCargando.close();
                     }
-                },
-                onerror: function() {
-                    alert("Error de conexión con el servidor.");
-                    winCargando.close();
-                    winCargando.close();
-                    winCargando.close();
-                }
-            });
-            xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
-            xhr.send({
-                email: $.inputCorreo.value,
-                password: $.inputClave.value
-            });
-        } else getMarcas(token);
+                });
+                xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+                xhr.send({
+                    email: $.inputCorreo.value,
+                    password: $.inputClave.value
+                });
+            } else getMarcas(token);
+        } else alert("No hay conexión a la red."); else alert("Debe llenar todos los campos.");
     }
     function getMarcas(token) {
-        if (null == marcas) {
+        if (0 == marcas.length) {
             var xhrMarcas = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
@@ -53,26 +55,11 @@ function Controller() {
         } else getProductos(token, marcas);
     }
     function getProductos(token, marcas) {
-        if (null == productos) {
-            winCargando.open();
+        if (0 == productos.length) {
             var xhrProductos = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
-                        Alloy.createController("productos", {
-                            token: token,
-                            carro: [],
-                            marcas: marcas,
-                            productos: JSON.parse(this.responseText),
-                            medios: [],
-                            direcciones: [],
-                            usuario: null,
-                            medio: null,
-                            direccion: null,
-                            categoria: "TODAS",
-                            marca: "TODAS",
-                            nombre: "TODOS",
-                            pagina: 1
-                        }).getView().open();
+                        getUsuario(token, marcas, JSON.parse(this.responseText));
                     } catch (e) {
                         alert("Error de conexión con els ervidor.");
                         winCargando.close();
@@ -89,24 +76,66 @@ function Controller() {
             });
             xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
             xhrProductos.send();
-        } else Alloy.createController("productos", {
+        } else getUsuario(token, marcas, productos);
+    }
+    function getUsuario(token, marcas, productos) {
+        if (null != usuario) Alloy.createController("productos", {
             token: token,
-            carro: [],
+            carro: carro,
             marcas: marcas,
             productos: productos,
-            medios: [],
-            direcciones: [],
-            usuario: null,
-            medio: null,
-            direccion: null,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: "TODOS",
             pagina: 1
-        }).getView().open();
+        }).getView().open(); else {
+            var xhrProductos = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        Alloy.createController("productos", {
+                            token: token,
+                            carro: carro,
+                            marcas: marcas,
+                            productos: productos,
+                            medios: medios,
+                            direcciones: direcciones,
+                            usuario: JSON.parse(this.responseText),
+                            medio: medio,
+                            direccion: direccion,
+                            categoria: "TODAS",
+                            marca: "TODAS",
+                            nombre: "TODOS",
+                            pagina: 1
+                        }).getView().open();
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                    }
+                },
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
+                }
+            });
+            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrProductos.send();
+        }
     }
     function registro() {
-        Alloy.createController("registro").getView().open();
+        Alloy.createController("registro", {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
     }
     function recuperarContraseña() {
         Alloy.createController("recuperarContrasena").getView().open();
@@ -243,9 +272,20 @@ function Controller() {
     _.extend($, $.__views);
     $.index.open();
     var args = arguments[0] || {};
-    var token = args["token"];
-    var marcas = args["marcas"];
-    var productos = args["productos"];
+    var token = null;
+    var carro = [];
+    var marcas = [];
+    var productos = [];
+    var medios = [];
+    var direcciones = [];
+    if (args.length > 0) {
+        marcas = args["marcas"];
+        productos = args["productos"];
+        medios = args["medios"];
+    }
+    var usuario = null;
+    var medio = null;
+    var direccion = null;
     cargarLoading();
     $.inputCorreo.value = "gabriel@octano.cl";
     $.inputClave.value = "12345";

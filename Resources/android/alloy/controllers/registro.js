@@ -1,37 +1,45 @@
 function Controller() {
     function registro() {
-        winCargando.open();
-        var email = $.inputCorreo.value;
-        var password = $.inputContraseña.value;
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function(e) {
-                try {
-                    Ti.API.info(this.responseText);
-                    var response = JSON.parse(this.responseText);
-                    getMarcas(response["token"]);
-                } catch (e) {
+        if ("" != $.inputNombre.value && "" != $.inputTelefono.value && "" != $.inputCorreo.value && "" != $.inputContraseña.value) if ($.inputContraseña.value == $.inputContraseña2.value) if (Titanium.Network.online) {
+            winCargando.open();
+            var nombre = $.inputNombre.value;
+            var telefono = $.inputTelefono.value;
+            var email = $.inputCorreo.value;
+            var password = $.inputContraseña.value;
+            $.inputContraseña2.value;
+            var xhr = Ti.Network.createHTTPClient({
+                onload: function(e) {
+                    try {
+                        Ti.API.info(this.responseText);
+                        var response = JSON.parse(this.responseText);
+                        getMarcas(response);
+                        getMarcas(response["token"]);
+                    } catch (e) {
+                        alert(e);
+                        winCargando.close();
+                        winCargando.close();
+                        winCargando.close();
+                    }
+                },
+                onerror: function(e) {
                     alert(e);
                     winCargando.close();
                     winCargando.close();
                     winCargando.close();
                 }
-            },
-            onerror: function(e) {
-                alert(e);
-                winCargando.close();
-                winCargando.close();
-                winCargando.close();
-            }
-        });
-        Ti.API.info(email + " " + password);
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
-        xhr.send({
-            email: email,
-            password: password
-        });
+            });
+            Ti.API.info(nombre + " " + telefono + " " + email + " " + password);
+            xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
+            xhr.send({
+                nombre: nombre,
+                telefono: telefono,
+                email: email,
+                password: password
+            });
+        } else alert("No hay conexión a la red."); else alert("La contraseña debe coincidir con la cofirmación."); else alert("Debe llenar todos los campos.");
     }
     function getMarcas(token) {
-        if (null == marcas) {
+        if (0 == marcas.length) {
             var xhrMarcas = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
@@ -55,26 +63,11 @@ function Controller() {
         } else getProductos(token, marcas);
     }
     function getProductos(token, marcas) {
-        if (null == productos) {
-            winCargando.open();
+        if (0 == productos.length) {
             var xhrProductos = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
-                        Alloy.createController("productos", {
-                            token: token,
-                            carro: [],
-                            marcas: marcas,
-                            productos: JSON.parse(this.responseText),
-                            medios: [],
-                            direcciones: [],
-                            usuario: null,
-                            medio: null,
-                            direccion: null,
-                            categoria: "TODAS",
-                            marca: "TODAS",
-                            nombre: "TODOS",
-                            pagina: 1
-                        }).getView().open();
+                        getUsuario(token, marcas, JSON.parse(this.responseText));
                     } catch (e) {
                         alert("Error de conexión con els ervidor.");
                         winCargando.close();
@@ -91,21 +84,53 @@ function Controller() {
             });
             xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
             xhrProductos.send();
-        } else Alloy.createController("productos", {
+        } else getUsuario(token, marcas, productos);
+    }
+    function getUsuario(token, marcas, productos) {
+        if (null != usuario) Alloy.createController("productos", {
             token: token,
-            carro: [],
+            carro: carro,
             marcas: marcas,
             productos: productos,
-            medios: [],
-            direcciones: [],
-            usuario: null,
-            medio: null,
-            direccion: null,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: "TODOS",
             pagina: 1
-        }).getView().open();
+        }).getView().open(); else {
+            var xhrProductos = Ti.Network.createHTTPClient({
+                onload: function() {
+                    try {
+                        Alloy.createController("productos", {
+                            token: token,
+                            carro: carro,
+                            marcas: marcas,
+                            productos: productos,
+                            medios: medios,
+                            direcciones: direcciones,
+                            usuario: JSON.parse(this.responseText),
+                            medio: medio,
+                            direccion: direccion,
+                            categoria: "TODAS",
+                            marca: "TODAS",
+                            nombre: "TODOS",
+                            pagina: 1
+                        }).getView().open();
+                    } catch (e) {
+                        alert("Error de conexión con el servidor.");
+                    }
+                },
+                onerror: function() {
+                    alert("Error de conexión con el servidor.");
+                }
+            });
+            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrProductos.send();
+        }
     }
     function atras() {
         $.registro.close();
@@ -153,20 +178,20 @@ function Controller() {
     atras ? $.__views.__alloyId4.addEventListener("click", atras) : __defers["$.__views.__alloyId4!click!atras"] = true;
     $.__views.main = Ti.UI.createView({
         width: "100%",
-        height: "49.2%",
+        height: "30%",
         id: "main"
     });
     $.__views.registro.add($.__views.main);
     $.__views.imagenIndex = Ti.UI.createImageView({
         width: "100%",
         height: "100%",
-        image: "/img/fondoRegistro.jpg",
+        image: "/img/fondoRegistroMin.jpg",
         id: "imagenIndex"
     });
     $.__views.main.add($.__views.imagenIndex);
     $.__views.inputs = Ti.UI.createView({
         width: "100%",
-        height: "18%",
+        height: "37.2%",
         layout: "vertical",
         backgroundColor: "#f5f5f5",
         id: "inputs"
@@ -175,17 +200,27 @@ function Controller() {
     $.__views.inputNombre = Ti.UI.createTextField({
         left: "10%",
         width: "90%",
-        height: "33.4%",
+        height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputNombre",
         hintText: "NOMBRE"
     });
     $.__views.inputs.add($.__views.inputNombre);
+    $.__views.inputTelefono = Ti.UI.createTextField({
+        left: "10%",
+        width: "90%",
+        height: "20%",
+        backgroundColor: "#f5f5f5",
+        color: "#585858",
+        id: "inputTelefono",
+        hintText: "TELÉFONO"
+    });
+    $.__views.inputs.add($.__views.inputTelefono);
     $.__views.inputCorreo = Ti.UI.createTextField({
         left: "10%",
         width: "90%",
-        height: "33.3%",
+        height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputCorreo",
@@ -195,7 +230,7 @@ function Controller() {
     $.__views.inputContraseña = Ti.UI.createTextField({
         left: "10%",
         width: "90%",
-        height: "33.3%",
+        height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
         id: "inputContraseña",
@@ -203,6 +238,17 @@ function Controller() {
         passwordMask: "true"
     });
     $.__views.inputs.add($.__views.inputContraseña);
+    $.__views.inputContraseña2 = Ti.UI.createTextField({
+        left: "10%",
+        width: "90%",
+        height: "20%",
+        backgroundColor: "#f5f5f5",
+        color: "#585858",
+        id: "inputContraseña2",
+        hintText: "CONFIRMAR CONTRASEÑA",
+        passwordMask: "true"
+    });
+    $.__views.inputs.add($.__views.inputContraseña2);
     $.__views.margenB = Ti.UI.createView({
         height: "5.2%",
         width: "100%",
@@ -233,30 +279,16 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
+    args["token"];
+    var carro = args["carro"];
     var marcas = args["marcas"];
     var productos = args["productos"];
-    var winCargando;
-    var labelCargando;
-    var winCargando = Ti.UI.createWindow({
-        backgroundColor: "#000",
-        width: "100%",
-        height: "100%",
-        opacity: .7,
-        navBarHidden: "true"
-    });
-    var labelCargando = Ti.UI.createLabel({
-        width: "100%",
-        height: "20%",
-        top: "40%",
-        bottom: "40%",
-        text: "CARGANDO...",
-        textAlign: "center",
-        color: "white",
-        font: {
-            fontWeight: "bold"
-        }
-    });
-    winCargando.add(labelCargando);
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    cargarLoading();
     __defers["$.__views.__alloyId4!click!atras"] && $.__views.__alloyId4.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);
     _.extend($, exports);

@@ -1,93 +1,77 @@
 var args = arguments[0] || {};
 
+var token = args['token'];
+var carro = args['carro'];
+
 var marcas = args['marcas'];
 var productos = args['productos'];
+var medios = args['medios'];
+var direcciones = args['direcciones'];
 
-if(Titanium.Platform.name == "iPhone OS"){
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        top: "3.5%",
-        height:'96.5%',
-        opacity:0.70
-        
-    });
-    
-    var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
-}
-else{
-	var winCargando = Ti.UI.createWindow({
-        backgroundColor : '#000',
-        width:'100%',
-        height:'100%',
-        opacity:0.70,
-        navBarHidden: "true"
-    });
-    
-     var labelCargando = Ti.UI.createLabel({
-		width:"100%",
-		height:"20%",
-		top:"40%",
-		bottom:"40%",
-		text:"CARGANDO...",
-		textAlign: "center",
-		color:"white",
-		font: {
-			fontWeight:"bold"
-		}
-	});
-}
+var usuario = args['usuario'];
+var medio = args['medio'];
+var direccion = args['direccion'];
 
-winCargando.add(labelCargando);
+cargarLoading();
 
 function registro(){
 	
-	winCargando.open();
-	
-	var email = $.inputCorreo.value;
-	var password = $.inputContraseña.value;
-	
-	var xhr = Ti.Network.createHTTPClient({
-		onload: function(e){
-			try{
-				Ti.API.info(this.responseText);
-				var response = JSON.parse(this.responseText);
-				getMarcas(response['token']);
+	if($.inputNombre.value != "" && $.inputTelefono.value != "" && $.inputCorreo.value != "" && $.inputContraseña.value != ""){
+		
+		if($.inputContraseña.value == $.inputContraseña2.value){
+		
+			if(Titanium.Network.online) {
+				winCargando.open();
+				
+				var nombre = $.inputNombre.value;
+				var telefono = $.inputTelefono.value;
+				var email = $.inputCorreo.value;
+				var password = $.inputContraseña.value;
+				var password2 = $.inputContraseña2.value;
+				
+				var xhr = Ti.Network.createHTTPClient({
+					onload: function(e){
+						try{
+							Ti.API.info(this.responseText);
+							var response = JSON.parse(this.responseText);
+							getMarcas(response);
+							getMarcas(response['token']);
+						}
+						catch(e){
+							alert(e);
+							winCargando.close();
+							winCargando.close();
+							winCargando.close();
+						}
+			
+					},
+					onerror: function(e){
+						alert(e);
+						winCargando.close();
+						winCargando.close();
+						winCargando.close();
+					}
+				});
+				Ti.API.info(nombre+" "+telefono+" "+email+" "+password);
+				xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
+				xhr.send({"nombre" : nombre,"telefono" : telefono,"email" : email,"password" : password});
 			}
-			catch(e){
-				alert(e);
-				winCargando.close();
-				winCargando.close();
-				winCargando.close();
+			else{
+				alert("No hay conexión a la red.");
 			}
-
-		},
-		onerror: function(e){
-			alert(e);
-			winCargando.close();
-			winCargando.close();
-			winCargando.close();
 		}
-	});
-	Ti.API.info(email+" "+password);
-	xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
-	xhr.send({"email" : email,"password" : password});
+		else{
+			alert("La contraseña debe coincidir con la cofirmación.");
+		}
+	}
+	else{
+		alert("Debe llenar todos los campos.");
+	}
 }
 
 function getMarcas(token){
 	
-	if(marcas == null){
+	if(marcas.length == 0){
 		var xhrMarcas = Ti.Network.createHTTPClient({
 			onload: function(e){
 				try{
@@ -119,13 +103,12 @@ function getMarcas(token){
 
 function getProductos(token,marcas){
 	
-	if(productos == null){
-		winCargando.open();
+	if(productos.length == 0){
 		
 		var xhrProductos = Ti.Network.createHTTPClient({
 			onload: function(e){
 				try{
-					Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: JSON.parse(this.responseText),medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+					getUsuario(token,marcas,JSON.parse(this.responseText));
 				}
 				catch(e){
 					alert("Error de conexión con els ervidor.");
@@ -146,8 +129,34 @@ function getProductos(token,marcas){
 		xhrProductos.send();
 	}
 	else{
-		Alloy.createController('productos',{token: token,carro: [],marcas: marcas,productos: productos,medios: [],direcciones: [],usuario: null,medio: null, direccion: null,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		getUsuario(token,marcas,productos);
 	}
+}
+
+function getUsuario(token,marcas,productos){
+	
+	if(usuario != null){
+		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	}
+	else{
+		var xhrProductos = Ti.Network.createHTTPClient({
+			
+			onload: function(e){
+				try{
+					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+				}
+				catch(e){
+					alert("Error de conexión con el servidor.");
+				}
+			},
+			onerror: function(e){
+				alert("Error de conexión con el servidor.");
+			}
+		});
+		
+		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
+		xhrProductos.send();
+	}	
 }
 
 function atras(){
