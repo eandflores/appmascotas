@@ -24,7 +24,8 @@ var medio = args['medio'];
 var direccion = args['direccion'];
 
 iniciarComponentes();
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'descuento');
+//iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'descuento',null);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({
@@ -123,13 +124,6 @@ footer.addEventListener("click",function(){
 	guardar();
 });
 
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
-
 main.add(wrapper);
 main.add(marcasView);
 main.add(margen);
@@ -192,4 +186,21 @@ function guardar(){
 
 function atras(){
 	$.descuento.close();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }

@@ -1,10 +1,4 @@
 function Controller() {
-    function busquedaProducto() {
-        buscarProducto();
-        lupa.addEventListener("click", function() {
-            productosNombre(buscar.value);
-        });
-    }
     function productosNombre(nombre) {
         Alloy.createController("productos", {
             token: token,
@@ -75,6 +69,15 @@ function Controller() {
     }
     function atras() {
         $.notificaciones.close();
+    }
+    function busquedaProducto() {
+        buscarProducto();
+        buscar.addEventListener("click", function() {
+            "¿Que es lo que buscas?" == buscar.value && (buscar.value = "");
+        });
+        lupa.addEventListener("click", function() {
+            "¿Que es lo que buscas?" != buscar.value && "" != buscar.value ? productosNombre(buscar.value) : "" == buscar.value && (buscar.value = "¿Que es lo que buscas?");
+        });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "notificaciones";
@@ -206,7 +209,7 @@ function Controller() {
             fontWeight: "bold",
             fontSize: 17
         },
-        text: "10",
+        text: "4",
         backgroundImage: "/img/notificacionesCant.png",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
     });
@@ -242,13 +245,13 @@ function Controller() {
         Main = 0 == i % 2 ? Ti.UI.createView({
             width: "100%",
             layout: "horizontal",
-            height: "160px",
+            height: "200px",
             id: notificaciones[i]["id"],
             backgroundColor: "#f8f8f8"
         }) : Ti.UI.createView({
             width: "100%",
             layout: "horizontal",
-            height: "160px",
+            height: "200px",
             id: notificaciones[i]["id"]
         });
         var ViewLeido = null;
@@ -270,7 +273,7 @@ function Controller() {
         var LabelGroupInterno = Ti.UI.createView({
             width: "70%",
             top: "15%",
-            height: "30%",
+            height: "35%",
             layout: "horizontal"
         });
         var LabelTienda = Ti.UI.createLabel({
@@ -300,8 +303,8 @@ function Controller() {
         var LabelDetalle = Ti.UI.createLabel({
             minimumFontSize: 8,
             width: "70%",
-            bottom: "10%",
-            height: "20%",
+            bottom: "15%",
+            height: "35%",
             text: notificaciones[i]["detalle"],
             color: "#7b7b7b",
             font: {

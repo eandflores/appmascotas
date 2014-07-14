@@ -54,6 +54,22 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
         switch (e.rowData.rowId) {
+          case 1:
+            Alloy.createController("pedidos", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion,
+                padre: padre,
+                producto: producto
+            }).getView().open();
+            break;
+
           case 2:
             if (direcciones.length > 0) Alloy.createController("direccion", {
                 token: token,
@@ -160,7 +176,7 @@ function buscarProducto() {
     buscar = Ti.UI.createTextField({
         width: "72%",
         height: "100%",
-        hintText: "¿Que es lo que buscas?",
+        value: "¿Que es lo que buscas?",
         color: "white",
         textAlign: "center"
     });

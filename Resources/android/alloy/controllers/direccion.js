@@ -1,10 +1,4 @@
 function Controller() {
-    function busquedaProducto() {
-        buscarProducto();
-        lupa.addEventListener("click", function() {
-            productosNombre(buscar.value);
-        });
-    }
     function selectDireccion(direccion_selected) {
         Alloy.createController("realizarPedido", {
             token: token,
@@ -157,6 +151,15 @@ function Controller() {
     }
     function atras() {
         $.direccion.close();
+    }
+    function busquedaProducto() {
+        buscarProducto();
+        buscar.addEventListener("click", function() {
+            "¿Que es lo que buscas?" == buscar.value && (buscar.value = "");
+        });
+        lupa.addEventListener("click", function() {
+            "¿Que es lo que buscas?" != buscar.value && "" != buscar.value ? productosNombre(buscar.value) : "" == buscar.value && (buscar.value = "¿Que es lo que buscas?");
+        });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "direccion";

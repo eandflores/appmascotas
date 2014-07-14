@@ -116,13 +116,6 @@ lupaImg.addEventListener("click",function(){
 	busquedaProducto();
 });
 
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
-
 main.add(wrapper);
 main.add(marcasView);
 main.add(mainScroll);
@@ -142,7 +135,7 @@ for(var i = 0; i < notificaciones.length; i++){
 		Main = Ti.UI.createView({
 			width:"100%",
 			layout:'horizontal',
-			height:"160px",
+			height:"200px",
 			id: notificaciones[i]['id'],
 			backgroundColor: '#f8f8f8'
 		});
@@ -151,7 +144,7 @@ for(var i = 0; i < notificaciones.length; i++){
 		Main = Ti.UI.createView({
 			width:"100%",
 			layout:'horizontal',
-			height:"160px",
+			height:"200px",
 			id: notificaciones[i]['id']
 		});
 	}
@@ -183,7 +176,7 @@ for(var i = 0; i < notificaciones.length; i++){
 	var LabelGroupInterno = Ti.UI.createView({
 		width:"70%",
 		top: '15%',
-		height:"30%",
+		height:"35%",
 		layout: 'horizontal'
 	});
 	
@@ -216,8 +209,8 @@ for(var i = 0; i < notificaciones.length; i++){
 	var LabelDetalle = Ti.UI.createLabel({
 		minimumFontSize: 8,
 		width:"70%",
-		bottom: "10%",
-		height:"20%",
+		bottom: "15%",
+		height:"35%",
 		text: notificaciones[i]['detalle'],
 		color: '#7b7b7b',
 		font:{
@@ -245,6 +238,7 @@ for(var i = 0; i < notificaciones.length; i++){
 	
 	mainScroll.add(Main);
 }
+
 function productosNombre(nombre){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
@@ -263,4 +257,21 @@ function productosGato(){
 
 function atras(){
 	$.notificaciones.close();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }

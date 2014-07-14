@@ -23,7 +23,8 @@ var direccion = args['direccion'];
 
 iniciarComponentes();
 cargarLoading();
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'fin');
+//iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'fin',null);
 
 menuImg.addEventListener('click',function(e){
 	$.drawermenu.showhidemenu();
@@ -44,13 +45,6 @@ gato.addEventListener("click",function(){
 lupaImg.addEventListener("click",function(){
 	busquedaProducto();
 });
-
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
 
 var marcasView = Ti.UI.createView({
 	id:"marcas",
@@ -181,4 +175,21 @@ function productosGato(){
 
 function productosMarca(marca){	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: marca,nombre: "TODOS,pagina: 1"}).getView().open();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }

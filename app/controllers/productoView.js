@@ -78,13 +78,6 @@ footer.addEventListener("click",function(){
 	carroCompra();
 });
 
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
-
 var marcasView = Ti.UI.createView({
 	backgroundImage:"/img/fondoMarcas.jpg",
 	width:"100%",
@@ -549,4 +542,21 @@ function carroCompra(){
 
 function atras(){
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView().open();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }

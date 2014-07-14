@@ -1,10 +1,4 @@
 function Controller() {
-    function busquedaProducto() {
-        buscarProducto();
-        lupa.addEventListener("click", function() {
-            productosNombre(buscar.value);
-        });
-    }
     function productosNombre(nombre) {
         Alloy.createController("productos", {
             token: token,
@@ -103,6 +97,15 @@ function Controller() {
             direccion: direccion
         }).getView().open();
     }
+    function busquedaProducto() {
+        buscarProducto();
+        buscar.addEventListener("click", function() {
+            "¿Que es lo que buscas?" == buscar.value && (buscar.value = "");
+        });
+        lupa.addEventListener("click", function() {
+            "¿Que es lo que buscas?" != buscar.value && "" != buscar.value ? productosNombre(buscar.value) : "" == buscar.value && (buscar.value = "¿Que es lo que buscas?");
+        });
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "gracias";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -140,7 +143,7 @@ function Controller() {
     var direccion = args["direccion"];
     iniciarComponentes();
     cargarLoading();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "gracias");
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "gracias", null);
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
     });

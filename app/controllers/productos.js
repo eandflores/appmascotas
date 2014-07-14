@@ -84,13 +84,6 @@ lupaImg.addEventListener("click",function(){
 	busquedaProducto();
 });
 
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
-
 var marcasView = Ti.UI.createView({
 	id:"marcas",
 	backgroundImage:"/img/fondoMarcas.jpg",
@@ -582,4 +575,21 @@ function productosView(producto){
 	mainScroll.removeAllChildren();
 	paginasView.removeAllChildren();
 	vista.open();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }

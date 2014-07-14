@@ -116,13 +116,6 @@ footer.addEventListener("click",function(){
 	realizarPedido();
 });
 
-function busquedaProducto(){
-	buscarProducto();
-	lupa.addEventListener("click",function(){
-		productosNombre(buscar.value);
-	});
-}
-
 main.add(wrapper);
 main.add(marcasView);
 main.add(mainScroll);
@@ -348,4 +341,21 @@ function cargarDirecciones(medios){
 
 function atras(){
 	$.carroCompra.close();
+}
+
+function busquedaProducto(){
+	buscarProducto();
+	
+	
+	buscar.addEventListener("click",function(){
+		if(buscar.value == "¿Que es lo que buscas?")
+			buscar.value = "";
+	});
+	
+	lupa.addEventListener("click",function(){
+		if(buscar.value != "¿Que es lo que buscas?" && buscar.value != "")
+			productosNombre(buscar.value);
+		else if(buscar.value == "")
+			buscar.value = "¿Que es lo que buscas?";
+	});
 }
