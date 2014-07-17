@@ -206,7 +206,7 @@ var LabelPrecio = Ti.UI.createLabel({
 		fontFamily:"Noto Sans",
 		fontWeight:"bold"
 	},
-	text : "$"+productoPrecio['sku_price']
+	text : "$"+formatCurrency(productoPrecio['sku_price'])
 });
 
 LabelGroup.add(LabelNombre);
@@ -515,7 +515,7 @@ Main.add(Borde4);
 Main.add(DescripcionContenido);	
 
 function productosPerroGato(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio,direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){

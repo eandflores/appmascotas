@@ -62,7 +62,7 @@ var margen = Ti.UI.createView({
 	backgroundImage:"/img/Margen.jpg"
 });
 
-var mainScroll = Ti.UI.createView({
+var mainScroll = Ti.UI.createScrollView({
 	width:"100%",
 	height:"77.4%",
 	contentHeight: Ti.UI.SIZE,

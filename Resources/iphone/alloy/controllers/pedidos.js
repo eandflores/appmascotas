@@ -117,9 +117,6 @@ function Controller() {
     var direccion = args["direccion"];
     var padre = args["padre"];
     var producto = args["producto"];
-    var currentTime = new Date();
-    var fecha_actual = currentTime.getFullYear() + "-" + (1 + currentTime.getMonth()) + "-" + currentTime.getDate();
-    Ti.API.info(fecha_actual);
     var pedidos = [ {
         id: 1,
         fecha: "2014-05-10",
@@ -166,21 +163,11 @@ function Controller() {
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
     var mainScroll = Ti.UI.createScrollView({
         width: "100%",
-        height: "72.8%",
+        height: "80.4%",
         contentHeight: Ti.UI.SIZE,
         layout: "vertical",
         scrollType: "vertical",
         showVerticalScrollIndicator: "true"
-    });
-    var footer = Ti.UI.createButton({
-        backgroundColor: "#cc5122",
-        color: "white",
-        width: "100%",
-        height: "7.6%",
-        font: {
-            fontWeight: "bold"
-        },
-        title: "HACER PEDIDO"
     });
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
@@ -196,9 +183,6 @@ function Controller() {
     });
     lupaImg.addEventListener("click", function() {
         busquedaProducto();
-    });
-    footer.addEventListener("click", function() {
-        carroCompra();
     });
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
@@ -217,31 +201,14 @@ function Controller() {
     var pedidoTitulo = Ti.UI.createView({
         width: "86%",
         height: "85%",
-        layout: "horizontal"
-    });
-    var pedidoTitulo1 = Ti.UI.createImageView({
-        width: "40%",
-        height: "100%",
+        layout: "horizontal",
         backgroundImage: "/img/misPedidos.png"
     });
-    var pedidoTitulo2 = Ti.UI.createImageView({
-        width: "40%",
-        height: "100%",
-        backgroundImage: "/img/misPedidos2.png"
-    });
-    var pedidoTitulo3 = Ti.UI.createImageView({
-        width: "20%",
-        height: "100%"
-    });
-    pedidoTitulo.add(pedidoTitulo1);
-    pedidoTitulo.add(pedidoTitulo2);
-    pedidoTitulo.add(pedidoTitulo3);
     marcasView.add(flecha);
     marcasView.add(pedidoTitulo);
     main.add(wrapper);
     main.add(marcasView);
     main.add(mainScroll);
-    main.add(footer);
     $.drawermenu.init({
         menuview: menu,
         mainview: main,
@@ -282,7 +249,7 @@ function Controller() {
                 top: "0%"
             });
             var LabelGroup = Ti.UI.createView({
-                width: "75%",
+                width: "85%",
                 height: "60%",
                 layout: "vertical",
                 top: "0%"
@@ -312,7 +279,7 @@ function Controller() {
                 text: productos[i]["prod_name"]
             });
             var LabelGroup2 = Ti.UI.createView({
-                width: "75%",
+                width: "85%",
                 height: "40%",
                 layout: "horizontal",
                 top: "0%"
@@ -348,7 +315,7 @@ function Controller() {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: "$" + pedidos[n]["carro"][k]["qty"] * productos[i]["producto_precios"][j]["sku_price"]
+                text: "$" + formatCurrency(pedidos[n]["carro"][k]["qty"] * productos[i]["producto_precios"][j]["sku_price"])
             });
             LabelGroup.add(LabelNombre);
             LabelGroup.add(LabelDescripcion);
@@ -362,60 +329,18 @@ function Controller() {
             mainScroll.add(Main);
             mainScroll.add(Margen);
         }
-        var fechaPedido = Ti.UI.createLabel({
-            left: "5%",
-            width: "95%",
-            height: "60px",
-            text: "Último Pedido",
-            color: "#5c5c5b",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            }
-        });
-        var programarPedido = Ti.UI.createLabel({
-            left: "5%",
-            width: "95%",
-            height: "60px",
-            text: "Programar Pedido",
-            color: "#5c5c5b",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            }
-        });
-        var repetirPedido = Ti.UI.createLabel({
-            left: "5%",
-            width: "95%",
-            height: "60px",
-            text: "Repetir Pedido",
-            color: "#5c5c5b",
-            font: {
-                fontFamily: "Noto Sans",
-                fontWeight: "bold"
-            }
+        var BotonPedido = Ti.UI.createLabel({
+            width: "100%",
+            height: "200px",
+            backgroundImage: "/img/BotonPedido.jpg"
         });
         var Margen2 = Ti.UI.createView({
             width: "100%",
             height: "2px",
             backgroundColor: "#e8e8e8"
         });
-        var Margen3 = Ti.UI.createView({
-            width: "100%",
-            height: "2px",
-            backgroundColor: "#e8e8e8"
-        });
-        var Margen4 = Ti.UI.createView({
-            width: "100%",
-            height: "2px",
-            backgroundColor: "#e8e8e8"
-        });
-        mainScroll.add(fechaPedido);
+        mainScroll.add(BotonPedido);
         mainScroll.add(Margen2);
-        mainScroll.add(programarPedido);
-        mainScroll.add(Margen3);
-        mainScroll.add(repetirPedido);
-        mainScroll.add(Margen4);
     }
     _.extend($, exports);
 }

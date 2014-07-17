@@ -7,6 +7,7 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
             categoria: categorias[3],
@@ -298,7 +299,7 @@ function Controller() {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
-        text: "$" + productoPrecio["sku_price"]
+        text: "$" + formatCurrency(productoPrecio["sku_price"])
     });
     LabelGroup.add(LabelNombre);
     LabelGroup.add(LabelDescripcion);

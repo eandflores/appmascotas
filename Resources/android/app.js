@@ -124,15 +124,52 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 direcciones: direcciones,
                 usuario: usuario,
                 medio: medio,
-                direccion: direccion
+                direccion: direccion,
+                padre: padre,
+                producto: producto
+            }).getView().open();
+            break;
+
+          case 4:
+            Alloy.createController("carroCompra", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion,
+                padre: padre,
+                producto: producto
             }).getView().open();
             break;
 
           case 5:
-            Ti.Platform.openURL("tel://0222021974");
             break;
 
           case 6:
+            Ti.Platform.openURL("tel://0222021974");
+            break;
+
+          case 7:
+            Alloy.createController("comoComprar", {
+                token: token,
+                carro: carro,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion,
+                padre: padre,
+                producto: producto
+            }).getView().open();
+            break;
+
+          case 8:
             Alloy.createController("index", {
                 token: null,
                 carro: [],
@@ -224,6 +261,22 @@ function buscarProducto() {
     viewModal.add(inputsBuscar);
     winModal.add(viewModal);
     winModal.open();
+}
+
+function formatCurrency(num) {
+    num = num.toString();
+    num = num.replace(/,/gi, "");
+    if (num.length > 3) {
+        var dec = 0;
+        var sep = ",";
+        var decChar = ",";
+        var pre = "";
+        var post = "";
+        num = isNaN(num) || "" === num || null === num ? 0 : num;
+        var n = num.toString().split(decChar);
+        return (pre || "") + n[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + sep) + (n.length > 1 ? decChar + n[1].substr(0, dec) : "") + (post || "");
+    }
+    return num;
 }
 
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;

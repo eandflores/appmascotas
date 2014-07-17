@@ -447,7 +447,7 @@ for(var i = 0; i < productos.length; i++){
 						fontFamily:"Noto Sans",
 						fontWeight:"bold"
 					},
-					text : "$"+(carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price'])
+					text : "$"+formatCurrency(carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price'])
 				});
 				
 				LabelGroup.add(LabelNombre);

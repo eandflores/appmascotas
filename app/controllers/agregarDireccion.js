@@ -26,7 +26,7 @@ var padre = args['padreAux'];
 
 iniciarComponentes();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'agregarDireccion',producto);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({

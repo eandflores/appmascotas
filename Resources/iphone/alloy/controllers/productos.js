@@ -190,7 +190,7 @@ function Controller() {
                     fontWeight: "bold",
                     fontSize: 13
                 },
-                text: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_description"] + " x $" + productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_price"]
+                text: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_description"] + " x $" + formatCurrency(productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_price"])
             });
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",

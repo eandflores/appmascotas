@@ -369,8 +369,7 @@ function ordenarProductos(){
 			
 			var ImageViewProducto = Ti.UI.createView({
 				width:"25%",
-				height:"100%",
-				backgroundColor:"white"
+				height:"100%"
 			});
 			
 			var ImageViewProducto_int = Ti.UI.createImageView({
@@ -432,13 +431,13 @@ function ordenarProductos(){
 					fontSize:13
 				},
 				text : productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['sku_description']+
-					" x $"+productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['sku_price']
+					" x $"+formatCurrency(productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['sku_price'])
 			});
 			
 			var ImageViewFlecha = Ti.UI.createImageView({
 				width:"7%",
 				height:"100%",
-				backgroundImage : "/img/Flecha.jpg"
+				backgroundImage : "/img/Flecha.png"
 			});
 			
 			LabelGroup.add(LabelNombre);

@@ -154,9 +154,9 @@ for(var i = 0; i < notificaciones.length; i++){
 	if(notificaciones[i]['leido'] == true){
 		ViewLeido = Ti.UI.createView({
 			width:"15%",
-			height:"50%",
-			top:"25%",
-			bottom:"25%",
+			height:"45%",
+			top:"27.5%",
+			bottom:"27.5%",
 			backgroundImage: "/img/leido.png"
 		});
 	}
@@ -168,68 +168,58 @@ for(var i = 0; i < notificaciones.length; i++){
 	}
 	
 	var LabelGroup = Ti.UI.createView({
-		width:"70%",
+		width:"80%",
 		height:"100%",
 		layout: 'vertical'
 	});
 	
 	var LabelGroupInterno = Ti.UI.createView({
-		width:"70%",
-		top: '15%',
-		height:"35%",
+		width:"100%",
+		height:"40%",
+		top:"10%",
 		layout: 'horizontal'
 	});
 	
 	var LabelTienda = Ti.UI.createLabel({
-		minimumFontSize: 8,
 		width:'40%',
-		height:"100%",
+		height:"auto",
 		text: 'Tienda Pet ',
-		color: '#7b7b7b',
-		font:{
-			fontFamily:"Noto Sans",
-			fontWeight:"bold",
-			fontSize:13
-		},
+		color: '#7b7b7b'
 	});
 	
 	var LabelTitulo = Ti.UI.createLabel({
-		minimumFontSize: 8,
 		width:'60%',
-		height:"100%",
+		height:"auto",
 		text: '- '+notificaciones[i]['titulo'],
-		color: '#d1d0d0',
-		font:{
-			fontFamily:"Noto Sans",
-			fontWeight:"bold",
-			fontSize:13
-		},
+		color: '#d1d0d0'
+	});
+	
+	var LabelGroupInterno2 = Ti.UI.createView({
+		width:"100%",
+		height:"40%",
+		bottom:"10%"
 	});
 	
 	var LabelDetalle = Ti.UI.createLabel({
-		minimumFontSize: 8,
-		width:"70%",
-		bottom: "15%",
-		height:"35%",
+		width:"100%",
+		height:"auto",
 		text: notificaciones[i]['detalle'],
 		color: '#7b7b7b',
-		font:{
-			fontFamily:"Noto Sans",
-			fontWeight:"bold",
-			fontSize:13
-		},
+		top:"0%"
 	});
 	
 	var ViewFlecha = Ti.UI.createView({
-		width:"15%",
+		width:"10%",
 		height:"100%",
-		backgroundImage: "/img/flechaSolicitud.png"
+		backgroundImage: "/img/Flecha.png"
 	});
 	
 	LabelGroupInterno.add(LabelTienda);
 	LabelGroupInterno.add(LabelTitulo);
+	LabelGroupInterno2.add(LabelDetalle);
 	
 	LabelGroup.add(LabelGroupInterno);
+	LabelGroup.add(LabelGroupInterno2);
 	LabelGroup.add(LabelDetalle);
 	
 	Main.add(ViewLeido);

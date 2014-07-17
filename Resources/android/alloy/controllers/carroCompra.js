@@ -68,23 +68,24 @@ function Controller() {
         }).getView().open();
     }
     function realizarPedido() {
-        if (medios.length > 0) cargarDirecciones(medios); else {
+        Ti.API.info(usuario);
+        if (carro.length > 0) if (medios.length > 0) cargarDirecciones(medios); else {
             var xhr = Ti.Network.createHTTPClient({
-                onload: function() {
+                onload: function(e) {
                     try {
                         medios = JSON.parse(this.responseText);
                         cargarDirecciones(medios);
                     } catch (e) {
-                        alert("Error de conexión con el servidor.");
+                        alert("1" + e);
                     }
                 },
-                onerror: function() {
-                    alert("Error de conexión con el servidor.");
+                onerror: function(e) {
+                    alert("2" + e);
                 }
             });
             xhr.open("GET", "http://tiendapet.cl/api/pagos");
             xhr.send();
-        }
+        } else alert("Debe agregar al menos un producto en el carro de compras.");
     }
     function cargarDirecciones(medios) {
         if (direcciones.length > 0) Alloy.createController("realizarPedido", {
@@ -99,7 +100,7 @@ function Controller() {
             direccion: direccion
         }).getView().open(); else {
             var xhr = Ti.Network.createHTTPClient({
-                onload: function() {
+                onload: function(e) {
                     try {
                         direcciones = JSON.parse(this.responseText);
                         Alloy.createController("realizarPedido", {
@@ -114,11 +115,11 @@ function Controller() {
                             direccion: direccion
                         }).getView().open();
                     } catch (e) {
-                        alert("Error de conexión con el servidor.");
+                        alert("3" + e);
                     }
                 },
-                onerror: function() {
-                    alert("Error de conexión con el servidor.");
+                onerror: function(e) {
+                    alert("4" + e);
                 }
             });
             xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
@@ -136,6 +137,21 @@ function Controller() {
         lupa.addEventListener("click", function() {
             "¿Que es lo que buscas?" != buscar.value && "" != buscar.value ? productosNombre(buscar.value) : "" == buscar.value && (buscar.value = "¿Que es lo que buscas?");
         });
+    }
+    function productosQuitar(id) {
+        var carro2 = [];
+        for (var i = 0; carro.length > i; i++) carro[i]["id"] != id && carro2.push(carro[i]);
+        Alloy.createController("carroCompra", {
+            token: token,
+            carro: carro2,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
+        }).getView().open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "carroCompra";
@@ -172,6 +188,8 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    args["padre"];
+    args["producto"];
     var total_val = 0;
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "carroCompra", null);
@@ -291,15 +309,22 @@ function Controller() {
             top: "0%"
         });
         var LabelGroup = Ti.UI.createView({
-            width: "75%",
+            width: "92.5%",
+            left: "7.5%",
             height: "60%",
             layout: "vertical",
             top: "0%"
         });
+        var LabelGroup1 = Ti.UI.createView({
+            width: "100%",
+            height: "50%",
+            layout: "horizontal",
+            top: "0%"
+        });
         var LabelNombre = Ti.UI.createLabel({
             color: "#cc5122",
-            width: "100%",
-            height: "40%",
+            width: "82%",
+            height: "100%",
             top: "20%",
             left: "8%",
             font: {
@@ -308,10 +333,20 @@ function Controller() {
             },
             text: productos[i]["brand"]
         });
+        var LabelBorrar = Ti.UI.createImageView({
+            id: carro[k]["id"],
+            width: "10%",
+            height: "80%",
+            right: "0%",
+            backgroundImage: "/img/eliminar.png"
+        });
+        LabelBorrar.addEventListener("click", function() {
+            productosQuitar(this["id"]);
+        });
         var LabelDescripcion = Ti.UI.createLabel({
             color: "gray",
             width: "100%",
-            height: "40%",
+            height: "50%",
             top: "0%",
             left: "8%",
             font: {
@@ -327,7 +362,7 @@ function Controller() {
             top: "0%"
         });
         var LabelPeso = Ti.UI.createLabel({
-            width: "35%",
+            width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
@@ -338,7 +373,7 @@ function Controller() {
             text: productos[i]["producto_precios"][j]["sku_description"]
         });
         var LabelCantidad = Ti.UI.createLabel({
-            width: "35%",
+            width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
@@ -349,7 +384,7 @@ function Controller() {
             text: "Cant " + carro[k]["qty"]
         });
         var LabelPrecio = Ti.UI.createLabel({
-            width: "30%",
+            width: "34%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
@@ -357,9 +392,11 @@ function Controller() {
                 fontFamily: "Noto Sans",
                 fontWeight: "bold"
             },
-            text: "$" + carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"]
+            text: "$" + formatCurrency(carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"])
         });
-        LabelGroup.add(LabelNombre);
+        LabelGroup1.add(LabelNombre);
+        LabelGroup1.add(LabelBorrar);
+        LabelGroup.add(LabelGroup1);
         LabelGroup.add(LabelDescripcion);
         LabelGroup2.add(LabelPeso);
         LabelGroup2.add(LabelCantidad);
@@ -371,7 +408,7 @@ function Controller() {
         mainScroll.add(Main);
         mainScroll.add(Margen);
     }
-    totalLabel.text = "$" + total_val;
+    totalLabel.text = "$" + formatCurrency(total_val);
     _.extend($, exports);
 }
 

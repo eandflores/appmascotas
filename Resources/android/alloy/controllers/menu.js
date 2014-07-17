@@ -35,10 +35,16 @@ function Controller() {
         img: "notificaciones",
         text: "Notificaciones"
     }, {
+        img: "carro",
+        text: "Carro Compras"
+    }, {
         text: "spacer"
     }, {
         img: "ayuda-telefonica",
         text: "Ayuda telefónica"
+    }, {
+        img: "centro-de-ayuda",
+        text: "Como comprar"
     }, {
         img: "cerrar-sesion",
         text: "Cerrar sesión"

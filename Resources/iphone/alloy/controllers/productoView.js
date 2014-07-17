@@ -299,7 +299,7 @@ function Controller() {
             fontFamily: "Noto Sans",
             fontWeight: "bold"
         },
-        text: "$" + productoPrecio["sku_price"]
+        text: "$" + formatCurrency(productoPrecio["sku_price"])
     });
     LabelGroup.add(LabelNombre);
     LabelGroup.add(LabelDescripcion);

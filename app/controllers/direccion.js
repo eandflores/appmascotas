@@ -26,7 +26,7 @@ var producto = args['producto'];
 
 iniciarComponentes();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'direccion',producto);
 cargarLoading();
 
 var marcasView = Ti.UI.createView({

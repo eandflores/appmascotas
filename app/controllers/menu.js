@@ -6,8 +6,10 @@ var data = [
 	{img: 'mis-pedidos', text: 'Mis Pedidos'},
 	{img: 'mis-direcciones', text: 'Mis Direcciones'},
 	{img: 'notificaciones', text: 'Notificaciones'},
+	{img: 'carro', text: 'Carro Compras'},
 	{text: 'spacer'},
 	{img: 'ayuda-telefonica', text: 'Ayuda telefónica'},
+	{img: 'centro-de-ayuda', text: 'Como comprar'},
 	{img: 'cerrar-sesion', text: 'Cerrar sesión'},
 ];
 

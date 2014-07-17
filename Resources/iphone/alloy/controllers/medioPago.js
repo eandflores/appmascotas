@@ -159,7 +159,7 @@ function Controller() {
         height: "3.1%",
         backgroundImage: "/img/Margen.jpg"
     });
-    var mainScroll = Ti.UI.createView({
+    var mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "77.4%",
         contentHeight: Ti.UI.SIZE,
