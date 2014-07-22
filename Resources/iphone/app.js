@@ -71,47 +71,7 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
             break;
 
           case 2:
-            if (direcciones.length > 0) Alloy.createController("direccion", {
-                token: token,
-                carro: carro,
-                marcas: marcas,
-                productos: productos,
-                medios: medios,
-                direcciones: direcciones,
-                usuario: usuario,
-                medio: medio,
-                direccion: direccion,
-                padre: padre,
-                producto: producto
-            }).getView().open(); else {
-                var xhr = Ti.Network.createHTTPClient({
-                    onload: function() {
-                        try {
-                            direcciones = JSON.parse(this.responseText);
-                            Alloy.createController("direccion", {
-                                token: token,
-                                carro: carro,
-                                marcas: marcas,
-                                productos: productos,
-                                medios: medios,
-                                direcciones: direcciones,
-                                usuario: usuario,
-                                medio: medio,
-                                direccion: direccion,
-                                padre: padre,
-                                producto: producto
-                            }).getView().open();
-                        } catch (e) {
-                            alert("Error de conexión con el servidor.");
-                        }
-                    },
-                    onerror: function() {
-                        alert("Error de conexión con el servidor.");
-                    }
-                });
-                xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-                xhr.send();
-            }
+            cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
             break;
 
           case 3:
@@ -265,6 +225,70 @@ function formatCurrency(num) {
         return (pre || "") + n[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + sep) + (n.length > 1 ? decChar + n[1].substr(0, dec) : "") + (post || "");
     }
     return num;
+}
+
+function cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
+    if (medios.length > 0) cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto); else {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function(e) {
+                try {
+                    medios = JSON.parse(this.responseText);
+                    cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
+                } catch (e) {
+                    alert("Error de conexión con el servidor1." + e);
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor2.");
+            }
+        });
+        xhr.open("GET", "http://tiendapet.cl/api/pagos");
+        xhr.send();
+    }
+}
+
+function cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
+    if (direcciones.length > 0) Alloy.createController("direccion", {
+        token: token,
+        carro: carro,
+        marcas: marcas,
+        productos: productos,
+        medios: medios,
+        direcciones: direcciones,
+        usuario: usuario,
+        medio: medio,
+        direccion: direccion,
+        padre: padre,
+        producto: producto
+    }).getView().open(); else {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    direcciones = JSON.parse(this.responseText);
+                    Alloy.createController("direccion", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion,
+                        padre: padre,
+                        producto: producto
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor3.");
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor4.");
+            }
+        });
+        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send();
+    }
 }
 
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;

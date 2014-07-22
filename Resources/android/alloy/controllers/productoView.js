@@ -64,7 +64,6 @@ function Controller() {
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
-            nombre: "TODOS",
             pagina: 1
         }).getView().open();
     }
@@ -93,6 +92,7 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
             categoria: categoria,
@@ -157,6 +157,7 @@ function Controller() {
             productos: productos,
             medios: medios,
             direcciones: direcciones,
+            usuario: usuario,
             medio: medio,
             direccion: direccion,
             categoria: categoria,

@@ -134,8 +134,7 @@ function Controller() {
             });
             var ImageViewProducto = Ti.UI.createView({
                 width: "25%",
-                height: "100%",
-                backgroundColor: "white"
+                height: "100%"
             });
             var ImageViewProducto_int = Ti.UI.createImageView({
                 image: productos_act[i]["prod_pic"],
@@ -195,7 +194,7 @@ function Controller() {
             var ImageViewFlecha = Ti.UI.createImageView({
                 width: "7%",
                 height: "100%",
-                backgroundImage: "/img/Flecha.jpg"
+                backgroundImage: "/img/Flecha.png"
             });
             LabelGroup.add(LabelNombre);
             LabelGroup.add(LabelDescripcion);

@@ -36,7 +36,7 @@ function Controller() {
         text: "Notificaciones"
     }, {
         img: "carro",
-        text: "Carro de Compras"
+        text: "Carro Compras"
     }, {
         text: "spacer"
     }, {

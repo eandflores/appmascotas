@@ -145,7 +145,7 @@ for(var i = 0; i < productos.length; i++){
 				var Main = Ti.UI.createView({
 					width:"100%",
 					layout:'horizontal',
-					height:"232px",
+					height:"242px",
 					id: productos[i]['producto_precios'][j]['id']
 				});
 				
@@ -238,37 +238,43 @@ for(var i = 0; i < productos.length; i++){
 				});
 				
 				var LabelPeso = Ti.UI.createLabel({
+					minimumFontSize: 8,
 					width:"33%",
 					height:"50%",
 					color:"#5c5c5b",
 					top:"25%",
 					font:{
 						fontFamily:"Noto Sans",
-						fontWeight:"bold"
+						fontWeight:"bold",
+						fontSize:13
 					},
 					text : productos[i]['producto_precios'][j]['sku_description']
 				});
 				
 				var LabelCantidad = Ti.UI.createLabel({
+					minimumFontSize: 8,
 					width:"33%",
 					height:"50%",
 					color:"#5c5c5b",
 					top:"25%",
 					font:{
 						fontFamily:"Noto Sans",
-						fontWeight:"bold"
+						fontWeight:"bold",
+						fontSize:13
 					},
 					text :"Cant "+carro[k]['qty']
 				});
 				
 				var LabelPrecio = Ti.UI.createLabel({
-					width:"34%",
+					minimumFontSize: 8,
+					width:"33%",
 					height:"50%",
 					color:"#5c5c5b",
 					top:"25%",
 					font:{
 						fontFamily:"Noto Sans",
-						fontWeight:"bold"
+						fontWeight:"bold",
+						fontSize:13
 					},
 					text : "$"+formatCurrency(carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price'])
 				});
@@ -315,7 +321,7 @@ function productosGato(){
 }
 
 function realizarPedido(){
-	Ti.API.info(usuario);
+
 	if(carro.length > 0){
 		if(medios.length > 0){
 			cargarDirecciones(medios);
@@ -329,11 +335,11 @@ function realizarPedido(){
 						cargarDirecciones(medios);
 					}
 					catch(e){
-						alert("1"+e);
+						alert("Error de conexión con el servidor.");
 					}
 				},
 				onerror: function(e){
-					alert("2"+e);
+					alert("Error de conexión con el servidor.");
 				}
 			});
 			xhr.open('GET','http://tiendapet.cl/api/pagos');
@@ -358,11 +364,11 @@ function cargarDirecciones(medios){
 					Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
 				}
 				catch(e){
-					alert("3"+e);
+					alert("Error de conexión con el servidor.");
 				}
 			},
 			onerror: function(e){
-				alert("4"+e);
+				alert("Error de conexión con el servidor.");
 			}
 		});
 		xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);

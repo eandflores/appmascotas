@@ -29,7 +29,7 @@ var pagina = args['pagina'];
 var cant_productos = 0;
 
 $.productoView.addEventListener('android:back',function(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio,direccion: direccion,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView().open();
 	return false;
 });
 
@@ -532,7 +532,7 @@ function productosMarca(marca){
 
 
 function productosNombre(nombre){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function carroCompra(){	
@@ -541,7 +541,7 @@ function carroCompra(){
 }
 
 function atras(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,medio: medio,direccion: direccion,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio,direccion: direccion,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView().open();
 }
 
 function busquedaProducto(){

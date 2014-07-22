@@ -317,14 +317,14 @@ function Controller() {
         });
         var LabelGroup1 = Ti.UI.createView({
             width: "100%",
-            height: "40%",
+            height: "50%",
             layout: "horizontal",
             top: "0%"
         });
         var LabelNombre = Ti.UI.createLabel({
             color: "#cc5122",
             width: "82%",
-            height: "40%",
+            height: "100%",
             top: "20%",
             left: "8%",
             font: {
@@ -346,7 +346,7 @@ function Controller() {
         var LabelDescripcion = Ti.UI.createLabel({
             color: "gray",
             width: "100%",
-            height: "40%",
+            height: "50%",
             top: "0%",
             left: "8%",
             font: {
@@ -384,7 +384,7 @@ function Controller() {
             text: "Cant " + carro[k]["qty"]
         });
         var LabelPrecio = Ti.UI.createLabel({
-            width: "34%",
+            width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",

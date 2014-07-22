@@ -184,7 +184,12 @@ for(i=0;i<direcciones.length;i++){
 }
 
 function selectDireccion(direccion_selected){
-	Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected}).getView().open();
+	if(padre == 'productos')
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	else if(padre == 'productoView')
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,producto: producto,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	else
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected}).getView().open();
 }
 
 function eliminarDireccion(direccion_id){

@@ -1,6 +1,35 @@
 function Controller() {
     function selectDireccion(direccion_selected) {
-        Alloy.createController("realizarPedido", {
+        "productos" == padre ? Alloy.createController(padre, {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion_selected,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open() : "productoView" == padre ? Alloy.createController(padre, {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion_selected,
+            producto: producto,
+            categoria: "TODAS",
+            marca: "TODAS",
+            nombre: "TODOS",
+            pagina: 1
+        }).getView().open() : Alloy.createController(padre, {
             token: token,
             carro: carro,
             marcas: marcas,

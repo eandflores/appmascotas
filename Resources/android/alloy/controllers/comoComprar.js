@@ -157,7 +157,7 @@ function Controller() {
     });
     var contenido = Ti.UI.createImageView({
         width: "100%",
-        height: "2985px",
+        height: "4500px",
         backgroundImage: "/img/ComoComprar.jpg"
     });
     mainScroll.add(contenido);

@@ -64,8 +64,20 @@ function Controller() {
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
-            nombre: "TODOS",
             pagina: 1
+        }).getView().open();
+    }
+    function repetirPedido(id) {
+        for (var i = 0; pedidos.length > i; i++) pedidos[i]["id"] == id && Alloy.createController("carroCompra", {
+            token: token,
+            carro: pedidos[i]["carro"],
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion
         }).getView().open();
     }
     function atras() {
@@ -222,7 +234,7 @@ function Controller() {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
-                height: "232px",
+                height: "242px",
                 id: productos[i]["producto_precios"][j]["id"]
             });
             var Margen = Ti.UI.createView({
@@ -285,7 +297,7 @@ function Controller() {
                 top: "0%"
             });
             var LabelPeso = Ti.UI.createLabel({
-                width: "35%",
+                width: "33%",
                 height: "50%",
                 color: "#5c5c5b",
                 top: "25%",
@@ -296,7 +308,7 @@ function Controller() {
                 text: productos[i]["producto_precios"][j]["sku_description"]
             });
             var LabelCantidad = Ti.UI.createLabel({
-                width: "35%",
+                width: "33%",
                 height: "50%",
                 color: "#5c5c5b",
                 top: "25%",
@@ -307,7 +319,7 @@ function Controller() {
                 text: "Cant " + pedidos[n]["carro"][k]["qty"]
             });
             var LabelPrecio = Ti.UI.createLabel({
-                width: "30%",
+                width: "33%",
                 height: "50%",
                 color: "#5c5c5b",
                 top: "25%",
@@ -330,9 +342,13 @@ function Controller() {
             mainScroll.add(Margen);
         }
         var BotonPedido = Ti.UI.createImageView({
+            id: pedidos[n]["id"],
             width: "100%",
-            height: "200px",
+            height: "250px",
             backgroundImage: "/img/botonPedido.png"
+        });
+        BotonPedido.addEventListener("click", function() {
+            repetirPedido(this["id"]);
         });
         var Margen2 = Ti.UI.createView({
             width: "100%",
