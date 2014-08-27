@@ -101,26 +101,28 @@ function iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,med
 				cargarDatos(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,descuento,pedidos,notificaciones,padre,producto);
 				break;
 			}
+			/*
 			case 3: {
 				Alloy.createController('notificaciones',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto : producto}).getView().open();
 				break;
 			}
-			case 4: {
+			*/
+			case 3: {
 				Alloy.createController('carroCompra',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto : producto}).getView().open();
 				break;
 			}
-			case 5: {
+			case 4: {
 				break;
 			}
-			case 6: {
+			case 5: {
 				Ti.Platform.openURL('tel://0222021974');
 				break;
 			}
-			case 7: {
+			case 6: {
 				Alloy.createController('comoComprar',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto : producto}).getView().open();
 				break;
 			}
-			case 8: {
+			case 7: {
 				Alloy.createController('index',{token: null,carro: [],marcas: marcas,productos: productos,medios: medios,direcciones: [],usuario: null,medio: null, direccion: null,descuento: null, pedidos: [],notificaciones: []}).getView().open();
 				break;
 			}

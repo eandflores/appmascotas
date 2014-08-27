@@ -387,11 +387,6 @@ function Controller() {
             id: direcciones[i],
             height: "100%"
         });
-        var SeleccionarDireccionImg = Ti.UI.createImageView({
-            image: "/img/seleccionarDireccion.jpg",
-            width: "auto",
-            height: "100%"
-        });
         SeleccionarDireccion.addEventListener("click", function() {
             selectDireccion(this["id"]);
         });
@@ -411,8 +406,7 @@ function Controller() {
             },
             text: direcciones[i]["direccion"]
         });
-        SeleccionarDireccion.add(SeleccionarDireccionImg);
-        SeleccionarDireccionImg.add(Label);
+        SeleccionarDireccion.add(Label);
         Direccion.add(EliminarDireccion);
         Direccion.add(SeleccionarDireccion);
         mainScroll.add(Direccion);

@@ -322,8 +322,6 @@ function Controller() {
     var pedidos = [];
     var notificaciones = [];
     cargarLoading();
-    $.inputCorreo.value = "gabriel@octano.cl";
-    $.inputClave.value = "12345";
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);

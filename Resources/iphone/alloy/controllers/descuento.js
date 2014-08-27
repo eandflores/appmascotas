@@ -266,7 +266,6 @@ function Controller() {
         duration: 200,
         parent: $.descuento
     });
-    inputDescuento.value = "PRUEBA";
     _.extend($, exports);
 }
 

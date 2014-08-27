@@ -223,14 +223,10 @@ function Controller() {
     });
     for (i = 0; medios.length > i; i++) {
         var MedioPago = Ti.UI.createView({
+            backgroundImage: "/img/flechaPagos.jpg",
             width: "100%",
             id: medios[i],
             height: "98px"
-        });
-        var MedioPagoImg = Ti.UI.createImageView({
-            image: "/img/flechaPagos.jpg",
-            width: "auto",
-            height: "100%"
         });
         MedioPago.addEventListener("click", function() {
             selectMedio(this["id"]);
@@ -251,8 +247,7 @@ function Controller() {
             },
             text: medios[i]["paym_name"]
         });
-        MedioPago.add(MedioPagoImg);
-        MedioPagoImg.add(Label);
+        MedioPago.add(Label);
         mainScroll.add(MedioPago);
         mainScroll.add(Margen);
     }

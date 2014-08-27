@@ -26,10 +26,8 @@ var notificaciones = [];
 
 cargarLoading();
 
-$.inputCorreo.value = "gabriel@octano.cl";
-$.inputClave.value = "12345";
-//$.inputCorreo.value = "Prueban";
-//$.inputClave.value = "123";
+//$.inputCorreo.value = "gabriel@octano.cl";
+//$.inputClave.value = "12345";
 
 function login(){
 	

@@ -43,9 +43,6 @@ function Controller() {
         img: "mis-direcciones",
         text: "Mis Direcciones"
     }, {
-        img: "notificaciones",
-        text: "Notificaciones"
-    }, {
         img: "carro",
         text: "Carro Compras"
     }, {

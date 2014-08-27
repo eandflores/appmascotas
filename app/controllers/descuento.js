@@ -141,7 +141,8 @@ $.drawermenu.init({
     parent: $.descuento
 });
 
-inputDescuento.value = "PRUEBA";
+//inputDescuento.value = "PRUEBA";
+
 function productosNombre(nombre){
 	
 	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();

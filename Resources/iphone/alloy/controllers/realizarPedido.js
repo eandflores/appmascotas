@@ -316,13 +316,9 @@ function Controller() {
         showVerticalScrollIndicator: "true"
     });
     var labelPago1 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px"
-    });
-    var labelPago1Img = Ti.UI.createImageView({
-        image: "/img/flechaPagos.jpg",
-        width: "auto",
-        height: "100%",
+        height: "96px",
         layout: "vertical"
     });
     var tituloLabel1 = Ti.UI.createLabel({
@@ -349,17 +345,12 @@ function Controller() {
         },
         id: "direccion"
     });
-    labelPago1.add(labelPago1Img);
-    labelPago1Img.add(tituloLabel1);
-    labelPago1Img.add(contenidoLabel1);
+    labelPago1.add(tituloLabel1);
+    labelPago1.add(contenidoLabel1);
     var labelPago2 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px"
-    });
-    var labelPago2Img = Ti.UI.createImageView({
-        image: "/img/flechaPagos.jpg",
-        width: "auto",
-        height: "100%",
+        height: "96px",
         layout: "vertical"
     });
     var tituloLabel2 = Ti.UI.createLabel({
@@ -386,17 +377,12 @@ function Controller() {
         },
         id: "correo"
     });
-    labelPago2.add(labelPago2Img);
-    labelPago2Img.add(tituloLabel2);
-    labelPago2Img.add(contenidoLabel2);
+    labelPago2.add(tituloLabel2);
+    labelPago2.add(contenidoLabel2);
     var labelPago3 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px"
-    });
-    var labelPago3Img = Ti.UI.createImageView({
-        image: "/img/flechaPagos.jpg",
-        width: "auto",
-        height: "100%",
+        height: "96px",
         layout: "vertical"
     });
     var tituloLabel3 = Ti.UI.createLabel({
@@ -423,17 +409,12 @@ function Controller() {
         },
         id: "pago"
     });
-    labelPago3.add(labelPago3Img);
-    labelPago3Img.add(tituloLabel3);
-    labelPago3Img.add(contenidoLabel3);
+    labelPago3.add(tituloLabel3);
+    labelPago3.add(contenidoLabel3);
     var labelPago4 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px"
-    });
-    var labelPago4Img = Ti.UI.createImageView({
-        image: "/img/flechaPagos.jpg",
-        width: "auto",
-        height: "100%",
+        height: "96px",
         layout: "vertical"
     });
     var tituloLabel4 = Ti.UI.createLabel({
@@ -460,17 +441,12 @@ function Controller() {
         },
         id: "telefono"
     });
-    labelPago4.add(labelPago4Img);
-    labelPago4Img.add(tituloLabel4);
-    labelPago4Img.add(contenidoLabel4);
+    labelPago4.add(tituloLabel4);
+    labelPago4.add(contenidoLabel4);
     var labelPago5 = Ti.UI.createView({
+        backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px"
-    });
-    var labelPago5Img = Ti.UI.createImageView({
-        image: "/img/flechaPagos.jpg",
-        width: "auto",
-        height: "100%",
+        height: "96px",
         layout: "vertical"
     });
     var tituloLabel5 = Ti.UI.createLabel({
@@ -497,9 +473,8 @@ function Controller() {
         },
         id: "cupon"
     });
-    labelPago5.add(labelPago5Img);
-    labelPago5Img.add(tituloLabel5);
-    labelPago5Img.add(contenidoLabel5);
+    labelPago5.add(tituloLabel5);
+    labelPago5.add(contenidoLabel5);
     labelPago1.addEventListener("click", function() {
         setDireccion();
     });
