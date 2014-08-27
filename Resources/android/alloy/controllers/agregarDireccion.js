@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -75,12 +96,31 @@ function Controller() {
         "" != esquina.value && (direccionString += esquina.value + " ");
         "" != telefono.value && (direccionString += telefono.value);
         var xhr = Ti.Network.createHTTPClient({
+            onload: function(e) {
+                try {
+                    JSON.parse(this.responseText);
+                    cargarDirecciones();
+                } catch (e) {
+                    alert(e);
+                }
+            },
+            onerror: function(e) {
+                alert(e);
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send({
+            calle: direccionString,
+            comuna: comuna.value,
+            ciudad: ciudad.value
+        });
+    }
+    function cargarDirecciones() {
+        var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 try {
-                    var response = JSON.parse(this.responseText);
-                    Ti.API.info(response);
-                    Ti.API.info(padre);
-                    "productos" == padre ? Alloy.createController(padre, {
+                    direcciones = JSON.parse(this.responseText);
+                    Alloy.createController("direccion", {
                         token: token,
                         carro: carro,
                         marcas: marcas,
@@ -90,35 +130,9 @@ function Controller() {
                         usuario: usuario,
                         medio: medio,
                         direccion: direccion,
-                        categoria: "TODAS",
-                        marca: "TODAS",
-                        nombre: "TODOS",
-                        pagina: 1
-                    }).getView().open() : "productoView" == padre ? Alloy.createController(padre, {
-                        token: token,
-                        carro: carro,
-                        marcas: marcas,
-                        productos: productos,
-                        medios: medios,
-                        direcciones: direcciones,
-                        usuario: usuario,
-                        medio: medio,
-                        direccion: direccion,
-                        producto: producto,
-                        categoria: "TODAS",
-                        marca: "TODAS",
-                        nombre: "TODOS",
-                        pagina: 1
-                    }).getView().open() : Alloy.createController(padre, {
-                        token: token,
-                        carro: carro,
-                        marcas: marcas,
-                        productos: productos,
-                        medios: medios,
-                        direcciones: direcciones,
-                        usuario: usuario,
-                        medio: medio,
-                        direccion: direccion
+                        descuento: descuento,
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -128,16 +142,8 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        Ti.API.info(token);
-        Ti.API.info(direccionString);
-        Ti.API.info(comuna.value);
-        Ti.API.info(ciudad.value);
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-        xhr.send({
-            direccion: direccionString,
-            comuna: comuna.value,
-            ciudad: ciudad.value
-        });
+        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send();
     }
     function atras() {
         $.agregarDireccion.close();
@@ -153,9 +159,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "agregarDireccion";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.agregarDireccion = Ti.UI.createWindow({
@@ -186,10 +194,12 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var producto = args["producto"];
-    var padre = args["padreAux"];
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "agregarDireccion", producto);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "agregarDireccion", producto);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",

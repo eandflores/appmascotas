@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -81,9 +102,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "notificaciones";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.notificaciones = Ti.UI.createWindow({
@@ -115,6 +138,9 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
     var notificaciones = [ {
@@ -169,7 +195,7 @@ function Controller() {
         leido: false
     } ];
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto);
     cargarLoading();
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",
@@ -254,17 +280,17 @@ function Controller() {
             height: "200px",
             id: notificaciones[i]["id"]
         });
-        var ViewLeido = null;
-        ViewLeido = true == notificaciones[i]["leido"] ? Ti.UI.createView({
+        var ViewLeido = Ti.UI.createView({
             width: "15%",
-            height: "45%",
-            top: "27.5%",
-            bottom: "27.5%",
-            backgroundImage: "/img/leido.png"
-        }) : Ti.UI.createView({
-            width: "15%",
-            height: "100%"
+            height: "50%",
+            top: "25%"
         });
+        var ViewLeidoInt = Ti.UI.createImageView({
+            width: "auto",
+            height: "100%",
+            image: "/img/leido.png"
+        });
+        true == notificaciones[i]["leido"] && ViewLeido.add(ViewLeidoInt);
         var LabelGroup = Ti.UI.createView({
             width: "80%",
             height: "100%",

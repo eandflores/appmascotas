@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function ordenarProductos() {
         for (var i = 0; marcas.length > i; i++) {
@@ -153,8 +162,8 @@ function Controller() {
                 minimumFontSize: 8,
                 color: "#cc5122",
                 width: "100%",
-                height: "20%",
-                top: "20%",
+                height: "25%",
+                top: "12.5%",
                 left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
@@ -167,7 +176,7 @@ function Controller() {
                 minimumFontSize: 8,
                 color: "gray",
                 width: "100%",
-                height: "20%",
+                height: "25%",
                 top: "0%",
                 left: "8%",
                 font: {
@@ -180,7 +189,7 @@ function Controller() {
             var LabelPrecio = Ti.UI.createLabel({
                 minimumFontSize: 8,
                 width: "100%",
-                height: "20%",
+                height: "25%",
                 color: "#5c5c5b",
                 top: "0%",
                 left: "8%",
@@ -191,17 +200,22 @@ function Controller() {
                 },
                 text: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_description"] + " x $" + formatCurrency(productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["sku_price"])
             });
-            var ImageViewFlecha = Ti.UI.createImageView({
+            var ViewFlecha = Ti.UI.createView({
                 width: "7%",
-                height: "100%",
-                backgroundImage: "/img/Flecha.png"
+                height: "100%"
             });
+            var ImageViewFlecha = Ti.UI.createImageView({
+                width: "auto",
+                height: "100%",
+                image: "/img/Flecha.png"
+            });
+            ViewFlecha.add(ImageViewFlecha);
             LabelGroup.add(LabelNombre);
             LabelGroup.add(LabelDescripcion);
             LabelGroup.add(LabelPrecio);
             Main.add(ImageViewProducto);
             Main.add(LabelGroup);
-            Main.add(ImageViewFlecha);
+            Main.add(ViewFlecha);
             Main.addEventListener("click", function() {
                 productosView(this["id"]);
             });
@@ -298,6 +312,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             producto: producto,
             categoria: categoria,
             marca: marca,
@@ -320,9 +337,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productos";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.productos = Ti.UI.createWindow({
@@ -355,6 +374,9 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var categoria = args["categoria"];
     var marca = args["marca"];
     var nombre = args["nombre"];
@@ -363,7 +385,7 @@ function Controller() {
     var productosPaginacion = 20;
     iniciarComponentes();
     cargarLoading();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "productos", null);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "productos", null);
     winCargando.close();
     var mainScroll = Ti.UI.createScrollView({
         id: "mainScroll",

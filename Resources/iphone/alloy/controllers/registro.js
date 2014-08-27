@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function registro() {
         if ("" != $.inputNombre.value && "" != $.inputTelefono.value && "" != $.inputCorreo.value && "" != $.inputContraseña.value) if ($.inputContraseña.value == $.inputContraseña2.value) if (Titanium.Network.online) {
@@ -10,9 +19,7 @@ function Controller() {
             var xhr = Ti.Network.createHTTPClient({
                 onload: function(e) {
                     try {
-                        Ti.API.info(this.responseText);
                         var response = JSON.parse(this.responseText);
-                        getMarcas(response);
                         getMarcas(response["token"]);
                     } catch (e) {
                         alert(e);
@@ -28,7 +35,6 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            Ti.API.info(nombre + " " + telefono + " " + email + " " + password);
             xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
             xhr.send({
                 nombre: nombre,
@@ -69,7 +75,7 @@ function Controller() {
                     try {
                         getUsuario(token, marcas, JSON.parse(this.responseText));
                     } catch (e) {
-                        alert("Error de conexión con els ervidor.");
+                        alert("Error de conexión con el servidor.");
                         winCargando.close();
                         winCargando.close();
                         winCargando.close();
@@ -97,12 +103,15 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: "TODOS",
             pagina: 1
         }).getView().open(); else {
-            var xhrProductos = Ti.Network.createHTTPClient({
+            var xhrUsuario = Ti.Network.createHTTPClient({
                 onload: function() {
                     try {
                         Alloy.createController("productos", {
@@ -115,6 +124,9 @@ function Controller() {
                             usuario: JSON.parse(this.responseText),
                             medio: medio,
                             direccion: direccion,
+                            descuento: descuento,
+                            pedidos: pedidos,
+                            notificaciones: notificaciones,
                             categoria: "TODAS",
                             marca: "TODAS",
                             nombre: "TODOS",
@@ -122,14 +134,20 @@ function Controller() {
                         }).getView().open();
                     } catch (e) {
                         alert("Error de conexión con el servidor.");
+                        winCargando.close();
+                        winCargando.close();
+                        winCargando.close();
                     }
                 },
                 onerror: function() {
                     alert("Error de conexión con el servidor.");
+                    winCargando.close();
+                    winCargando.close();
+                    winCargando.close();
                 }
             });
-            xhrProductos.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
-            xhrProductos.send();
+            xhrUsuario.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrUsuario.send();
         }
     }
     function atras() {
@@ -137,9 +155,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "registro";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -290,6 +310,9 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     cargarLoading();
     __defers["$.__views.__alloyId4!click!atras"] && $.__views.__alloyId4.addEventListener("click", atras);
     __defers["$.__views.registrarse!click!registro"] && $.__views.registrarse.addEventListener("click", registro);

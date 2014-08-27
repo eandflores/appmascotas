@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,13 +79,46 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
             pagina: 1
         }).getView().open();
     }
-    function guardar() {}
+    function guardar() {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    Alloy.createController("realizarPedido", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion,
+                        descuento: JSON.parse(this.responseText),
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/comprar/descuento?user_token=" + token);
+        xhr.send({
+            descuento: inputDescuento.value
+        });
+    }
     function atras() {
         $.descuento.close();
     }
@@ -82,9 +133,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "descuento";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.descuento = Ti.UI.createWindow({
@@ -116,8 +169,11 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "descuento", null);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "descuento", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
@@ -159,7 +215,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "30%",
         width: "60%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
@@ -178,7 +234,7 @@ function Controller() {
         font: {
             fontWeight: "bold"
         },
-        title: "GUARDAR"
+        title: "INGRESAR"
     });
     menuImg.addEventListener("click", function() {
         $.drawermenu.showhidemenu();
@@ -209,7 +265,7 @@ function Controller() {
         duration: 200,
         parent: $.descuento
     });
-    inputDescuento.value = "b8c7tetxs";
+    inputDescuento.value = "PRUEBA";
     _.extend($, exports);
 }
 

@@ -49,12 +49,13 @@ function iniciarComponentes() {
     wrapper.add(lupaImg);
 }
 
-function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
+function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto) {
     menu = Alloy.createController("menu").getView();
     menu.addEventListener("click", function(e) {
         Ti.API.info("CLICK: " + e.rowData.rowId);
         switch (e.rowData.rowId) {
           case 1:
+            cargarPedidos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto);
             Alloy.createController("pedidos", {
                 token: token,
                 carro: carro,
@@ -65,13 +66,16 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 usuario: usuario,
                 medio: medio,
                 direccion: direccion,
+                descuento: descuento,
+                pedidos: pedidos,
+                notificaciones: notificaciones,
                 padre: padre,
                 producto: producto
             }).getView().open();
             break;
 
           case 2:
-            cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
+            cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto);
             break;
 
           case 3:
@@ -85,6 +89,9 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 usuario: usuario,
                 medio: medio,
                 direccion: direccion,
+                descuento: descuento,
+                pedidos: pedidos,
+                notificaciones: notificaciones,
                 padre: padre,
                 producto: producto
             }).getView().open();
@@ -101,6 +108,9 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 usuario: usuario,
                 medio: medio,
                 direccion: direccion,
+                descuento: descuento,
+                pedidos: pedidos,
+                notificaciones: notificaciones,
                 padre: padre,
                 producto: producto
             }).getView().open();
@@ -124,6 +134,9 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 usuario: usuario,
                 medio: medio,
                 direccion: direccion,
+                descuento: descuento,
+                pedidos: pedidos,
+                notificaciones: notificaciones,
                 padre: padre,
                 producto: producto
             }).getView().open();
@@ -139,7 +152,10 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
                 direcciones: [],
                 usuario: null,
                 medio: null,
-                direccion: null
+                direccion: null,
+                descuento: null,
+                pedidos: [],
+                notificaciones: []
             }).getView().open();
         }
     });
@@ -216,7 +232,7 @@ function formatCurrency(num) {
     num = num.replace(/,/gi, "");
     if (num.length > 3) {
         var dec = 0;
-        var sep = ",";
+        var sep = ".";
         var decChar = ",";
         var pre = "";
         var post = "";
@@ -227,13 +243,13 @@ function formatCurrency(num) {
     return num;
 }
 
-function cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
-    if (medios.length > 0) cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto); else {
+function cargarDatos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto) {
+    if (medios.length > 0) cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto); else {
         var xhr = Ti.Network.createHTTPClient({
             onload: function(e) {
                 try {
                     medios = JSON.parse(this.responseText);
-                    cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
+                    cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto);
                 } catch (e) {
                     alert("Error de conexión con el servidor1." + e);
                 }
@@ -247,48 +263,70 @@ function cargarDatos(token, carro, marcas, productos, medios, direcciones, usuar
     }
 }
 
-function cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto) {
-    if (direcciones.length > 0) Alloy.createController("direccion", {
-        token: token,
-        carro: carro,
-        marcas: marcas,
-        productos: productos,
-        medios: medios,
-        direcciones: direcciones,
-        usuario: usuario,
-        medio: medio,
-        direccion: direccion,
-        padre: padre,
-        producto: producto
-    }).getView().open(); else {
-        var xhr = Ti.Network.createHTTPClient({
-            onload: function() {
-                try {
-                    direcciones = JSON.parse(this.responseText);
-                    Alloy.createController("direccion", {
-                        token: token,
-                        carro: carro,
-                        marcas: marcas,
-                        productos: productos,
-                        medios: medios,
-                        direcciones: direcciones,
-                        usuario: usuario,
-                        medio: medio,
-                        direccion: direccion,
-                        padre: padre,
-                        producto: producto
-                    }).getView().open();
-                } catch (e) {
-                    alert("Error de conexión con el servidor3.");
-                }
-            },
-            onerror: function() {
-                alert("Error de conexión con el servidor4.");
+function cargarDirecciones(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto) {
+    var xhr = Ti.Network.createHTTPClient({
+        onload: function() {
+            try {
+                direcciones = JSON.parse(this.responseText);
+                Alloy.createController("direccion", {
+                    token: token,
+                    carro: carro,
+                    marcas: marcas,
+                    productos: productos,
+                    medios: medios,
+                    direcciones: direcciones,
+                    usuario: usuario,
+                    medio: medio,
+                    direccion: direccion,
+                    descuento: descuento,
+                    pedidos: pedidos,
+                    notificaciones: notificaciones,
+                    padre: padre,
+                    producto: producto
+                }).getView().open();
+            } catch (e) {
+                alert("Error de conexión con el servidor3.");
             }
-        });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-        xhr.send();
-    }
+        },
+        onerror: function() {
+            alert("Error de conexión con el servidor4.");
+        }
+    });
+    xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+    xhr.send();
+}
+
+function cargarPedidos(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto) {
+    var xhr = Ti.Network.createHTTPClient({
+        onload: function(e) {
+            try {
+                pedidos = JSON.parse(this.responseText);
+                Alloy.createController("pedidos", {
+                    token: token,
+                    carro: carro,
+                    marcas: marcas,
+                    productos: productos,
+                    medios: medios,
+                    direcciones: direcciones,
+                    usuario: usuario,
+                    medio: medio,
+                    direccion: direccion,
+                    descuento: descuento,
+                    pedidos: pedidos,
+                    notificaciones: notificaciones,
+                    padre: padre,
+                    producto: producto
+                }).getView().open();
+            } catch (e) {
+                alert(e);
+            }
+        },
+        onerror: function() {
+            alert("Error de conexión con el servidor6.");
+        }
+    });
+    xhr.open("GET", "http://tiendapet.cl/api/usuario/compras?user_token=" + token);
+    xhr.send();
 }
 
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;

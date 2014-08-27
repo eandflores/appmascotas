@@ -11,6 +11,10 @@ var direcciones = args['direcciones'];
 var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
+var descuento = args['descuento'];
+
+var pedidos = args['pedidos'];
+var notificaciones = args['notificaciones'];
 
 cargarLoading();
 
@@ -32,9 +36,8 @@ function registro(){
 				var xhr = Ti.Network.createHTTPClient({
 					onload: function(e){
 						try{
-							Ti.API.info(this.responseText);
 							var response = JSON.parse(this.responseText);
-							getMarcas(response);
+							
 							getMarcas(response['token']);
 						}
 						catch(e){
@@ -52,7 +55,7 @@ function registro(){
 						winCargando.close();
 					}
 				});
-				Ti.API.info(nombre+" "+telefono+" "+email+" "+password);
+				
 				xhr.open('POST','http://tiendapet.cl/api/usuario/registrar');
 				xhr.send({"nombre" : nombre,"telefono" : telefono,"email" : email,"password" : password});
 			}
@@ -111,7 +114,7 @@ function getProductos(token,marcas){
 					getUsuario(token,marcas,JSON.parse(this.responseText));
 				}
 				catch(e){
-					alert("Error de conexión con els ervidor.");
+					alert("Error de conexión con el servidor.");
 					winCargando.close();
 					winCargando.close();
 					winCargando.close();
@@ -136,26 +139,32 @@ function getProductos(token,marcas){
 function getUsuario(token,marcas,productos){
 	
 	if(usuario != null){
-		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 	}
 	else{
-		var xhrProductos = Ti.Network.createHTTPClient({
+		var xhrUsuario = Ti.Network.createHTTPClient({
 			
 			onload: function(e){
 				try{
-					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 				}
 				catch(e){
 					alert("Error de conexión con el servidor.");
+					winCargando.close();
+					winCargando.close();
+					winCargando.close();
 				}
 			},
 			onerror: function(e){
 				alert("Error de conexión con el servidor.");
+				winCargando.close();
+				winCargando.close();
+				winCargando.close();
 			}
 		});
 		
-		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
-		xhrProductos.send();
+		xhrUsuario.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
+		xhrUsuario.send();
 	}	
 }
 

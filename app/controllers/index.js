@@ -19,11 +19,17 @@ if(args.length > 0){
 var usuario = null;
 var medio = null;
 var direccion = null;
+var descuento = null;
+
+var pedidos = [];
+var notificaciones = [];
 
 cargarLoading();
 
 $.inputCorreo.value = "gabriel@octano.cl";
 $.inputClave.value = "12345";
+//$.inputCorreo.value = "Prueban";
+//$.inputClave.value = "123";
 
 function login(){
 	
@@ -135,16 +141,16 @@ function getProductos(token,marcas){
 }
 
 function getUsuario(token,marcas,productos){
-	
+	Ti.API.info(token);
 	if(usuario != null){
-		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 	}
 	else{
-		var xhrProductos = Ti.Network.createHTTPClient({
+		var xhrUsuario = Ti.Network.createHTTPClient({
 			
 			onload: function(e){
 				try{
-					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+					Alloy.createController('productos',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: JSON.parse(this.responseText),medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 				}
 				catch(e){
 					alert("Error de conexión con el servidor.");
@@ -155,15 +161,15 @@ function getUsuario(token,marcas,productos){
 			}
 		});
 		
-		xhrProductos.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
-		xhrProductos.send();
+		xhrUsuario.open('GET','http://tiendapet.cl/api/usuario/?user_token='+token);
+		xhrUsuario.send();
 	}	
 }
 
 function registro(){
-	Alloy.createController('registro',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView().open();
+	Alloy.createController('registro',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 }
 
 function recuperarContraseña(){
-	Alloy.createController('recuperarContrasena').getView().open();
+	Alloy.createController('recuperarContrasena',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 }

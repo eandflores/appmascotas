@@ -20,6 +20,10 @@ var direcciones = args['direcciones'];
 var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
+var descuento = args['descuento'];
+
+var pedidos = args['pedidos'];
+var notificaciones = args['notificaciones'];
 
 var categoria = args['categoria'];
 var marca = args['marca'];
@@ -32,7 +36,7 @@ var productosPaginacion = 20;
 iniciarComponentes();
 cargarLoading();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'productos',null);
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,descuento,pedidos,notificaciones,'productos',null);
 winCargando.close();
 
 var mainScroll = Ti.UI.createScrollView({
@@ -392,8 +396,8 @@ function ordenarProductos(){
 				minimumFontSize: 8,
 				color:"#cc5122",
 				width:"100%",
-				height:"20%",
-				top:"20%",
+				height:"25%",
+				top:"12.5%",
 				left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
@@ -407,7 +411,7 @@ function ordenarProductos(){
 				minimumFontSize: 8,
 				color:"gray",
 				width:"100%",
-				height:"20%",
+				height:"25%",
 				top:"0%",
 				left:"8%",
 				font:{
@@ -421,7 +425,7 @@ function ordenarProductos(){
 			var LabelPrecio = Ti.UI.createLabel({
 				minimumFontSize: 8,
 				width:"100%",
-				height:"20%",
+				height:"25%",
 				color:"#5c5c5b",
 				top:"0%",
 				left:"8%",
@@ -434,11 +438,18 @@ function ordenarProductos(){
 					" x $"+formatCurrency(productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['sku_price'])
 			});
 			
-			var ImageViewFlecha = Ti.UI.createImageView({
+			var ViewFlecha = Ti.UI.createView({
 				width:"7%",
-				height:"100%",
-				backgroundImage : "/img/Flecha.png"
+				height:"100%"
 			});
+			
+			var ImageViewFlecha = Ti.UI.createImageView({
+				width:"auto",
+				height:"100%",
+				image : "/img/Flecha.png"
+			});
+			
+			ViewFlecha.add(ImageViewFlecha);
 			
 			LabelGroup.add(LabelNombre);
 			LabelGroup.add(LabelDescripcion);
@@ -446,7 +457,7 @@ function ordenarProductos(){
 			
 			Main.add(ImageViewProducto);
 			Main.add(LabelGroup);
-			Main.add(ImageViewFlecha);
+			Main.add(ViewFlecha);
 			
 			Main.addEventListener("click",function(){
 				productosView(this['id']);
@@ -569,7 +580,7 @@ function productosPagina(paginaParam){
 
 function productosView(producto){
 	
-	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,producto: producto,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView();
+	var vista = Alloy.createController('productoView',{token: token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,producto: producto,categoria: categoria, marca: marca,nombre: nombre,pagina: pagina}).getView();
 	winCargando.open();
 	mainScroll.removeAllChildren();
 	paginasView.removeAllChildren();

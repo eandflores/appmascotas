@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -82,7 +103,10 @@ function Controller() {
                         direcciones: direcciones,
                         usuario: usuario,
                         medio: medio,
-                        direccion: direccion
+                        direccion: direccion,
+                        descuento: descuento,
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -111,9 +135,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "email";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.email = Ti.UI.createWindow({
@@ -145,8 +171,11 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "email", null);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "email", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
@@ -188,7 +217,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "30%",
         width: "60%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",

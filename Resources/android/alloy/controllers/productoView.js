@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosPerroGato() {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -81,7 +102,10 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function atras() {
@@ -95,6 +119,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categoria,
             marca: marca,
             nombre: nombre,
@@ -112,9 +139,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "productoView";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.productoView = Ti.UI.createWindow({
@@ -145,30 +174,19 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var categoria = args["categoria"];
     var marca = args["marca"];
     var nombre = args["nombre"];
     var pagina = args["pagina"];
     $.productoView.addEventListener("android:back", function() {
-        Alloy.createController("productos", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion,
-            categoria: categoria,
-            marca: marca,
-            nombre: nombre,
-            pagina: pagina
-        }).getView().open();
+        atras();
         return false;
     });
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "productoView", args["producto"]);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "productoView", args["producto"]);
     var Main = Ti.UI.createView({
         width: "100%",
         height: "72.8%",

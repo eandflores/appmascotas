@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -78,6 +99,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             padre: "realizarPedido",
             producto: null
         }).getView().open();
@@ -92,7 +116,10 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function setMedioPago() {
@@ -105,7 +132,10 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function setTelefono() {
@@ -118,7 +148,10 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function setCupon() {
@@ -131,7 +164,10 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function gracias() {
@@ -149,7 +185,10 @@ function Controller() {
                             direcciones: direcciones,
                             usuario: usuario,
                             medio: medio,
-                            direccion: direccion
+                            direccion: direccion,
+                            descuento: descuento,
+                            pedidos: pedidos,
+                            notificaciones: notificaciones
                         }).getView();
                         vista.open();
                     } catch (e) {
@@ -160,12 +199,22 @@ function Controller() {
                     alert(e);
                 }
             });
-            xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
-            xhr.send({
-                pago: medio["id"],
-                cart: JSON.stringify(carro),
-                direccion: direccion["id"]
-            });
+            if (null != descuento) {
+                xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
+                xhr.send({
+                    pago: medio["id"],
+                    cart: JSON.stringify(carro),
+                    direccion: direccion["id"],
+                    discount: descuento["id"]
+                });
+            } else {
+                xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
+                xhr.send({
+                    pago: medio["id"],
+                    cart: JSON.stringify(carro),
+                    direccion: direccion["id"]
+                });
+            }
         } else alert("Debe seleccionar una dirección y medio de pago.");
     }
     function atras() {
@@ -182,9 +231,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "realizarPedido";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.realizarPedido = Ti.UI.createWindow({
@@ -215,8 +266,11 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "realizarPedido", null);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "realizarPedido", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
@@ -557,9 +611,9 @@ function Controller() {
         });
         var LabelDetalle = Ti.UI.createLabel({
             width: "60%",
-            height: "50%",
+            height: "60%",
             color: "#5c5c5b",
-            top: "25%",
+            top: "20%",
             font: {
                 fontFamily: "Noto Sans",
                 fontWeight: "bold"
@@ -568,9 +622,9 @@ function Controller() {
         });
         var LabelPrecio = Ti.UI.createLabel({
             width: "40%",
-            height: "50%",
+            height: "60%",
             color: "#5c5c5b",
-            top: "25%",
+            top: "20%",
             font: {
                 fontFamily: "Noto Sans",
                 fontWeight: "bold"
@@ -592,6 +646,7 @@ function Controller() {
         contenidoLabel3.text = medios[0]["paym_name"];
         medio = medios[0];
     }
+    null != descuento && (contenidoLabel5.text = descuento["descripcion"] + " " + descuento["percentage"] + "%");
     if (null != direccion) contenidoLabel1.text = direccion["direccion"]; else if (direcciones.length > 0) {
         contenidoLabel1.text = direcciones[direcciones.length - 1]["direccion"];
         direccion = direcciones[direcciones.length - 1];

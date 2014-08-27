@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function selectDireccion(direccion_selected) {
         "productos" == padre ? Alloy.createController(padre, {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion_selected,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: "TODOS",
@@ -24,11 +36,28 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion_selected,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             producto: producto,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: "TODOS",
             pagina: 1
+        }).getView().open() : "direccion" == padre ? Alloy.createController(padre, {
+            token: token,
+            carro: carro,
+            marcas: marcas,
+            productos: productos,
+            medios: medios,
+            direcciones: direcciones,
+            usuario: usuario,
+            medio: medio,
+            direccion: direccion_selected,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
+            padre: "direccion"
         }).getView().open() : Alloy.createController(padre, {
             token: token,
             carro: carro,
@@ -38,11 +67,13 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion_selected
+            direccion: direccion_selected,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     function eliminarDireccion(direccion_id) {
-        winCargando.open();
         var xhr = Ti.Network.createHTTPClient({
             onload: function() {
                 try {
@@ -51,12 +82,10 @@ function Controller() {
                     cargarDirecciones();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
-                    winCargando.close();
                 }
             },
             onerror: function(e) {
                 alert(e);
-                winCargando.close();
             }
         });
         xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones_borrar?user_token=" + token);
@@ -69,7 +98,7 @@ function Controller() {
             onload: function() {
                 try {
                     direcciones = JSON.parse(this.responseText);
-                    var vista = Alloy.createController("direccion", {
+                    Alloy.createController("direccion", {
                         token: token,
                         carro: carro,
                         marcas: marcas,
@@ -78,18 +107,17 @@ function Controller() {
                         direcciones: direcciones,
                         usuario: usuario,
                         medio: medio,
-                        direccion: direccion
-                    }).getView();
-                    winCargando.close();
-                    vista.open();
+                        direccion: direccion,
+                        descuento: descuento,
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
+                    }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
-                    winCargando.close();
                 }
             },
             onerror: function() {
                 alert("Error de conexión con el servidor.");
-                winCargando.close();
             }
         });
         xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
@@ -106,6 +134,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -123,6 +154,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -140,6 +174,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -157,6 +194,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -174,6 +214,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             padre: padre,
             producto: producto
         }).getView().open();
@@ -192,9 +235,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "direccion";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.direccion = Ti.UI.createWindow({
@@ -226,11 +271,14 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
+    Ti.API.info(padre);
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "direccion", producto);
-    cargarLoading();
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "direccion", producto);
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
         width: "100%",
@@ -313,25 +361,35 @@ function Controller() {
         duration: 200,
         parent: $.direccion
     });
-    for (i = 0; direcciones.length > i; i++) {
+    for (var i = 0; direcciones.length > i; i++) {
         var Direccion = Ti.UI.createView({
             width: "100%",
             height: "110px",
             layout: "horizontal"
         });
         var EliminarDireccion = Ti.UI.createView({
-            backgroundImage: "/img/eliminarDireccion.jpg",
             width: "14.8%",
             id: direcciones[i]["id"],
+            height: "100%"
+        });
+        var EliminarDireccionInt = Ti.UI.createImageView({
+            image: "/img/eliminarDireccion.jpg",
+            width: "auto",
             height: "100%"
         });
         EliminarDireccion.addEventListener("click", function() {
             eliminarDireccion(this["id"]);
         });
+        EliminarDireccion.add(EliminarDireccionInt);
         var SeleccionarDireccion = Ti.UI.createView({
             backgroundImage: "/img/seleccionarDireccion.jpg",
             width: "85.2%",
             id: direcciones[i],
+            height: "100%"
+        });
+        var SeleccionarDireccionImg = Ti.UI.createImageView({
+            image: "/img/seleccionarDireccion.jpg",
+            width: "auto",
             height: "100%"
         });
         SeleccionarDireccion.addEventListener("click", function() {
@@ -353,7 +411,8 @@ function Controller() {
             },
             text: direcciones[i]["direccion"]
         });
-        SeleccionarDireccion.add(Label);
+        SeleccionarDireccion.add(SeleccionarDireccionImg);
+        SeleccionarDireccionImg.add(Label);
         Direccion.add(EliminarDireccion);
         Direccion.add(SeleccionarDireccion);
         mainScroll.add(Direccion);

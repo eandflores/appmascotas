@@ -1,12 +1,57 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function atras() {
         $.recuperarContrasena.close();
     }
+    function recuperar() {
+        Ti.API.info($.inputCorreo.value);
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    Ti.API.info(this.responseText);
+                    JSON.parse(this.responseText);
+                    Alloy.createController("resetearContrasena", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion,
+                        descuento: descuento,
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
+                    }).getView().open();
+                } catch (e) {
+                    alert("Error de conexión con el servidor.");
+                }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("POST", "http://tiendapet.cl/api/usuario/recuperar_contrasena");
+        xhr.send({
+            email: $.inputCorreo.value
+        });
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "recuperarContrasena";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -99,9 +144,24 @@ function Controller() {
         id: "registro"
     });
     $.__views.footer.add($.__views.registro);
+    recuperar ? $.__views.registro.addEventListener("click", recuperar) : __defers["$.__views.registro!click!recuperar"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var args = arguments[0] || {};
+    var token = args["token"];
+    var carro = args["carro"];
+    var marcas = args["marcas"];
+    var productos = args["productos"];
+    var medios = args["medios"];
+    var direcciones = args["direcciones"];
+    var usuario = args["usuario"];
+    var medio = args["medio"];
+    var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     __defers["$.__views.__alloyId3!click!atras"] && $.__views.__alloyId3.addEventListener("click", atras);
+    __defers["$.__views.registro!click!recuperar"] && $.__views.registro.addEventListener("click", recuperar);
     _.extend($, exports);
 }
 

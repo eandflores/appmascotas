@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosPerroGato() {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -68,17 +89,27 @@ function Controller() {
         }).getView().open();
     }
     function repetirPedido(id) {
-        for (var i = 0; pedidos.length > i; i++) pedidos[i]["id"] == id && Alloy.createController("carroCompra", {
-            token: token,
-            carro: pedidos[i]["carro"],
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion
-        }).getView().open();
+        var carro_actual = [];
+        for (var i = 0; pedidos.length > i; i++) {
+            if (pedidos[i]["resumen"]["id"] == id) for (var j = 0; pedidos[i]["orden"].length > j; j++) carro_actual.push({
+                id: pedidos[i]["orden"][j]["sku_id"],
+                qty: pedidos[i]["orden"][j]["qty"]
+            });
+            Alloy.createController("carroCompra", {
+                token: token,
+                carro: carro_actual,
+                marcas: marcas,
+                productos: productos,
+                medios: medios,
+                direcciones: direcciones,
+                usuario: usuario,
+                medio: medio,
+                direccion: direccion,
+                descuento: descuento,
+                pedidos: pedidos,
+                notificaciones: notificaciones
+            }).getView().open();
+        }
     }
     function atras() {
         $.pedidos.close();
@@ -94,9 +125,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "pedidos";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.pedidos = Ti.UI.createWindow({
@@ -127,52 +160,14 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
-    var pedidos = [ {
-        id: 1,
-        fecha: "2014-05-10",
-        programado: true,
-        carro: [ {
-            id: 1,
-            qty: 2
-        } ]
-    }, {
-        id: 2,
-        fecha: "2014-04-15",
-        programado: false,
-        carro: [ {
-            id: 10,
-            qty: 1
-        }, {
-            id: 32,
-            qty: 3
-        } ]
-    }, {
-        id: 3,
-        fecha: "2014-02-01",
-        programado: true,
-        carro: [ {
-            id: 47,
-            qty: 1
-        } ]
-    }, {
-        id: 4,
-        fecha: "2014-01-30",
-        programado: false,
-        carro: [ {
-            id: 68,
-            qty: 1
-        }, {
-            id: 77,
-            qty: 4
-        }, {
-            id: 85,
-            qty: 1
-        } ]
-    } ];
+    Ti.API.info(pedidos);
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, padre, producto);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, padre, producto);
     var mainScroll = Ti.UI.createScrollView({
         width: "100%",
         height: "80.4%",
@@ -227,15 +222,15 @@ function Controller() {
         duration: 200,
         parent: $.pedidos
     });
-    for (var n = 0; pedidos.length > n; n++) {
+    for (var n = 0; pedidos.length > n; n++) if (pedidos[n]["orden"].length > 0) {
         var total_val = 0;
-        for (var i = 0; productos.length > i; i++) for (var j = 0; productos[i]["producto_precios"].length > j; j++) for (var k = 0; pedidos[n]["carro"].length > k; k++) if (pedidos[n]["carro"][k]["id"] == productos[i]["producto_precios"][j]["id"]) {
-            total_val += pedidos[n]["carro"][k]["qty"] * productos[i]["producto_precios"][j]["sku_price"];
+        for (var k = 0; pedidos[n]["orden"].length > k; k++) {
+            total_val += pedidos[n]["orden"][k]["qty"] * pedidos[n]["orden"][k]["sku_price"];
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
                 height: "242px",
-                id: productos[i]["producto_precios"][j]["id"]
+                id: pedidos[n]["orden"][k]["sku_id"]
             });
             var Margen = Ti.UI.createView({
                 width: "100%",
@@ -248,7 +243,7 @@ function Controller() {
                 backgroundColor: "white"
             });
             var ImageViewProducto_int = Ti.UI.createImageView({
-                image: productos[i]["prod_pic"],
+                image: pedidos[n]["orden"][k]["prod_pic"],
                 defaultImage: "/img/Perro1.jpg",
                 width: "auto",
                 height: "100%"
@@ -276,7 +271,7 @@ function Controller() {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["brand"]
+                text: pedidos[n]["orden"][k]["name"]
             });
             var LabelDescripcion = Ti.UI.createLabel({
                 color: "gray",
@@ -288,7 +283,7 @@ function Controller() {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["prod_name"]
+                text: pedidos[n]["orden"][k]["prod_name"]
             });
             var LabelGroup2 = Ti.UI.createView({
                 width: "85%",
@@ -298,36 +293,36 @@ function Controller() {
             });
             var LabelPeso = Ti.UI.createLabel({
                 width: "33%",
-                height: "50%",
+                height: "60%",
                 color: "#5c5c5b",
-                top: "25%",
+                top: "20%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: productos[i]["producto_precios"][j]["sku_description"]
+                text: pedidos[n]["orden"][k]["sku_description"]
             });
             var LabelCantidad = Ti.UI.createLabel({
                 width: "33%",
-                height: "50%",
+                height: "60%",
                 color: "#5c5c5b",
-                top: "25%",
+                top: "20%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: "Cant " + pedidos[n]["carro"][k]["qty"]
+                text: "Cant " + pedidos[n]["orden"][k]["qty"]
             });
             var LabelPrecio = Ti.UI.createLabel({
                 width: "33%",
-                height: "50%",
+                height: "60%",
                 color: "#5c5c5b",
-                top: "25%",
+                top: "20%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
                 },
-                text: "$" + formatCurrency(pedidos[n]["carro"][k]["qty"] * productos[i]["producto_precios"][j]["sku_price"])
+                text: "$" + formatCurrency(pedidos[n]["orden"][k]["qty"] * pedidos[n]["orden"][k]["sku_price"])
             });
             LabelGroup.add(LabelNombre);
             LabelGroup.add(LabelDescripcion);
@@ -341,12 +336,17 @@ function Controller() {
             mainScroll.add(Main);
             mainScroll.add(Margen);
         }
-        var BotonPedido = Ti.UI.createImageView({
-            id: pedidos[n]["id"],
+        var BotonPedido = Ti.UI.createView({
+            id: pedidos[n]["resumen"]["id"],
             width: "100%",
-            height: "250px",
-            backgroundImage: "/img/botonPedido.png"
+            height: "200px"
         });
+        var BotonPedidoInt = Ti.UI.createImageView({
+            width: "auto",
+            height: "100%",
+            image: "/img/botonPedido.png"
+        });
+        BotonPedido.add(BotonPedidoInt);
         BotonPedido.addEventListener("click", function() {
             repetirPedido(this["id"]);
         });

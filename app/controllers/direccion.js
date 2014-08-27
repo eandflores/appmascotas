@@ -20,14 +20,18 @@ var direcciones = args['direcciones'];
 var usuario = args['usuario'];
 var medio = args['medio'];
 var direccion = args['direccion'];
+var descuento = args['descuento'];
+
+var pedidos = args['pedidos'];
+var notificaciones = args['notificaciones'];
 
 var padre = args['padre'];
 var producto = args['producto'];
 
+Ti.API.info(padre);
 iniciarComponentes();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
-iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,'direccion',producto);
-cargarLoading();
+iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,descuento,pedidos,notificaciones,'direccion',producto);
 
 var marcasView = Ti.UI.createView({
 	backgroundImage:"/img/fondoMarcas.jpg",
@@ -128,7 +132,7 @@ $.drawermenu.init({
     parent: $.direccion
 });
 
-for(i=0;i<direcciones.length;i++){
+for(var i = 0;i < direcciones.length;i++){
 		
 	var Direccion = Ti.UI.createView({
 		width:"100%",
@@ -137,15 +141,22 @@ for(i=0;i<direcciones.length;i++){
 	});
 	
 	var EliminarDireccion = Ti.UI.createView({
-		backgroundImage:"/img/eliminarDireccion.jpg",
 		width:"14.8%",
 		id: direcciones[i]['id'],
+		height:"100%"
+	});
+	
+	var EliminarDireccionInt = Ti.UI.createImageView({
+		image:"/img/eliminarDireccion.jpg",
+		width:"auto",
 		height:"100%"
 	});
 	
 	EliminarDireccion.addEventListener("click",function(){
 		eliminarDireccion(this['id']);
 	});
+	
+	EliminarDireccion.add(EliminarDireccionInt);
 	
 	var SeleccionarDireccion = Ti.UI.createView({
 		backgroundImage:"/img/seleccionarDireccion.jpg",
@@ -185,16 +196,16 @@ for(i=0;i<direcciones.length;i++){
 
 function selectDireccion(direccion_selected){
 	if(padre == 'productos')
-		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 	else if(padre == 'productoView')
-		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,producto: producto,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,producto: producto,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
+	else if(padre == 'direccion')
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: 'direccion'}).getView().open();
 	else
-		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected}).getView().open();
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 }
 
 function eliminarDireccion(direccion_id){
-	
-	winCargando.open();
 	
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
@@ -211,12 +222,10 @@ function eliminarDireccion(direccion_id){
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");
-				winCargando.close();
 			}
 		},
 		onerror: function(e){
 			alert(e);
-			winCargando.close();
 		}
 	});
 	
@@ -231,18 +240,14 @@ function cargarDirecciones(){
 			try{
 				direcciones = JSON.parse(this.responseText);
 			
-				var vista = Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion}).getView();
-				winCargando.close();
-				vista.open();
+				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");
-				winCargando.close();
 			}	
 		},
 		onerror: function(e){
 			alert("Error de conexión con el servidor.");
-			winCargando.close();
 		}
 	});
 	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
@@ -250,23 +255,23 @@ function cargarDirecciones(){
 }
 
 function productosPerroGato(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: categorias[3], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosPerro(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: categorias[1], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosGato(){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: categorias[2], marca: "TODAS",nombre: "TODOS",pagina: 1}).getView().open();
 }
 
 function productosNombre(nombre){
-	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
+	Alloy.createController('productos',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,categoria: "TODAS", marca: "TODAS",nombre: nombre,pagina: 1}).getView().open();
 }
 
 function agregarDireccion(){
-	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,padre: padre,producto: producto}).getView().open();
+	Alloy.createController('agregarDireccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto: producto}).getView().open();
 }
 
 function atras(){

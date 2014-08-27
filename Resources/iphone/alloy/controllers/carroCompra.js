@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function productosNombre(nombre) {
         Alloy.createController("productos", {
@@ -10,6 +19,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: "TODAS",
             marca: "TODAS",
             nombre: nombre,
@@ -27,6 +39,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[3],
             marca: "TODAS",
             nombre: "TODOS",
@@ -44,6 +59,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[1],
             marca: "TODAS",
             nombre: "TODOS",
@@ -61,6 +79,9 @@ function Controller() {
             usuario: usuario,
             medio: medio,
             direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones,
             categoria: categorias[2],
             marca: "TODAS",
             nombre: "TODOS",
@@ -87,43 +108,34 @@ function Controller() {
         } else alert("Debe agregar al menos un producto en el carro de compras.");
     }
     function cargarDirecciones(medios) {
-        if (direcciones.length > 0) Alloy.createController("realizarPedido", {
-            token: token,
-            carro: carro,
-            marcas: marcas,
-            productos: productos,
-            medios: medios,
-            direcciones: direcciones,
-            usuario: usuario,
-            medio: medio,
-            direccion: direccion
-        }).getView().open(); else {
-            var xhr = Ti.Network.createHTTPClient({
-                onload: function() {
-                    try {
-                        direcciones = JSON.parse(this.responseText);
-                        Alloy.createController("realizarPedido", {
-                            token: token,
-                            carro: carro,
-                            marcas: marcas,
-                            productos: productos,
-                            medios: medios,
-                            direcciones: direcciones,
-                            usuario: usuario,
-                            medio: medio,
-                            direccion: direccion
-                        }).getView().open();
-                    } catch (e) {
-                        alert("Error de conexión con el servidor.");
-                    }
-                },
-                onerror: function() {
+        var xhr = Ti.Network.createHTTPClient({
+            onload: function() {
+                try {
+                    direcciones = JSON.parse(this.responseText);
+                    Alloy.createController("realizarPedido", {
+                        token: token,
+                        carro: carro,
+                        marcas: marcas,
+                        productos: productos,
+                        medios: medios,
+                        direcciones: direcciones,
+                        usuario: usuario,
+                        medio: medio,
+                        direccion: direccion,
+                        descuento: descuento,
+                        pedidos: pedidos,
+                        notificaciones: notificaciones
+                    }).getView().open();
+                } catch (e) {
                     alert("Error de conexión con el servidor.");
                 }
-            });
-            xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
-            xhr.send();
-        }
+            },
+            onerror: function() {
+                alert("Error de conexión con el servidor.");
+            }
+        });
+        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.send();
     }
     function atras() {
         $.carroCompra.close();
@@ -149,14 +161,19 @@ function Controller() {
             direcciones: direcciones,
             usuario: usuario,
             medio: medio,
-            direccion: direccion
+            direccion: direccion,
+            descuento: descuento,
+            pedidos: pedidos,
+            notificaciones: notificaciones
         }).getView().open();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "carroCompra";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.carroCompra = Ti.UI.createWindow({
@@ -188,11 +205,14 @@ function Controller() {
     var usuario = args["usuario"];
     var medio = args["medio"];
     var direccion = args["direccion"];
+    var descuento = args["descuento"];
+    var pedidos = args["pedidos"];
+    var notificaciones = args["notificaciones"];
     args["padre"];
     args["producto"];
     var total_val = 0;
     iniciarComponentes();
-    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, "carroCompra", null);
+    iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "carroCompra", null);
     cargarLoading();
     var marcasView = Ti.UI.createView({
         backgroundImage: "/img/fondoMarcas.jpg",
@@ -282,7 +302,7 @@ function Controller() {
         var Main = Ti.UI.createView({
             width: "100%",
             layout: "horizontal",
-            height: "232px",
+            height: "242px",
             id: productos[i]["producto_precios"][j]["id"]
         });
         var Margen = Ti.UI.createView({
@@ -333,16 +353,22 @@ function Controller() {
             },
             text: productos[i]["brand"]
         });
-        var LabelBorrar = Ti.UI.createImageView({
+        var LabelBorrar = Ti.UI.createView({
             id: carro[k]["id"],
             width: "10%",
             height: "80%",
-            right: "0%",
-            backgroundImage: "/img/eliminar.png"
+            right: "0%"
+        });
+        var LabelBorrarInt = Ti.UI.createImageView({
+            id: carro[k]["id"],
+            width: "auto",
+            height: "100%",
+            image: "/img/eliminar.png"
         });
         LabelBorrar.addEventListener("click", function() {
             productosQuitar(this["id"]);
         });
+        LabelBorrar.add(LabelBorrarInt);
         var LabelDescripcion = Ti.UI.createLabel({
             color: "gray",
             width: "100%",
@@ -362,35 +388,41 @@ function Controller() {
             top: "0%"
         });
         var LabelPeso = Ti.UI.createLabel({
+            minimumFontSize: 8,
             width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
             font: {
                 fontFamily: "Noto Sans",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                fontSize: 13
             },
             text: productos[i]["producto_precios"][j]["sku_description"]
         });
         var LabelCantidad = Ti.UI.createLabel({
+            minimumFontSize: 8,
             width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
             font: {
                 fontFamily: "Noto Sans",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                fontSize: 13
             },
             text: "Cant " + carro[k]["qty"]
         });
         var LabelPrecio = Ti.UI.createLabel({
+            minimumFontSize: 8,
             width: "33%",
             height: "50%",
             color: "#5c5c5b",
             top: "25%",
             font: {
                 fontFamily: "Noto Sans",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                fontSize: 13
             },
             text: "$" + formatCurrency(carro[k]["qty"] * productos[i]["producto_precios"][j]["sku_price"])
         });

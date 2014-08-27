@@ -8,11 +8,13 @@
 				<ImageView id="imagenIndex"></ImageView>
 		</View>
 		<View id="inputs">
-				<TextField id="inputCorreo" hintText="CORREO"></TextField>
+				<TextField id="inputCodigo" hintText="CÓDIGO"></TextField>
+				<TextField id="inputPass" hintText="PASSWORD"></TextField>
+				<TextField id="inputPass2" hintText="CONFIRMAR PASSWORD"></TextField>
 		</View>
 		<View id="margenB"></View>
 		<View id="footer">
-			<Button id="registro" onClick="recuperar">RECUPERAR CONTRASEÑA</Button>
+			<Button id="resetear" onClick="resetear">RESETEAR CONTRSASEÑA</Button>
 		</View>
 	</Window>
 </Alloy>
