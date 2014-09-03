@@ -83,14 +83,14 @@ var envioScroll = Ti.UI.createScrollView({
 var labelPago1 = Ti.UI.createView({
 	backgroundImage:"/img/flechaPagos.jpg",
 	width:"100%",
-	height:"96px",
+	height:"55dp",
 	layout:"vertical"
 });
 
 var tituloLabel1 = Ti.UI.createLabel({
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"35%",
 	color:"#cc5122",		
 	font:{
 		fontFamily:"Noto Sans",
@@ -103,7 +103,7 @@ var contenidoLabel1 = Ti.UI.createLabel({
 	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"65%",
 	color:"#5c5c5b",
 	font:{
 		fontFamily:"Noto Sans",
@@ -119,14 +119,14 @@ labelPago1.add(contenidoLabel1);
 var labelPago2 = Ti.UI.createView({
 	backgroundImage:"/img/flechaPagos.jpg",
 	width:"100%",
-	height:"96px",
+	height:"48dp",
 	layout:"vertical"
 });
 
 var tituloLabel2 = Ti.UI.createLabel({
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"35%",
 	color:"#cc5122",		
 	font:{
 		fontFamily:"Noto Sans",
@@ -139,7 +139,7 @@ var contenidoLabel2 = Ti.UI.createLabel({
 	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"65%",
 	color:"#5c5c5b",
 	font:{
 		fontSize:12,
@@ -155,14 +155,14 @@ labelPago2.add(contenidoLabel2);
 var labelPago3 = Ti.UI.createView({
 	backgroundImage:"/img/flechaPagos.jpg",
 	width:"100%",
-	height:"96px",
+	height:"48dp",
 	layout:"vertical"
 });
 
 var tituloLabel3 = Ti.UI.createLabel({
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"35%",
 	color:"#cc5122",		
 	font:{
 		fontFamily:"Noto Sans",
@@ -175,7 +175,7 @@ var contenidoLabel3 = Ti.UI.createLabel({
 	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"65%",
 	color:"#5c5c5b",
 	font:{
 		fontSize:12,
@@ -191,14 +191,14 @@ labelPago3.add(contenidoLabel3);
 var labelPago4 = Ti.UI.createView({
 	backgroundImage:"/img/flechaPagos.jpg",
 	width:"100%",
-	height:"96px",
+	height:"48dp",
 	layout:"vertical"
 });
 
 var tituloLabel4 = Ti.UI.createLabel({
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"35%",
 	color:"#cc5122",		
 	font:{
 		fontFamily:"Noto Sans",
@@ -211,7 +211,7 @@ var contenidoLabel4 = Ti.UI.createLabel({
 	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"65%",
 	color:"#5c5c5b",
 	font:{
 		fontSize:12,
@@ -227,14 +227,14 @@ labelPago4.add(contenidoLabel4);
 var labelPago5 = Ti.UI.createView({
 	backgroundImage:"/img/flechaPagos.jpg",
 	width:"100%",
-	height:"96px",
+	height:"48dp",
 	layout:"vertical"
 });
 
 var tituloLabel5 = Ti.UI.createLabel({
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"35%",
 	color:"#cc5122",		
 	font:{
 		fontFamily:"Noto Sans",
@@ -247,7 +247,7 @@ var contenidoLabel5 = Ti.UI.createLabel({
 	minimumFontSize: 8,
 	left:"7%",
 	width:"80%",
-	height:"50%",
+	height:"65%",
 	color:"#5c5c5b",
 	font:{
 		fontSize:12,
@@ -357,7 +357,7 @@ for(var i = 0; i < productos.length; i++){
 				var Main = Ti.UI.createView({
 					width:"100%",
 					layout:'horizontal',
-					height:"232px",
+					height:"116dp",
 					id: productos[i]['producto_precios'][j]['id']
 				});
 				
@@ -553,10 +553,12 @@ function gracias(){
 		});
 		
 		if(descuento != null){
+			Ti.API.info(medio['id']+" "+JSON.stringify(carro)+" "+direccion['id']+" "+descuento["id"]);
 			xhr.open('POST','http://tiendapet.cl/api/comprar?user_token='+token);
 			xhr.send({"pago" : medio['id'],"cart" : JSON.stringify(carro),"direccion" : direccion['id'],"discount" : descuento["id"]}); 
 		}
 		else{
+			Ti.API.info(medio['id']+" "+JSON.stringify(carro)+" "+direccion['id']);
 			xhr.open('POST','http://tiendapet.cl/api/comprar?user_token='+token);
 			xhr.send({"pago" : medio['id'],"cart" : JSON.stringify(carro),"direccion" : direccion['id']}); 
 		}

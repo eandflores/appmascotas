@@ -72,24 +72,37 @@ var mainView = Ti.UI.createView({
 
 var viewDescuento = Ti.UI.createView({
 	width:"100%",
-	height:"7%",
-	backgroundImage:"/img/labelDescuento.jpg"
+	top:"2%",
+	height:"10%",
+	layout:'horizontal',
+	backgroundImage:"/img/labelOscuro.jpg"
+});
+
+var labelDescuento = Ti.UI.createLabel({
+	width:"20.2%",
+	left:"11%",
+	height:"100%",
+	color:"#7b7b7b",
+	font: {
+		fontWeight:"bold"
+    },
+    text:"Cupón"
 });
 
 var inputDescuento = Ti.UI.createTextField({
 	minimumFontSize: 8,
-	left:"30%",
 	width:"60%",
+	right:"8.8%",
 	height:"100%",
 	color:"#888888",
 	font:{
 		fontFamily:"Noto Sans",
-		fontWeight:"bold",
-		fontSize:12
+		fontSize:'12sp'
 	},
 	backgroundColor:"#d8d8d8"
 });
 
+viewDescuento.add(labelDescuento);
 viewDescuento.add(inputDescuento);
 mainView.add(viewDescuento);
 
@@ -168,7 +181,13 @@ function guardar(){
 	var xhr = Ti.Network.createHTTPClient({
 		onload: function(e){
 			try{
-				Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: JSON.parse(this.responseText), pedidos: pedidos,notificaciones: notificaciones}).getView().open();
+				descuento = JSON.parse(this.responseText);
+				
+				if(descuento['id'] == null)
+					descuento = null
+				
+				Ti.API.info(descuento);
+				Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");

@@ -226,7 +226,7 @@ function Controller() {
             backgroundImage: "/img/flechaPagos.jpg",
             width: "100%",
             id: medios[i],
-            height: "98px"
+            height: "45dp"
         });
         MedioPago.addEventListener("click", function() {
             selectMedio(this["id"]);

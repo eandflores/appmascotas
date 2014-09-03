@@ -200,6 +200,7 @@ function Controller() {
                 }
             });
             if (null != descuento) {
+                Ti.API.info(medio["id"] + " " + JSON.stringify(carro) + " " + direccion["id"] + " " + descuento["id"]);
                 xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
                 xhr.send({
                     pago: medio["id"],
@@ -208,6 +209,7 @@ function Controller() {
                     discount: descuento["id"]
                 });
             } else {
+                Ti.API.info(medio["id"] + " " + JSON.stringify(carro) + " " + direccion["id"]);
                 xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
                 xhr.send({
                     pago: medio["id"],
@@ -318,13 +320,13 @@ function Controller() {
     var labelPago1 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px",
+        height: "55dp",
         layout: "vertical"
     });
     var tituloLabel1 = Ti.UI.createLabel({
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "35%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
@@ -336,7 +338,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "65%",
         color: "#5c5c5b",
         font: {
             fontFamily: "Noto Sans",
@@ -350,13 +352,13 @@ function Controller() {
     var labelPago2 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px",
+        height: "48dp",
         layout: "vertical"
     });
     var tituloLabel2 = Ti.UI.createLabel({
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "35%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
@@ -368,7 +370,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "65%",
         color: "#5c5c5b",
         font: {
             fontSize: 12,
@@ -382,13 +384,13 @@ function Controller() {
     var labelPago3 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px",
+        height: "48dp",
         layout: "vertical"
     });
     var tituloLabel3 = Ti.UI.createLabel({
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "35%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
@@ -400,7 +402,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "65%",
         color: "#5c5c5b",
         font: {
             fontSize: 12,
@@ -414,13 +416,13 @@ function Controller() {
     var labelPago4 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px",
+        height: "48dp",
         layout: "vertical"
     });
     var tituloLabel4 = Ti.UI.createLabel({
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "35%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
@@ -432,7 +434,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "65%",
         color: "#5c5c5b",
         font: {
             fontSize: 12,
@@ -446,13 +448,13 @@ function Controller() {
     var labelPago5 = Ti.UI.createView({
         backgroundImage: "/img/flechaPagos.jpg",
         width: "100%",
-        height: "96px",
+        height: "48dp",
         layout: "vertical"
     });
     var tituloLabel5 = Ti.UI.createLabel({
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "35%",
         color: "#cc5122",
         font: {
             fontFamily: "Noto Sans",
@@ -464,7 +466,7 @@ function Controller() {
         minimumFontSize: 8,
         left: "7%",
         width: "80%",
-        height: "50%",
+        height: "65%",
         color: "#5c5c5b",
         font: {
             fontSize: 12,
@@ -548,7 +550,7 @@ function Controller() {
         var Main = Ti.UI.createView({
             width: "100%",
             layout: "horizontal",
-            height: "232px",
+            height: "116dp",
             id: productos[i]["producto_precios"][j]["id"]
         });
         var Margen = Ti.UI.createView({

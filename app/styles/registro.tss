@@ -42,7 +42,10 @@
 	width:"90%",
 	height:"20%",
 	backgroundColor:"#f5f5f5",
-	color:"#585858"
+	color:"#585858",
+	font: {
+        fontSize: '12sp'
+    }
 	
 },
 "#inputTelefono":{
@@ -50,7 +53,10 @@
 	width:"90%",
 	height:"20%",
 	backgroundColor:"#f5f5f5",
-	color:"#585858"
+	color:"#585858",
+	font: {
+        fontSize: '12sp'
+    }
 	
 },
 "#inputCorreo":{
@@ -58,21 +64,30 @@
 	width:"90%",
 	height:"20%",
 	backgroundColor:"#f5f5f5",
-	color:"#585858"
+	color:"#585858",
+	font: {
+        fontSize: '12sp'
+    }
 },
 "#inputContraseña":{
 	left:"10%",
 	width:"90%",
 	height:"20%",
 	backgroundColor:"#f5f5f5",
-	color:"#585858"
+	color:"#585858",
+	font: {
+        fontSize: '12sp'
+    }
 },
 "#inputContraseña2":{
 	left:"10%",
 	width:"90%",
 	height:"20%",
 	backgroundColor:"#f5f5f5",
-	color:"#585858"
+	color:"#585858",
+	font: {
+        fontSize: '12sp'
+    }
 },
 "#margenB":{
 	height:"5.2%",

@@ -302,7 +302,7 @@ function Controller() {
         var Main = Ti.UI.createView({
             width: "100%",
             layout: "horizontal",
-            height: "242px",
+            height: "121dp",
             id: productos[i]["producto_precios"][j]["id"]
         });
         var Margen = Ti.UI.createView({

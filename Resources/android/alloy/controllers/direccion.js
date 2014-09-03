@@ -275,7 +275,7 @@ function Controller() {
     var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
-    Ti.API.info(padre);
+    Ti.API.info(direcciones);
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "direccion", producto);
     var marcasView = Ti.UI.createView({
@@ -363,7 +363,7 @@ function Controller() {
     for (var i = 0; direcciones.length > i; i++) {
         var Direccion = Ti.UI.createView({
             width: "100%",
-            height: "110px",
+            height: "55dp",
             layout: "horizontal"
         });
         var EliminarDireccion = Ti.UI.createView({

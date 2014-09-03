@@ -15,6 +15,7 @@ var data = [
 
 var row_h = 40;
 var row = null;
+
 for(i in data)
 {
 	row = Ti.UI.createTableViewRow({
@@ -43,7 +44,7 @@ for(i in data)
 		}));
 	} else {
 		// Es separador, estiro
-		row.height = 220;//"58%";
+		row.height = 200;//"58%";
 		row.selectionStyle = "none";
 	}
 	

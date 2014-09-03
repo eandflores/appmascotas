@@ -28,7 +28,7 @@ var notificaciones = args['notificaciones'];
 var padre = args['padre'];
 var producto = args['producto'];
 
-Ti.API.info(padre);
+Ti.API.info(direcciones);
 iniciarComponentes();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
 iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,descuento,pedidos,notificaciones,'direccion',producto);
@@ -136,7 +136,7 @@ for(var i = 0;i < direcciones.length;i++){
 		
 	var Direccion = Ti.UI.createView({
 		width:"100%",
-		height:"110px",
+		height:"55dp",
 		layout:"horizontal"
 	});
 	
@@ -239,7 +239,7 @@ function cargarDirecciones(){
 		onload: function(e){
 			try{
 				direcciones = JSON.parse(this.responseText);
-			
+				
 				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 			}
 			catch(e){

@@ -245,6 +245,8 @@ function Controller() {
     var input1 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "2%",
+        bottom: "1%",
         layout: "horizontal"
     });
     var labelDireccion1 = Ti.UI.createLabel({
@@ -258,23 +260,21 @@ function Controller() {
         text: "Calle"
     });
     var calle = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8"
     });
     var input2 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal",
         backgroundImage: "/img/labelOscuro.jpg"
     });
@@ -289,17 +289,13 @@ function Controller() {
         text: "Nro."
     });
     var numero = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
@@ -307,6 +303,8 @@ function Controller() {
     var input3 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal"
     });
     var labelDireccion3 = Ti.UI.createLabel({
@@ -320,17 +318,13 @@ function Controller() {
         text: "Depto."
     });
     var departamento = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
@@ -338,6 +332,8 @@ function Controller() {
     var input4 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal",
         backgroundImage: "/img/labelOscuro.jpg"
     });
@@ -352,23 +348,21 @@ function Controller() {
         text: "Esquina"
     });
     var esquina = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8"
     });
     var input5 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal"
     });
     var labelDireccion5 = Ti.UI.createLabel({
@@ -382,23 +376,21 @@ function Controller() {
         text: "Ciudad"
     });
     var ciudad = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8"
     });
     var input6 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal",
         backgroundImage: "/img/labelOscuro.jpg"
     });
@@ -413,23 +405,21 @@ function Controller() {
         text: "Comuna"
     });
     var comuna = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8"
     });
     var input7 = Ti.UI.createView({
         width: "100%",
         height: "10%",
+        top: "1%",
+        bottom: "1%",
         layout: "horizontal"
     });
     var labelDireccion7 = Ti.UI.createLabel({
@@ -443,17 +433,13 @@ function Controller() {
         text: "Teléfono"
     });
     var telefono = Ti.UI.createTextField({
-        minimumFontSize: 8,
         width: "60%",
         right: "8.8%",
-        top: "10%",
-        bottom: "10%",
-        height: "80%",
+        height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8",
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD

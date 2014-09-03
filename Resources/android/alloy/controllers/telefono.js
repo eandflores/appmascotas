@@ -210,23 +210,34 @@ function Controller() {
     });
     var viewTelefono = Ti.UI.createView({
         width: "100%",
-        height: "7%",
-        backgroundImage: "/img/labelTelefono.jpg"
+        top: "2%",
+        height: "10%",
+        layout: "horizontal",
+        backgroundImage: "/img/labelOscuro.jpg"
+    });
+    var labelTelefono = Ti.UI.createLabel({
+        width: "20.2%",
+        left: "11%",
+        height: "100%",
+        color: "#7b7b7b",
+        font: {
+            fontWeight: "bold"
+        },
+        text: "Teléfono"
     });
     var inputTelefono = Ti.UI.createTextField({
-        minimumFontSize: 8,
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-        left: "30%",
         width: "60%",
+        right: "8.8%",
         height: "100%",
         color: "#888888",
         font: {
             fontFamily: "Noto Sans",
-            fontWeight: "bold",
-            fontSize: 12
+            fontSize: "12sp"
         },
         backgroundColor: "#d8d8d8"
     });
+    viewTelefono.add(labelTelefono);
     viewTelefono.add(inputTelefono);
     mainView.add(viewTelefono);
     var footer = Ti.UI.createButton({

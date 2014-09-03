@@ -108,7 +108,7 @@ for(var i = 0; i < marcas.length; i++){
 	var ImageViewMarca = Ti.UI.createImageView({
 		image : marcas[i]['brand_logo'],
 		defaultImage: "/img/Doguitos.jpg",
-		width:"250px",
+		width:"125dp",
 		id: marcas[i]['id'],
 		height:"100%"
 	});
@@ -179,7 +179,11 @@ var footer = Ti.UI.createButton({
 	color:"white",
 	width:"100%",
 	height:"9%",
-	title:"ACEPTAR"
+	title:"ACEPTAR",
+	font: {
+		fontWeight:"bold",
+        fontSize: '12sp'
+    }
 });
 
 footer.addEventListener("click",function(){

@@ -236,6 +236,9 @@ function Controller() {
         height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "11sp"
+        },
         id: "inputCorreo",
         hintText: "CORREO"
     });
@@ -246,6 +249,9 @@ function Controller() {
         height: "50%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "11sp"
+        },
         id: "inputClave",
         hintText: "CLAVE",
         passwordMask: "true"
@@ -284,6 +290,10 @@ function Controller() {
         color: "white",
         width: "50%",
         height: "100%",
+        font: {
+            fontWeight: "bold",
+            fontSize: "12sp"
+        },
         title: "INICIAR SESIÓN",
         id: "login"
     });
@@ -295,7 +305,8 @@ function Controller() {
         width: "50%",
         height: "100%",
         font: {
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: "12sp"
         },
         title: "REGISTRARSE",
         id: "registro"

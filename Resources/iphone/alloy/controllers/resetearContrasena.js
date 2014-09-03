@@ -119,6 +119,9 @@ function Controller() {
         height: "33%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputCodigo",
         hintText: "CÓDIGO"
     });
@@ -129,6 +132,9 @@ function Controller() {
         height: "33%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputPass",
         hintText: "PASSWORD"
     });
@@ -139,6 +145,9 @@ function Controller() {
         height: "33%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputPass2",
         hintText: "CONFIRMAR PASSWORD"
     });

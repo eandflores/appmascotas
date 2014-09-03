@@ -219,7 +219,7 @@ function Controller() {
         var ImageViewMarca = Ti.UI.createImageView({
             image: marcas[i]["brand_logo"],
             defaultImage: "/img/Doguitos.jpg",
-            width: "250px",
+            width: "125dp",
             id: marcas[i]["id"],
             height: "100%"
         });

@@ -13,7 +13,7 @@ function Controller() {
             var ImageViewMarca = Ti.UI.createImageView({
                 image: marcas[i]["brand_logo"],
                 defaultImage: "/img/Doguitos.jpg",
-                width: "250px",
+                width: "125dp",
                 id: marcas[i]["id"],
                 height: "100%"
             });
@@ -68,7 +68,7 @@ function Controller() {
         paginas = 0;
         paginas = 0 != productos_act.length % productosPaginacion ? parseInt(productos_act.length / productosPaginacion) + 1 : parseInt(productos_act.length / productosPaginacion);
         var pagerFlechaIzq = Ti.UI.createView({
-            width: "100px",
+            width: "50dp",
             height: "100%",
             backgroundImage: "/img/pagerIzq.jpg"
         });
@@ -78,7 +78,7 @@ function Controller() {
         paginasView.add(pagerFlechaIzq);
         for (var i = 0; paginas > i; i++) {
             if (i == pagina - 1) var paginaLabel = Ti.UI.createLabel({
-                width: "55px",
+                width: "27dp",
                 height: "100%",
                 text: i + 1,
                 color: "#620001",
@@ -89,7 +89,7 @@ function Controller() {
                 },
                 id: i + 1
             }); else var paginaLabel = Ti.UI.createLabel({
-                width: "55px",
+                width: "27dp",
                 height: "100%",
                 text: i + 1,
                 color: "white",
@@ -121,7 +121,7 @@ function Controller() {
             paginasView.add(margenPagina);
         }
         var pagerFlechaDer = Ti.UI.createView({
-            width: "100px",
+            width: "50dp",
             height: "100%",
             backgroundImage: "/img/pagerDer.jpg"
         });
@@ -133,7 +133,7 @@ function Controller() {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
-                height: "232px",
+                height: "116dp",
                 id: productos_act[i]["producto_precios"][productos_act[i]["producto_precios"].length - 1]["id"]
             });
             var Margen = Ti.UI.createView({

@@ -84,7 +84,7 @@ function Controller() {
                 }
             }));
         } else {
-            row.height = 220;
+            row.height = 200;
             row.selectionStyle = "none";
         }
         rows.push(row);

@@ -161,7 +161,7 @@ function ordenarProductos(){
 		var ImageViewMarca = Ti.UI.createImageView({
 			image : marcas[i]['brand_logo'],
 			defaultImage: "/img/Doguitos.jpg",
-			width:"250px",
+			width:"125dp",
 			id: marcas[i]['id'],
 			height:"100%"
 		});
@@ -274,7 +274,7 @@ function ordenarProductos(){
 	}
 	
 	var pagerFlechaIzq = Ti.UI.createView({
-		width:"100px",
+		width:"50dp",
 		height:"100%",
 		backgroundImage:"/img/pagerIzq.jpg"
 	});
@@ -289,7 +289,7 @@ function ordenarProductos(){
 		
 		if(i == (pagina-1)){
 			var paginaLabel = Ti.UI.createLabel({
-				width:"55px",
+				width:"27dp",
 				height:"100%",
 				text: (i+1),
 				//backgroundColor:"#e8e8e8",
@@ -304,7 +304,7 @@ function ordenarProductos(){
 		}
 		else{
 			var paginaLabel = Ti.UI.createLabel({
-				width:"55px",
+				width:"27dp",
 				height:"100%",
 				text: (i+1),
 				color:"white",
@@ -343,7 +343,7 @@ function ordenarProductos(){
 	}
 	
 	var pagerFlechaDer = Ti.UI.createView({
-		width:"100px",
+		width:"50dp",
 		height:"100%",
 		backgroundImage:"/img/pagerDer.jpg"
 	});
@@ -361,7 +361,7 @@ function ordenarProductos(){
 			var Main = Ti.UI.createView({
 				width:"100%",
 				layout:'horizontal',
-				height:"232px",
+				height:"116dp",
 				id: productos_act[i]['producto_precios'][productos_act[i]['producto_precios'].length-1]['id']
 			});
 			

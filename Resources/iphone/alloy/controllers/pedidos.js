@@ -230,7 +230,7 @@ function Controller() {
             var Main = Ti.UI.createView({
                 width: "100%",
                 layout: "horizontal",
-                height: "242px",
+                height: "121dp",
                 id: pedidos[n]["orden"][k]["sku_id"]
             });
             var Margen = Ti.UI.createView({
@@ -340,7 +340,7 @@ function Controller() {
         var BotonPedido = Ti.UI.createView({
             id: pedidos[n]["resumen"]["id"],
             width: "100%",
-            height: "200px"
+            height: "100dp"
         });
         var BotonPedidoInt = Ti.UI.createImageView({
             width: "auto",

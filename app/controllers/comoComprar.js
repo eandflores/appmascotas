@@ -80,7 +80,7 @@ var mainScroll = Ti.UI.createScrollView({
 
 var contenido = Ti.UI.createView({
 	width:'100%',
-	height:'3200px'
+	height:'1500dp'
 });
 
 var contenidoInt = Ti.UI.createImageView({

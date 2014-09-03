@@ -116,6 +116,9 @@ function Controller() {
         height: "100%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "11sp"
+        },
         id: "inputCorreo",
         hintText: "CORREO"
     });

@@ -225,6 +225,9 @@ function Controller() {
         height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputNombre",
         hintText: "NOMBRE"
     });
@@ -235,6 +238,9 @@ function Controller() {
         height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputTelefono",
         hintText: "TELÉFONO"
     });
@@ -245,6 +251,9 @@ function Controller() {
         height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputCorreo",
         hintText: "CORREO"
     });
@@ -255,6 +264,9 @@ function Controller() {
         height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputContraseña",
         hintText: "CONTRASEÑA",
         passwordMask: "true"
@@ -266,6 +278,9 @@ function Controller() {
         height: "20%",
         backgroundColor: "#f5f5f5",
         color: "#585858",
+        font: {
+            fontSize: "12sp"
+        },
         id: "inputContraseña2",
         hintText: "CONFIRMAR CONTRASEÑA",
         passwordMask: "true"
