@@ -184,7 +184,7 @@ function guardar(){
 				descuento = JSON.parse(this.responseText);
 				
 				if(descuento['id'] == null)
-					descuento = null
+					descuento = null;
 				
 				Ti.API.info(descuento);
 				Alloy.createController('realizarPedido',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
