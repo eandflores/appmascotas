@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+iosLaunchConfigurationAttributes/ATTR_MINIFY=true
+iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=tiendapet
+iosLaunchConfigurationAttributes/appid=com.villagranquiroz.tiendapet
+iosLaunchConfigurationAttributes/certificate=Andres Villagran Placencia (2Q24AA49X5)
+iosLaunchConfigurationAttributes/distribute_path=/Users/avillagran/Desarrollo/Movil/TiendaPetVersiones
+iosLaunchConfigurationAttributes/keychain=
+iosLaunchConfigurationAttributes/output_format=ipa
+iosLaunchConfigurationAttributes/sdk_version=7.1
+iosLaunchConfigurationAttributes/uuid=4D860E01-9008-4113-92E5-FBCE24F23739
