@@ -1,6 +1,49 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function login() {
         if ("" != $.inputCorreo.value && "" != $.inputClave.value) if (Titanium.Network.online) {
+            winCargando.open();
+            if (null == token) {
+                var xhr = Ti.Network.createHTTPClient({
+                    onload: function() {
+                        try {
+                            var response = JSON.parse(this.responseText);
+                            var db = Ti.Database.open("TiendaPet");
+                            db.execute("INSERT INTO params (name, user, pass) VALUES (?,?,?)", "cookie", $.inputCorreo.value, $.inputClave.value);
+                            db.close();
+                            getMarcas(response["token"]);
+                        } catch (e) {
+                            alert("Error de conexión con el servidor.");
+                            winCargando.close();
+                            winCargando.close();
+                            winCargando.close();
+                        }
+                    },
+                    onerror: function() {
+                        alert("Error de conexión con el servidor.");
+                        winCargando.close();
+                        winCargando.close();
+                        winCargando.close();
+                    }
+                });
+                xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+                xhr.send({
+                    email: $.inputCorreo.value,
+                    password: $.inputClave.value
+                });
+            } else getMarcas(token);
+        } else alert("No hay conexión a la red."); else alert("Debe llenar todos los campos.");
+    }
+    function login2(correo, pass) {
+        if (Titanium.Network.online) {
             winCargando.open();
             if (null == token) {
                 var xhr = Ti.Network.createHTTPClient({
@@ -24,11 +67,11 @@ function Controller() {
                 });
                 xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
                 xhr.send({
-                    email: $.inputCorreo.value,
-                    password: $.inputClave.value
+                    email: correo,
+                    password: pass
                 });
             } else getMarcas(token);
-        } else alert("No hay conexión a la red."); else alert("Debe llenar todos los campos.");
+        } else alert("No hay conexión a la red.");
     }
     function getMarcas(token) {
         if (0 == marcas.length) {
@@ -165,9 +208,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -324,8 +369,16 @@ function Controller() {
     var pedidos = [];
     var notificaciones = [];
     cargarLoading();
-    $.inputCorreo.value = "gabriel@octano.cl";
-    $.inputClave.value = "12345";
+    var db = Ti.Database.open("TiendaPet");
+    db.execute("CREATE TABLE IF NOT EXISTS params(name TEXT, user TEXT, pass TEXT)");
+    var row = db.execute("SELECT user,pass FROM params where name=?", "cookie");
+    if (row.rowCount > 0) while (row.isValidRow()) {
+        row.fieldByName("user") && row.fieldByName("pass") ? login2(row.fieldByName("user"), row.fieldByName("pass")) : alert("Empty");
+        row.next();
+    }
+    db.close();
+    $.inputCorreo.value = "Pruebafinal2";
+    $.inputClave.value = "1234";
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
