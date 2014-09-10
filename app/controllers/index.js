@@ -1,7 +1,7 @@
 $.index.open();
 
 var args = arguments[0] || {};
-
+    
 var token = null;
 var carro = [];
 
@@ -26,8 +26,25 @@ var notificaciones = [];
 
 cargarLoading();
 
-//$.inputCorreo.value = "gabriel@octano.cl";
-//$.inputClave.value = "12345";
+var db = Ti.Database.open('TiendaPet');
+ 
+db.execute('CREATE TABLE IF NOT EXISTS params(name TEXT, user TEXT, pass TEXT)');
+ 
+var row = db.execute('SELECT user,pass FROM params where name=?', 'cookie');
+
+if (row.rowCount > 0) {
+    while (row.isValidRow())
+	{
+	    if (row.fieldByName('user') && row.fieldByName('pass')) {
+	    	login2(row.fieldByName('user'),row.fieldByName('pass'));
+		} else {
+	    	alert('Empty');
+	    }
+	    row.next();
+	}
+}
+ 
+db.close();
 
 function login(){
 	
@@ -41,6 +58,11 @@ function login(){
 					onload: function(e){
 						try{
 							var response = JSON.parse(this.responseText);
+							
+							var db = Ti.Database.open('TiendaPet');
+							db.execute('INSERT INTO params (name, user, pass) VALUES (?,?,?)', 'cookie', $.inputCorreo.value,$.inputClave.value); 
+							db.close();
+							
 							getMarcas(response['token']);
 						}
 						catch(e){
@@ -72,6 +94,46 @@ function login(){
 	}
 	else{
 		alert("Debe llenar todos los campos.");
+	}
+}
+
+function login2(correo,pass){
+	
+	if (Titanium.Network.online) {
+		winCargando.open();
+		
+		if(token == null){
+			var xhr = Ti.Network.createHTTPClient({
+				onload: function(e){
+					try{
+						var response = JSON.parse(this.responseText);
+						getMarcas(response['token']);
+					}
+					catch(e){
+						alert("Error de conexión con el servidor.");
+						winCargando.close();
+						winCargando.close();
+						winCargando.close();
+					}
+		
+				},
+				onerror: function(e){
+					alert("Error de conexión con el servidor.");
+					winCargando.close();
+					winCargando.close();
+					winCargando.close();
+				}
+			});
+			
+			xhr.open('POST','http://tiendapet.cl/api/usuario/login');
+			xhr.send({"email" : correo,"password" : pass});
+		}
+		else{
+			getMarcas(token);
+		}
+	}
+	else{
+		alert("No hay conexión a la red.");
 	}
 }
 

@@ -20,6 +20,9 @@ function Controller() {
                 onload: function(e) {
                     try {
                         var response = JSON.parse(this.responseText);
+                        var db = Ti.Database.open("TiendaPet");
+                        db.execute("INSERT INTO params (name, user, pass) VALUES (?,?,?)", "cookie", $.inputCorreo.value, $.inputContraseña.value);
+                        db.close();
                         getMarcas(response["token"]);
                     } catch (e) {
                         alert(e);
