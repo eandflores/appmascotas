@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function login() {
         if ("" != $.inputCorreo.value && "" != $.inputClave.value) if (Titanium.Network.online) {
@@ -165,9 +174,11 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -324,8 +335,6 @@ function Controller() {
     var pedidos = [];
     var notificaciones = [];
     cargarLoading();
-    $.inputCorreo.value = "gabriel@octano.cl";
-    $.inputClave.value = "12345";
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
