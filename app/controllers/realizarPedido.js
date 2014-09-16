@@ -346,6 +346,8 @@ $.drawermenu.init({
     parent: $.realizarPedido
 });
 
+var total_val = 0;
+
 for(var i = 0; i < productos.length; i++){
 	
 	for(var j = 0; j < productos[i]['producto_precios'].length; j++){
@@ -441,7 +443,15 @@ for(var i = 0; i < productos.length; i++){
 					text : productos[i]['producto_precios'][j]['sku_description']+
 							" x "+carro[k]['qty']
 				});
-								
+				
+				var valorProducto = carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price'];
+				
+				if(descuento != null){
+					valorProducto = valorProducto - valorProducto * (descuento['percentage'] / 100);
+				}	
+				
+				total_val = total_val + valorProducto;
+						
 				var LabelPrecio = Ti.UI.createLabel({
 					width:"40%",
 					height:"60%",
@@ -451,7 +461,7 @@ for(var i = 0; i < productos.length; i++){
 						fontFamily:"Noto Sans",
 						fontWeight:"bold"
 					},
-					text : "$"+formatCurrency(carro[k]['qty'] * productos[i]['producto_precios'][j]['sku_price'])
+					text : "$"+formatCurrency(valorProducto)
 				});
 				
 				LabelGroup.add(LabelNombre);
@@ -472,6 +482,33 @@ for(var i = 0; i < productos.length; i++){
 		}
 	}
 }
+var total = Ti.UI.createView({
+	height:"50dp",
+	width:"100%",
+	backgroundImage:"/img/totalFondo.jpg"
+});
+
+var totalLabel = Ti.UI.createLabel({
+	height:"100%",
+	right:"5.6%",
+	color:"gray",
+	font:{
+		fontFamily:"Noto Sans",
+		fontWeight:"bold"
+	}
+});
+
+var MargenTotal = Ti.UI.createView({
+	width:"100%",
+	height:"2px",
+	backgroundColor:"#e8e8e8"
+});
+
+total.add(totalLabel);
+mainScroll.add(total);	
+mainScroll.add(MargenTotal);
+
+totalLabel.text = "$"+formatCurrency(total_val);
 
 if(medio != null){
 	contenidoLabel3.text = medio['paym_name'];

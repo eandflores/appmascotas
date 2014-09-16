@@ -124,6 +124,10 @@ function iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuar
             break;
 
           case 7:
+            var db = Ti.Database.open("TiendaPet");
+            db.execute("CREATE TABLE IF NOT EXISTS params(name TEXT, user TEXT, pass TEXT)");
+            db.execute("DELETE FROM params where name=?", "cookie");
+            db.close();
             Alloy.createController("index", {
                 token: null,
                 carro: [],
