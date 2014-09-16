@@ -369,6 +369,7 @@ function Controller() {
     var pedidos = [];
     var notificaciones = [];
     cargarLoading();
+
     var db = Ti.Database.open("TiendaPet");
     db.execute("CREATE TABLE IF NOT EXISTS params(name TEXT, user TEXT, pass TEXT)");
     var row = db.execute("SELECT user,pass FROM params where name=?", "cookie");
