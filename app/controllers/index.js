@@ -46,9 +46,6 @@ if (row.rowCount > 0) {
  
 db.close();
 
-$.inputCorreo.value = "gabriel@octano.cl";
-$.inputClave.value = "12345";
-
 function login(){
 	
 	if($.inputCorreo.value != "" && $.inputClave.value != ""){
