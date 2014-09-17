@@ -281,7 +281,6 @@ function Controller() {
         duration: 200,
         parent: $.descuento
     });
-    inputDescuento.value = "#pipeta";
     _.extend($, exports);
 }
 

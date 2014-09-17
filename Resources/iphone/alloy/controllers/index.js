@@ -369,7 +369,6 @@ function Controller() {
     var pedidos = [];
     var notificaciones = [];
     cargarLoading();
-
     var db = Ti.Database.open("TiendaPet");
     db.execute("CREATE TABLE IF NOT EXISTS params(name TEXT, user TEXT, pass TEXT)");
     var row = db.execute("SELECT user,pass FROM params where name=?", "cookie");
@@ -378,6 +377,8 @@ function Controller() {
         row.next();
     }
     db.close();
+    $.inputCorreo.value = "gabriel@octano.cl";
+    $.inputClave.value = "12345";
     __defers["$.__views.recuperarContraseña!click!recuperarContraseña"] && $.__views.recuperarContraseña.addEventListener("click", recuperarContraseña);
     __defers["$.__views.login!click!login"] && $.__views.login.addEventListener("click", login);
     __defers["$.__views.registro!click!registro"] && $.__views.registro.addEventListener("click", registro);
