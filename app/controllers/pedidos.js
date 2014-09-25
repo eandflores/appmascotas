@@ -141,7 +141,7 @@ for(var n = 0; n < pedidos.length; n++){
 				height:"2px",
 				backgroundColor:"#e8e8e8"
 			});
-			
+			/*
 			var ImageViewProducto = Ti.UI.createView({
 				width:"25%",
 				height:"100%",
@@ -156,9 +156,9 @@ for(var n = 0; n < pedidos.length; n++){
 			});
 			
 			ImageViewProducto.add(ImageViewProducto_int);
-			
+			*/
 			var ViewLabels = Ti.UI.createView({
-				width:"75%",
+				width:"100%",
 				height:"100%",
 				layout:"vertical",
 				top:"0%"
@@ -176,7 +176,7 @@ for(var n = 0; n < pedidos.length; n++){
 				width:"100%",
 				height:"40%",
 				top:"20%",
-				left:"8%",
+				//left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
@@ -189,7 +189,7 @@ for(var n = 0; n < pedidos.length; n++){
 				width:"100%",
 				height:"40%",
 				top:"0%",
-				left:"8%",
+				//left:"8%",
 				font:{
 					fontFamily:"Noto Sans",
 					fontWeight:"bold"
@@ -250,7 +250,7 @@ for(var n = 0; n < pedidos.length; n++){
 			ViewLabels.add(LabelGroup);
 			ViewLabels.add(LabelGroup2);
 			
-			Main.add(ImageViewProducto);
+			//Main.add(ImageViewProducto);
 			Main.add(ViewLabels);
 			
 			mainScroll.add(Main);	

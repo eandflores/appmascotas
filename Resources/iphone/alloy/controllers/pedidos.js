@@ -238,20 +238,8 @@ function Controller() {
                 height: "2px",
                 backgroundColor: "#e8e8e8"
             });
-            var ImageViewProducto = Ti.UI.createView({
-                width: "25%",
-                height: "100%",
-                backgroundColor: "white"
-            });
-            var ImageViewProducto_int = Ti.UI.createImageView({
-                image: pedidos[n]["orden"][k]["prod_pic"],
-                defaultImage: "/img/Perro1.jpg",
-                width: "auto",
-                height: "100%"
-            });
-            ImageViewProducto.add(ImageViewProducto_int);
             var ViewLabels = Ti.UI.createView({
-                width: "75%",
+                width: "100%",
                 height: "100%",
                 layout: "vertical",
                 top: "0%"
@@ -267,7 +255,6 @@ function Controller() {
                 width: "100%",
                 height: "40%",
                 top: "20%",
-                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
@@ -279,7 +266,6 @@ function Controller() {
                 width: "100%",
                 height: "40%",
                 top: "0%",
-                left: "8%",
                 font: {
                     fontFamily: "Noto Sans",
                     fontWeight: "bold"
@@ -332,7 +318,6 @@ function Controller() {
             LabelGroup2.add(LabelPrecio);
             ViewLabels.add(LabelGroup);
             ViewLabels.add(LabelGroup2);
-            Main.add(ImageViewProducto);
             Main.add(ViewLabels);
             mainScroll.add(Main);
             mainScroll.add(Margen);
