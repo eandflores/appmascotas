@@ -465,16 +465,20 @@ var DescripcionTitulo = Ti.UI.createImageView({
 	backgroundImage:"/img/descripcionTitulo.jpg"
 });
 
-var DescripcionContenido = Ti.UI.createView({
+var DescripcionContenido = Ti.UI.createScrollView({
+	id:"mainScroll",
 	width:"100%",
-	layout:'horizontal',
+	contentHeight: 'auto',
+	layout:'vertical',
+	scrollType: 'vertical',
+	showVerticalScrollIndicator:"true",
 	height:"33.6%"
 });
 
 var LabelDescripcion =  Ti.UI.createLabel({
 	left:"7%",
 	width:"93%",
-	height:"100%",
+	height:"auto",
 	color:"#5c5c5b",
 	font:{
 		fontFamily:"Noto Sans",

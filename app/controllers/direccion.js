@@ -28,7 +28,7 @@ var notificaciones = args['notificaciones'];
 var padre = args['padre'];
 var producto = args['producto'];
 
-Ti.API.info(direcciones);
+Ti.API.info(padre);
 iniciarComponentes();
 //iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,padre,producto);
 iniciarMenu(token,carro,marcas,productos,medios,direcciones,usuario,medio,direccion,descuento,pedidos,notificaciones,'direccion',producto);
@@ -200,7 +200,7 @@ function selectDireccion(direccion_selected){
 	else if(padre == 'productoView')
 		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,producto: producto,categoria: 'TODAS',marca: 'TODAS',nombre: "TODOS",pagina: 1}).getView().open();
 	else if(padre == 'direccion')
-		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: 'direccion'}).getView().open();
+		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto: producto}).getView().open();
 	else
 		Alloy.createController(padre,{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion_selected,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
 }
@@ -240,7 +240,7 @@ function cargarDirecciones(){
 			try{
 				direcciones = JSON.parse(this.responseText);
 				
-				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
+				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto: producto}).getView().open();
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");

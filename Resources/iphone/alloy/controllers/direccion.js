@@ -57,7 +57,8 @@ function Controller() {
             descuento: descuento,
             pedidos: pedidos,
             notificaciones: notificaciones,
-            padre: "direccion"
+            padre: padre,
+            producto: producto
         }).getView().open() : Alloy.createController(padre, {
             token: token,
             carro: carro,
@@ -110,7 +111,9 @@ function Controller() {
                         direccion: direccion,
                         descuento: descuento,
                         pedidos: pedidos,
-                        notificaciones: notificaciones
+                        notificaciones: notificaciones,
+                        padre: padre,
+                        producto: producto
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -276,7 +279,7 @@ function Controller() {
     var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
-    Ti.API.info(direcciones);
+    Ti.API.info(padre);
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "direccion", producto);
     var marcasView = Ti.UI.createView({

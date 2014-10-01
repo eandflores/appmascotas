@@ -132,7 +132,9 @@ function Controller() {
                         direccion: direccion,
                         descuento: descuento,
                         pedidos: pedidos,
-                        notificaciones: notificaciones
+                        notificaciones: notificaciones,
+                        padre: padre,
+                        producto: producto
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -198,6 +200,7 @@ function Controller() {
     var descuento = args["descuento"];
     var pedidos = args["pedidos"];
     var notificaciones = args["notificaciones"];
+    var padre = args["padre"];
     var producto = args["producto"];
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "agregarDireccion", producto);

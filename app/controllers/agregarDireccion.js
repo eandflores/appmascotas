@@ -25,6 +25,7 @@ var descuento = args['descuento'];
 var pedidos = args['pedidos'];
 var notificaciones = args['notificaciones'];
 
+var padre = args['padre'];
 var producto = args['producto'];
 
 iniciarComponentes();
@@ -437,7 +438,7 @@ function cargarDirecciones(){
 			try{
 				direcciones = JSON.parse(this.responseText);
 			
-				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones}).getView().open();
+				Alloy.createController('direccion',{token : token,carro: carro,marcas: marcas,productos: productos,medios: medios,direcciones: direcciones,usuario: usuario,medio: medio, direccion: direccion,descuento: descuento, pedidos: pedidos,notificaciones: notificaciones,padre: padre,producto: producto}).getView().open();
 			}
 			catch(e){
 				alert("Error de conexión con el servidor.");
