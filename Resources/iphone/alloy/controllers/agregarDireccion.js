@@ -98,7 +98,8 @@ function Controller() {
         var xhr = Ti.Network.createHTTPClient({
             onload: function(e) {
                 try {
-                    JSON.parse(this.responseText);
+                    var response = JSON.parse(this.responseText);
+                    Ti.API.info(response);
                     cargarDirecciones();
                 } catch (e) {
                     alert(e);
@@ -108,7 +109,7 @@ function Controller() {
                 alert(e);
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("POST", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send({
             calle: direccionString,
             comuna: comuna.value,
@@ -144,7 +145,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("GET", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send();
     }
     function atras() {

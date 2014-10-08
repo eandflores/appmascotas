@@ -22,7 +22,7 @@ function Controller() {
                 winCargando.close();
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+        xhr.open("POST", "http://localhost/api/usuario/login");
         xhr.send({
             email: email,
             password: password
@@ -60,7 +60,7 @@ function Controller() {
                 winCargando.close();
             }
         });
-        xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
+        xhrProductos.open("GET", "http://localhost/api/productos/?desde=1&cantidad=-1");
         xhrProductos.send();
     }
     function atras() {

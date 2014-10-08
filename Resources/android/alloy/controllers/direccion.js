@@ -57,7 +57,8 @@ function Controller() {
             descuento: descuento,
             pedidos: pedidos,
             notificaciones: notificaciones,
-            padre: "direccion"
+            padre: padre,
+            producto: producto
         }).getView().open() : Alloy.createController(padre, {
             token: token,
             carro: carro,
@@ -88,7 +89,7 @@ function Controller() {
                 alert(e);
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones_borrar?user_token=" + token);
+        xhr.open("POST", "http://localhost/api/usuario/direcciones_borrar?user_token=" + token);
         xhr.send({
             direccion: direccion_id
         });
@@ -110,7 +111,9 @@ function Controller() {
                         direccion: direccion,
                         descuento: descuento,
                         pedidos: pedidos,
-                        notificaciones: notificaciones
+                        notificaciones: notificaciones,
+                        padre: padre,
+                        producto: producto
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -120,7 +123,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("GET", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send();
     }
     function productosPerroGato() {
@@ -275,7 +278,7 @@ function Controller() {
     var notificaciones = args["notificaciones"];
     var padre = args["padre"];
     var producto = args["producto"];
-    Ti.API.info(direcciones);
+    Ti.API.info(padre);
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "direccion", producto);
     var marcasView = Ti.UI.createView({

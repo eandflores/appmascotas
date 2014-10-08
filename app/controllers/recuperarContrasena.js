@@ -39,7 +39,7 @@ function recuperar(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/recuperar_contrasena');
+	xhr.open('POST','http://localhost/api/usuario/recuperar_contrasena');
 	xhr.send({'email' : $.inputCorreo.value}); 
 	
 }

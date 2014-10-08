@@ -201,7 +201,7 @@ function Controller() {
             });
             if (null != descuento) {
                 Ti.API.info(medio["id"] + " " + JSON.stringify(carro) + " " + direccion["id"] + " " + descuento["id"]);
-                xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
+                xhr.open("POST", "http://localhost/api/comprar?user_token=" + token);
                 xhr.send({
                     pago: medio["id"],
                     cart: JSON.stringify(carro),
@@ -210,7 +210,7 @@ function Controller() {
                 });
             } else {
                 Ti.API.info(medio["id"] + " " + JSON.stringify(carro) + " " + direccion["id"]);
-                xhr.open("POST", "http://tiendapet.cl/api/comprar?user_token=" + token);
+                xhr.open("POST", "http://localhost/api/comprar?user_token=" + token);
                 xhr.send({
                     pago: medio["id"],
                     cart: JSON.stringify(carro),

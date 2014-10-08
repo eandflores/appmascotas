@@ -196,7 +196,7 @@ function guardar(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/comprar/descuento?user_token='+token);
+	xhr.open('POST','http://localhost/api/comprar/descuento?user_token='+token);
 	xhr.send({'descuento' : inputDescuento.value}); 
 	
 }

@@ -191,7 +191,7 @@ function guardar(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/?user_token='+token);
+	xhr.open('POST','http://localhost/api/usuario/?user_token='+token);
 	xhr.send({'telefono' : inputTelefono.value}); 
 	
 }

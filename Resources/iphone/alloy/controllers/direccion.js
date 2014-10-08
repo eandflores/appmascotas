@@ -89,7 +89,7 @@ function Controller() {
                 alert(e);
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones_borrar?user_token=" + token);
+        xhr.open("POST", "http://localhost/api/usuario/direcciones_borrar?user_token=" + token);
         xhr.send({
             direccion: direccion_id
         });
@@ -123,7 +123,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("GET", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send();
     }
     function productosPerroGato() {

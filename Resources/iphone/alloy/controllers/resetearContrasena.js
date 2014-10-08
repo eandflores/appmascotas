@@ -40,7 +40,7 @@ function Controller() {
                     alert(e);
                 }
             });
-            xhr.open("POST", "http://tiendapet.cl/api/usuario/resetear_contrasena?reset_pass=" + $.inputCodigo.value);
+            xhr.open("POST", "http://localhost/api/usuario/resetear_contrasena?reset_pass=" + $.inputCodigo.value);
             xhr.send({
                 password: $.inputPass.value,
                 password2: $.inputPass2.value

@@ -354,7 +354,7 @@ function realizarPedido(){
 					alert("Error de conexión con el servidor.");
 				}
 			});
-			xhr.open('GET','http://tiendapet.cl/api/pagos');
+			xhr.open('GET','http://localhost/api/pagos');
 			xhr.send();
 		}
 	}
@@ -380,7 +380,7 @@ function cargarDirecciones(medios){
 			alert("Error de conexión con el servidor.");
 		}
 	});
-	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.open('GET','http://localhost/api/usuario/direcciones?user_token='+token);
 	xhr.send();
 }
 

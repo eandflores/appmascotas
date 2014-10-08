@@ -34,7 +34,7 @@ function Controller() {
                         winCargando.close();
                     }
                 });
-                xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+                xhr.open("POST", "http://localhost/api/usuario/login");
                 xhr.send({
                     email: $.inputCorreo.value,
                     password: $.inputClave.value
@@ -65,7 +65,7 @@ function Controller() {
                         winCargando.close();
                     }
                 });
-                xhr.open("POST", "http://tiendapet.cl/api/usuario/login");
+                xhr.open("POST", "http://localhost/api/usuario/login");
                 xhr.send({
                     email: correo,
                     password: pass
@@ -93,7 +93,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+            xhrMarcas.open("GET", "http://localhost/api/marcas");
             xhrMarcas.send();
         } else getProductos(token, marcas);
     }
@@ -117,7 +117,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
+            xhrProductos.open("GET", "http://localhost/api/productos/?desde=1&cantidad=-1");
             xhrProductos.send();
         } else getUsuario(token, marcas, productos);
     }
@@ -170,7 +170,7 @@ function Controller() {
                     alert("Error de conexión con el servidor.");
                 }
             });
-            xhrUsuario.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrUsuario.open("GET", "http://localhost/api/usuario/?user_token=" + token);
             xhrUsuario.send();
         }
     }

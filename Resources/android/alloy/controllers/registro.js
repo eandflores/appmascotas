@@ -38,7 +38,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhr.open("POST", "http://tiendapet.cl/api/usuario/registrar");
+            xhr.open("POST", "http://localhost/api/usuario/registrar");
             xhr.send({
                 nombre: nombre,
                 telefono: telefono,
@@ -67,7 +67,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrMarcas.open("GET", "http://tiendapet.cl/api/marcas");
+            xhrMarcas.open("GET", "http://localhost/api/marcas");
             xhrMarcas.send();
         } else getProductos(token, marcas);
     }
@@ -91,7 +91,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrProductos.open("GET", "http://tiendapet.cl/api/productos/?desde=1&cantidad=-1");
+            xhrProductos.open("GET", "http://localhost/api/productos/?desde=1&cantidad=-1");
             xhrProductos.send();
         } else getUsuario(token, marcas, productos);
     }
@@ -149,7 +149,7 @@ function Controller() {
                     winCargando.close();
                 }
             });
-            xhrUsuario.open("GET", "http://tiendapet.cl/api/usuario/?user_token=" + token);
+            xhrUsuario.open("GET", "http://localhost/api/usuario/?user_token=" + token);
             xhrUsuario.send();
         }
     }

@@ -117,7 +117,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/comprar/descuento?user_token=" + token);
+        xhr.open("POST", "http://localhost/api/comprar/descuento?user_token=" + token);
         xhr.send({
             descuento: inputDescuento.value
         });

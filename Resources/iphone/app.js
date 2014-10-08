@@ -243,7 +243,7 @@ function cargarDatos(token, carro, marcas, productos, medios, direcciones, usuar
                 alert("Error de conexión con el servidor2.");
             }
         });
-        xhr.open("GET", "http://tiendapet.cl/api/pagos");
+        xhr.open("GET", "http://localhost/api/pagos");
         xhr.send();
     }
 }
@@ -277,7 +277,7 @@ function cargarDirecciones(token, carro, marcas, productos, medios, direcciones,
             alert("Error de conexión con el servidor4.");
         }
     });
-    xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+    xhr.open("GET", "http://localhost/api/usuario/direcciones?user_token=" + token);
     xhr.send();
 }
 
@@ -310,7 +310,7 @@ function cargarPedidos(token, carro, marcas, productos, medios, direcciones, usu
             alert("Error de conexión con el servidor6.");
         }
     });
-    xhr.open("GET", "http://tiendapet.cl/api/usuario/compras?user_token=" + token);
+    xhr.open("GET", "http://localhost/api/usuario/compras?user_token=" + token);
     xhr.send();
 }
 

@@ -416,7 +416,7 @@ function guardar(){
 		onload: function(e){
 			try{
 				var response = JSON.parse(this.responseText);
-				
+				Ti.API.info(response);
 				cargarDirecciones();
 			}
 			catch(e){
@@ -428,7 +428,7 @@ function guardar(){
 		}
 	});
 	
-	xhr.open('POST','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.open('POST','http://localhost/api/usuario/direcciones?user_token='+token);
 	xhr.send({"calle" : direccionString,"comuna" : comuna.value,"ciudad" : ciudad.value}); 
 }
 
@@ -448,7 +448,7 @@ function cargarDirecciones(){
 			alert("Error de conexión con el servidor.");
 		}
 	});
-	xhr.open('GET','http://tiendapet.cl/api/usuario/direcciones?user_token='+token);
+	xhr.open('GET','http://localhost/api/usuario/direcciones?user_token='+token);
 	xhr.send();
 }
 

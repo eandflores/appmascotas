@@ -108,7 +108,7 @@ function Controller() {
                 alert(e);
             }
         });
-        xhr.open("POST", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("POST", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send({
             calle: direccionString,
             comuna: comuna.value,
@@ -132,7 +132,9 @@ function Controller() {
                         direccion: direccion,
                         descuento: descuento,
                         pedidos: pedidos,
-                        notificaciones: notificaciones
+                        notificaciones: notificaciones,
+                        padre: padre,
+                        producto: producto
                     }).getView().open();
                 } catch (e) {
                     alert("Error de conexión con el servidor.");
@@ -142,7 +144,7 @@ function Controller() {
                 alert("Error de conexión con el servidor.");
             }
         });
-        xhr.open("GET", "http://tiendapet.cl/api/usuario/direcciones?user_token=" + token);
+        xhr.open("GET", "http://localhost/api/usuario/direcciones?user_token=" + token);
         xhr.send();
     }
     function atras() {
@@ -197,6 +199,7 @@ function Controller() {
     var descuento = args["descuento"];
     var pedidos = args["pedidos"];
     var notificaciones = args["notificaciones"];
+    var padre = args["padre"];
     var producto = args["producto"];
     iniciarComponentes();
     iniciarMenu(token, carro, marcas, productos, medios, direcciones, usuario, medio, direccion, descuento, pedidos, notificaciones, "agregarDireccion", producto);
